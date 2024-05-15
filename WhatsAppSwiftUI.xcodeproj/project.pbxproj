@@ -12,6 +12,7 @@
 		D563560C2BF4C72600F0FDE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D563560B2BF4C72600F0FDE1 /* Assets.xcassets */; };
 		D563560F2BF4C72600F0FDE1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D563560E2BF4C72600F0FDE1 /* Preview Assets.xcassets */; };
 		D56356162BF4D00000F0FDE1 /* UIHelperManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356152BF4CFFF00F0FDE1 /* UIHelperManager.swift */; };
+		D56356182BF4D38900F0FDE1 /* UpadatesTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356172BF4D38900F0FDE1 /* UpadatesTabScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		D563560B2BF4C72600F0FDE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D563560E2BF4C72600F0FDE1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D56356152BF4CFFF00F0FDE1 /* UIHelperManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelperManager.swift; sourceTree = "<group>"; };
+		D56356172BF4D38900F0FDE1 /* UpadatesTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpadatesTabScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 				D563560B2BF4C72600F0FDE1 /* Assets.xcassets */,
 				D563560D2BF4C72600F0FDE1 /* Preview Content */,
 				D56356152BF4CFFF00F0FDE1 /* UIHelperManager.swift */,
+				D56356172BF4D38900F0FDE1 /* UpadatesTabScreen.swift */,
 			);
 			path = WhatsAppSwiftUI;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D56356182BF4D38900F0FDE1 /* UpadatesTabScreen.swift in Sources */,
 				D56356162BF4D00000F0FDE1 /* UIHelperManager.swift in Sources */,
 				D563560A2BF4C70F00F0FDE1 /* MainTabView.swift in Sources */,
 				D56356082BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift in Sources */,
