@@ -11,7 +11,7 @@ import SwiftUI
 struct WhatsAppSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainTabView()
         }
     }
 }
