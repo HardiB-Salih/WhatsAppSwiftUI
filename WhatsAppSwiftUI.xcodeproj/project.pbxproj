@@ -13,6 +13,8 @@
 		D563560F2BF4C72600F0FDE1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D563560E2BF4C72600F0FDE1 /* Preview Assets.xcassets */; };
 		D56356162BF4D00000F0FDE1 /* UIHelperManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356152BF4CFFF00F0FDE1 /* UIHelperManager.swift */; };
 		D56356182BF4D38900F0FDE1 /* UpadatesTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356172BF4D38900F0FDE1 /* UpadatesTabScreen.swift */; };
+		D563561A2BF4FD4600F0FDE1 /* CallsTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356192BF4FD4600F0FDE1 /* CallsTabScreen.swift */; };
+		D563561D2BF5092200F0FDE1 /* Intiger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563561C2BF5092200F0FDE1 /* Intiger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +25,8 @@
 		D563560E2BF4C72600F0FDE1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D56356152BF4CFFF00F0FDE1 /* UIHelperManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelperManager.swift; sourceTree = "<group>"; };
 		D56356172BF4D38900F0FDE1 /* UpadatesTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpadatesTabScreen.swift; sourceTree = "<group>"; };
+		D56356192BF4FD4600F0FDE1 /* CallsTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsTabScreen.swift; sourceTree = "<group>"; };
+		D563561C2BF5092200F0FDE1 /* Intiger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intiger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,12 +59,13 @@
 		D56356062BF4C70F00F0FDE1 /* WhatsAppSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				D563561F2BF50A0400F0FDE1 /* Screens */,
+				D563561E2BF509F600F0FDE1 /* Manager */,
+				D563561B2BF5090700F0FDE1 /* Extention */,
 				D56356072BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift */,
 				D56356092BF4C70F00F0FDE1 /* MainTabView.swift */,
 				D563560B2BF4C72600F0FDE1 /* Assets.xcassets */,
 				D563560D2BF4C72600F0FDE1 /* Preview Content */,
-				D56356152BF4CFFF00F0FDE1 /* UIHelperManager.swift */,
-				D56356172BF4D38900F0FDE1 /* UpadatesTabScreen.swift */,
 			);
 			path = WhatsAppSwiftUI;
 			sourceTree = "<group>";
@@ -71,6 +76,31 @@
 				D563560E2BF4C72600F0FDE1 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D563561B2BF5090700F0FDE1 /* Extention */ = {
+			isa = PBXGroup;
+			children = (
+				D563561C2BF5092200F0FDE1 /* Intiger.swift */,
+			);
+			path = Extention;
+			sourceTree = "<group>";
+		};
+		D563561E2BF509F600F0FDE1 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				D56356152BF4CFFF00F0FDE1 /* UIHelperManager.swift */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		D563561F2BF50A0400F0FDE1 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				D56356192BF4FD4600F0FDE1 /* CallsTabScreen.swift */,
+				D56356172BF4D38900F0FDE1 /* UpadatesTabScreen.swift */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,6 +176,8 @@
 				D56356182BF4D38900F0FDE1 /* UpadatesTabScreen.swift in Sources */,
 				D56356162BF4D00000F0FDE1 /* UIHelperManager.swift in Sources */,
 				D563560A2BF4C70F00F0FDE1 /* MainTabView.swift in Sources */,
+				D563561A2BF4FD4600F0FDE1 /* CallsTabScreen.swift in Sources */,
+				D563561D2BF5092200F0FDE1 /* Intiger.swift in Sources */,
 				D56356082BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
