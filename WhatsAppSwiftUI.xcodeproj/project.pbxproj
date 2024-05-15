@@ -15,6 +15,7 @@
 		D56356182BF4D38900F0FDE1 /* UpadatesTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356172BF4D38900F0FDE1 /* UpadatesTabScreen.swift */; };
 		D563561A2BF4FD4600F0FDE1 /* CallsTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356192BF4FD4600F0FDE1 /* CallsTabScreen.swift */; };
 		D563561D2BF5092200F0FDE1 /* Intiger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563561C2BF5092200F0FDE1 /* Intiger.swift */; };
+		D56356292BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356282BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		D56356172BF4D38900F0FDE1 /* UpadatesTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpadatesTabScreen.swift; sourceTree = "<group>"; };
 		D56356192BF4FD4600F0FDE1 /* CallsTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsTabScreen.swift; sourceTree = "<group>"; };
 		D563561C2BF5092200F0FDE1 /* Intiger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intiger.swift; sourceTree = "<group>"; };
+		D56356282BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesTabScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,10 +99,75 @@
 		D563561F2BF50A0400F0FDE1 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				D56356192BF4FD4600F0FDE1 /* CallsTabScreen.swift */,
-				D56356172BF4D38900F0FDE1 /* UpadatesTabScreen.swift */,
+				D56356262BF50B4A00F0FDE1 /* Settings */,
+				D56356252BF50B4300F0FDE1 /* Chats */,
+				D56356242BF50B2900F0FDE1 /* Communities */,
+				D56356212BF50ADA00F0FDE1 /* Calls */,
+				D56356202BF50AC300F0FDE1 /* Updates */,
 			);
 			path = Screens;
+			sourceTree = "<group>";
+		};
+		D56356202BF50AC300F0FDE1 /* Updates */ = {
+			isa = PBXGroup;
+			children = (
+				D56356222BF50AE500F0FDE1 /* View */,
+			);
+			path = Updates;
+			sourceTree = "<group>";
+		};
+		D56356212BF50ADA00F0FDE1 /* Calls */ = {
+			isa = PBXGroup;
+			children = (
+				D56356232BF50B1600F0FDE1 /* View */,
+			);
+			path = Calls;
+			sourceTree = "<group>";
+		};
+		D56356222BF50AE500F0FDE1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D56356172BF4D38900F0FDE1 /* UpadatesTabScreen.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D56356232BF50B1600F0FDE1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D56356192BF4FD4600F0FDE1 /* CallsTabScreen.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D56356242BF50B2900F0FDE1 /* Communities */ = {
+			isa = PBXGroup;
+			children = (
+				D56356272BF50B5300F0FDE1 /* View */,
+			);
+			path = Communities;
+			sourceTree = "<group>";
+		};
+		D56356252BF50B4300F0FDE1 /* Chats */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Chats;
+			sourceTree = "<group>";
+		};
+		D56356262BF50B4A00F0FDE1 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		D56356272BF50B5300F0FDE1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D56356282BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +243,7 @@
 				D56356182BF4D38900F0FDE1 /* UpadatesTabScreen.swift in Sources */,
 				D56356162BF4D00000F0FDE1 /* UIHelperManager.swift in Sources */,
 				D563560A2BF4C70F00F0FDE1 /* MainTabView.swift in Sources */,
+				D56356292BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift in Sources */,
 				D563561A2BF4FD4600F0FDE1 /* CallsTabScreen.swift in Sources */,
 				D563561D2BF5092200F0FDE1 /* Intiger.swift in Sources */,
 				D56356082BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift in Sources */,
