@@ -16,18 +16,30 @@ struct ChatRoomScreen: View {
     }
     
     var body: some View {
-        MessageListView()
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackButtonHidden()
-            .toolbar(.hidden, for: .tabBar)
-            .toolbar {
-                leadingNavItem()
-                trailingNavItem()
-            }
-            .safeAreaInset(edge: .bottom) {
-                TextInputArea()
-                    .padding(.horizontal)
-            }
+        ZStack {
+            Image("chatbackground")
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .opacity(0.7)
+                .ignoresSafeArea()
+            
+            MessageListView()
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden()
+                .toolbar(.hidden, for: .tabBar)
+                .toolbar {
+                    leadingNavItem()
+                    trailingNavItem()
+                }
+                .safeAreaInset(edge: .bottom) {
+                    TextInputArea()
+                        .padding(.horizontal)
+                }
+        }
+        
+        
+        
     }
 }
 

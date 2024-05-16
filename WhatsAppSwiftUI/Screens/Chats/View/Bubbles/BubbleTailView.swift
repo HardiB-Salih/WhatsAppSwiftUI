@@ -25,9 +25,5 @@ struct BubbleTailView: View {
 }
 
 #Preview {
-    ScrollView{
-        BubbleTailView(direction: .sent)
-        BubbleTailView(direction: .received)
-    }
-    .frame(maxWidth: .infinity)
+    BubbleTailView(direction: .sent)
 }

@@ -22,11 +22,10 @@ class MessageListController: UIViewController {
     // Lazy property for tableView with an anonymous closure
     private lazy var tableView : UITableView = {
         let tableView = UITableView()
-        tableView.dataSource = self
-        tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.backgroundColor = .clear
         return tableView
     }()
 
@@ -34,6 +33,8 @@ class MessageListController: UIViewController {
     //MARK: -Methods
     private func setUpViews() {
         view.addSubview(tableView)
+        tableView.dataSource = self
+        tableView.delegate = self
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -49,16 +50,24 @@ class MessageListController: UIViewController {
 // MARK: -UITableViewDelegate & UITableViewDataSource
 extension MessageListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return MessageItem.stubMessages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
+        let message = MessageItem.stubMessages[indexPath.row]
         
         cell.contentConfiguration = UIHostingConfiguration {
-            BubbleTextView(item: .sentPlaceholder)
+            switch message.type {
+            case .text:
+                BubbleTextView(item: message)
+            case .photo, .video:
+                BubblePhotoView(item: message)
+            case .audio:
+                BubbleAudioView(item: message)
+            }
         }
         return cell
     }
@@ -68,3 +77,7 @@ extension MessageListController: UITableViewDelegate, UITableViewDataSource {
     }
     
 }
+
+#Preview(body: {
+    ChatRoomScreen()
+})

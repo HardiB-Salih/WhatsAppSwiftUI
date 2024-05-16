@@ -15,7 +15,7 @@ struct BubbleTextView: View {
             Text(item.text)
                 .padding(10)
                 .background(item.backgroundColor)
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .applyTail(item.direction)
             
             timestampTextView()
@@ -46,10 +46,5 @@ struct BubbleTextView: View {
 }
 
 #Preview {
-    ScrollView{
-        BubbleTextView(item: .sentPlaceholder)
-        BubbleTextView(item: .receivedPlaceholder)
-    }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .background(Color(.systemGray6))
+    BubbleTextView(item: .sentPlaceholder)
 }
