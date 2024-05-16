@@ -16,6 +16,16 @@
 		D563561A2BF4FD4600F0FDE1 /* CallsTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356192BF4FD4600F0FDE1 /* CallsTabScreen.swift */; };
 		D563561D2BF5092200F0FDE1 /* Intiger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563561C2BF5092200F0FDE1 /* Intiger.swift */; };
 		D56356292BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356282BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift */; };
+		D5FB52A22BF6003E0091B68A /* ChannelTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A12BF6003E0091B68A /* ChannelTabScreen.swift */; };
+		D5FB52A42BF602FC0091B68A /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A32BF602FC0091B68A /* Button.swift */; };
+		D5FB52A62BF6084A0091B68A /* ChannelItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A52BF6084A0091B68A /* ChannelItemView.swift */; };
+		D5FB52A92BF611A30091B68A /* SettingsTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A82BF611A30091B68A /* SettingsTabScreen.swift */; };
+		D5FB52AB2BF614ED0091B68A /* SettingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52AA2BF614ED0091B68A /* SettingItemView.swift */; };
+		D5FB52AE2BF6172F0091B68A /* SettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52AD2BF6172F0091B68A /* SettingsItem.swift */; };
+		D5FB52B22BF61E680091B68A /* ChatRoomScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52B12BF61E680091B68A /* ChatRoomScreen.swift */; };
+		D5FB52B42BF6217E0091B68A /* TextInputArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52B32BF6217E0091B68A /* TextInputArea.swift */; };
+		D5FB52B62BF62EFF0091B68A /* MessageListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52B52BF62EFF0091B68A /* MessageListController.swift */; };
+		D5FB52B82BF632D60091B68A /* MessageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52B72BF632D60091B68A /* MessageListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +39,16 @@
 		D56356192BF4FD4600F0FDE1 /* CallsTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsTabScreen.swift; sourceTree = "<group>"; };
 		D563561C2BF5092200F0FDE1 /* Intiger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intiger.swift; sourceTree = "<group>"; };
 		D56356282BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesTabScreen.swift; sourceTree = "<group>"; };
+		D5FB52A12BF6003E0091B68A /* ChannelTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelTabScreen.swift; sourceTree = "<group>"; };
+		D5FB52A32BF602FC0091B68A /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		D5FB52A52BF6084A0091B68A /* ChannelItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelItemView.swift; sourceTree = "<group>"; };
+		D5FB52A82BF611A30091B68A /* SettingsTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabScreen.swift; sourceTree = "<group>"; };
+		D5FB52AA2BF614ED0091B68A /* SettingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItemView.swift; sourceTree = "<group>"; };
+		D5FB52AD2BF6172F0091B68A /* SettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItem.swift; sourceTree = "<group>"; };
+		D5FB52B12BF61E680091B68A /* ChatRoomScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomScreen.swift; sourceTree = "<group>"; };
+		D5FB52B32BF6217E0091B68A /* TextInputArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputArea.swift; sourceTree = "<group>"; };
+		D5FB52B52BF62EFF0091B68A /* MessageListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListController.swift; sourceTree = "<group>"; };
+		D5FB52B72BF632D60091B68A /* MessageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				D563561C2BF5092200F0FDE1 /* Intiger.swift */,
+				D5FB52A32BF602FC0091B68A /* Button.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -99,8 +120,9 @@
 		D563561F2BF50A0400F0FDE1 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				D5FB52AF2BF61E320091B68A /* Chats */,
 				D56356262BF50B4A00F0FDE1 /* Settings */,
-				D56356252BF50B4300F0FDE1 /* Chats */,
+				D56356252BF50B4300F0FDE1 /* Channels */,
 				D56356242BF50B2900F0FDE1 /* Communities */,
 				D56356212BF50ADA00F0FDE1 /* Calls */,
 				D56356202BF50AC300F0FDE1 /* Updates */,
@@ -148,16 +170,19 @@
 			path = Communities;
 			sourceTree = "<group>";
 		};
-		D56356252BF50B4300F0FDE1 /* Chats */ = {
+		D56356252BF50B4300F0FDE1 /* Channels */ = {
 			isa = PBXGroup;
 			children = (
+				D5FB52A02BF600250091B68A /* View */,
 			);
-			path = Chats;
+			path = Channels;
 			sourceTree = "<group>";
 		};
 		D56356262BF50B4A00F0FDE1 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				D5FB52AC2BF617190091B68A /* Model */,
+				D5FB52A72BF6117E0091B68A /* View */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -166,6 +191,51 @@
 			isa = PBXGroup;
 			children = (
 				D56356282BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D5FB52A02BF600250091B68A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D5FB52A12BF6003E0091B68A /* ChannelTabScreen.swift */,
+				D5FB52A52BF6084A0091B68A /* ChannelItemView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D5FB52A72BF6117E0091B68A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D5FB52A82BF611A30091B68A /* SettingsTabScreen.swift */,
+				D5FB52AA2BF614ED0091B68A /* SettingItemView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D5FB52AC2BF617190091B68A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D5FB52AD2BF6172F0091B68A /* SettingsItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D5FB52AF2BF61E320091B68A /* Chats */ = {
+			isa = PBXGroup;
+			children = (
+				D5FB52B02BF61E510091B68A /* View */,
+			);
+			path = Chats;
+			sourceTree = "<group>";
+		};
+		D5FB52B02BF61E510091B68A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D5FB52B12BF61E680091B68A /* ChatRoomScreen.swift */,
+				D5FB52B32BF6217E0091B68A /* TextInputArea.swift */,
+				D5FB52B52BF62EFF0091B68A /* MessageListController.swift */,
+				D5FB52B72BF632D60091B68A /* MessageListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -240,12 +310,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5FB52A92BF611A30091B68A /* SettingsTabScreen.swift in Sources */,
+				D5FB52B82BF632D60091B68A /* MessageListView.swift in Sources */,
 				D56356182BF4D38900F0FDE1 /* UpadatesTabScreen.swift in Sources */,
+				D5FB52A22BF6003E0091B68A /* ChannelTabScreen.swift in Sources */,
 				D56356162BF4D00000F0FDE1 /* UIHelperManager.swift in Sources */,
+				D5FB52AB2BF614ED0091B68A /* SettingItemView.swift in Sources */,
+				D5FB52AE2BF6172F0091B68A /* SettingsItem.swift in Sources */,
+				D5FB52B22BF61E680091B68A /* ChatRoomScreen.swift in Sources */,
+				D5FB52A62BF6084A0091B68A /* ChannelItemView.swift in Sources */,
 				D563560A2BF4C70F00F0FDE1 /* MainTabView.swift in Sources */,
 				D56356292BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift in Sources */,
+				D5FB52B42BF6217E0091B68A /* TextInputArea.swift in Sources */,
+				D5FB52B62BF62EFF0091B68A /* MessageListController.swift in Sources */,
 				D563561A2BF4FD4600F0FDE1 /* CallsTabScreen.swift in Sources */,
 				D563561D2BF5092200F0FDE1 /* Intiger.swift in Sources */,
+				D5FB52A42BF602FC0091B68A /* Button.swift in Sources */,
 				D56356082BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

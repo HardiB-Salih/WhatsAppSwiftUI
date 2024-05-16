@@ -30,12 +30,12 @@ struct MainTabView: View {
                     Image(systemName: Tab.communities.icon)
                     Text(Tab.communities.title)
                 }
-            placeholderItemView("chats")
+            ChannelTabScreen()
                 .tabItem {
                     Image(systemName: Tab.chats.icon)
                     Text(Tab.chats.title)
                 }
-            placeholderItemView("settings")
+            SettingsTabScreen()
                 .tabItem {
                     Image(systemName: Tab.settings.icon)
                     Text(Tab.settings.title)

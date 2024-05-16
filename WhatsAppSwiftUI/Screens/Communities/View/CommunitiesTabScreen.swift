@@ -11,13 +11,13 @@ struct CommunitiesTabScreen: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack (alignment: .leading, spacing: 10){
+                VStack (alignment: .leading, spacing: 20){
                     Image(.communities)
                         .resizable()
                         .scaledToFit()
                         .padding()
                     
-                    Group {
+                    VStack(alignment: .leading, spacing: 10 ) {
                         Text("Stay connected with a community")
                             .font(.title2)
                         
