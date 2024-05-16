@@ -25,6 +25,7 @@ class MessageListController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         return tableView
     }()
@@ -53,10 +54,11 @@ extension MessageListController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
+        
         cell.contentConfiguration = UIHostingConfiguration {
-            Text("Hello")
-                .font(.largeTitle)
-                .padding(.vertical)
+            BubbleTextView(item: .sentPlaceholder)
         }
         return cell
     }

@@ -35,7 +35,6 @@ struct ChatRoomScreen: View {
     NavigationStack {
         ChatRoomScreen()
     }
-    
 }
 
 extension ChatRoomScreen {
@@ -79,6 +78,5 @@ extension ChatRoomScreen {
     private func phoneButton() -> some View {
         Button("", systemImage: "phone", action: {}).tint(.black)
     }
-    
     
 }
