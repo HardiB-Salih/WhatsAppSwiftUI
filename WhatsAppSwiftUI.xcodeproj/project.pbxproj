@@ -24,6 +24,10 @@
 		D52E169B2BF79643002466D8 /* RootScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E169A2BF79643002466D8 /* RootScreenViewModel.swift */; };
 		D52E169E2BF7A1B7002466D8 /* UserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E169D2BF7A1B7002466D8 /* UserItem.swift */; };
 		D52E16A12BF7A395002466D8 /* FirebaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16A02BF7A395002466D8 /* FirebaseConstants.swift */; };
+		D52E16A32BF7BB81002466D8 /* ChatPartnerPickerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16A22BF7BB81002466D8 /* ChatPartnerPickerScreen.swift */; };
+		D52E16A52BF7C4DE002466D8 /* ChatPartnerRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16A42BF7C4DE002466D8 /* ChatPartnerRowView.swift */; };
+		D52E16A82BF7E60C002466D8 /* ChatPartnerPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16A72BF7E60C002466D8 /* ChatPartnerPickerViewModel.swift */; };
+		D52E16AA2BF7F82D002466D8 /* AddGroupChatMenmbersScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16A92BF7F82C002466D8 /* AddGroupChatMenmbersScreen.swift */; };
 		D56356082BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356072BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift */; };
 		D563560A2BF4C70F00F0FDE1 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356092BF4C70F00F0FDE1 /* MainTabView.swift */; };
 		D563560C2BF4C72600F0FDE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D563560B2BF4C72600F0FDE1 /* Assets.xcassets */; };
@@ -64,6 +68,10 @@
 		D52E169A2BF79643002466D8 /* RootScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootScreenViewModel.swift; sourceTree = "<group>"; };
 		D52E169D2BF7A1B7002466D8 /* UserItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItem.swift; sourceTree = "<group>"; };
 		D52E16A02BF7A395002466D8 /* FirebaseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConstants.swift; sourceTree = "<group>"; };
+		D52E16A22BF7BB81002466D8 /* ChatPartnerPickerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPartnerPickerScreen.swift; sourceTree = "<group>"; };
+		D52E16A42BF7C4DE002466D8 /* ChatPartnerRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPartnerRowView.swift; sourceTree = "<group>"; };
+		D52E16A72BF7E60C002466D8 /* ChatPartnerPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPartnerPickerViewModel.swift; sourceTree = "<group>"; };
+		D52E16A92BF7F82C002466D8 /* AddGroupChatMenmbersScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupChatMenmbersScreen.swift; sourceTree = "<group>"; };
 		D56356042BF4C70F00F0FDE1 /* WhatsAppSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatsAppSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D56356072BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppSwiftUIApp.swift; sourceTree = "<group>"; };
 		D56356092BF4C70F00F0FDE1 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
@@ -196,6 +204,14 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		D52E16A62BF7E5E9002466D8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D52E16A72BF7E60C002466D8 /* ChatPartnerPickerViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		D56355FB2BF4C70E00F0FDE1 = {
 			isa = PBXGroup;
 			children = (
@@ -311,6 +327,7 @@
 		D56356252BF50B4300F0FDE1 /* Channels */ = {
 			isa = PBXGroup;
 			children = (
+				D52E16A62BF7E5E9002466D8 /* ViewModel */,
 				D5FB52A02BF600250091B68A /* View */,
 			);
 			path = Channels;
@@ -338,6 +355,9 @@
 			children = (
 				D5FB52A12BF6003E0091B68A /* ChannelTabScreen.swift */,
 				D5FB52A52BF6084A0091B68A /* ChannelItemView.swift */,
+				D52E16A22BF7BB81002466D8 /* ChatPartnerPickerScreen.swift */,
+				D52E16A42BF7C4DE002466D8 /* ChatPartnerRowView.swift */,
+				D52E16A92BF7F82C002466D8 /* AddGroupChatMenmbersScreen.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -505,14 +525,17 @@
 				D52E169B2BF79643002466D8 /* RootScreenViewModel.swift in Sources */,
 				D56356182BF4D38900F0FDE1 /* UpadatesTabScreen.swift in Sources */,
 				D52E16852BF7498E002466D8 /* LoginScreen.swift in Sources */,
+				D52E16AA2BF7F82D002466D8 /* AddGroupChatMenmbersScreen.swift in Sources */,
 				D5FB52A22BF6003E0091B68A /* ChannelTabScreen.swift in Sources */,
 				D56356162BF4D00000F0FDE1 /* UIHelperManager.swift in Sources */,
 				D5FB52AB2BF614ED0091B68A /* SettingItemView.swift in Sources */,
 				D5FB52C72BF670960091B68A /* BubbleAudioView.swift in Sources */,
 				D5FB52AE2BF6172F0091B68A /* SettingsItem.swift in Sources */,
 				D5FB52B22BF61E680091B68A /* ChatRoomScreen.swift in Sources */,
+				D52E16A52BF7C4DE002466D8 /* ChatPartnerRowView.swift in Sources */,
 				D52E16992BF79631002466D8 /* RootScreen.swift in Sources */,
 				D52E16942BF76EDD002466D8 /* AuthProvider.swift in Sources */,
+				D52E16A82BF7E60C002466D8 /* ChatPartnerPickerViewModel.swift in Sources */,
 				D5FB52A62BF6084A0091B68A /* ChannelItemView.swift in Sources */,
 				D52E16872BF74A5C002466D8 /* AuthHeaderView.swift in Sources */,
 				D563560A2BF4C70F00F0FDE1 /* MainTabView.swift in Sources */,
@@ -520,6 +543,7 @@
 				D5FB52C52BF660720091B68A /* BubblePhotoView.swift in Sources */,
 				D52E16892BF74B3A002466D8 /* AuthTextFeild.swift in Sources */,
 				D56356292BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift in Sources */,
+				D52E16A32BF7BB81002466D8 /* ChatPartnerPickerScreen.swift in Sources */,
 				D52E168B2BF754CB002466D8 /* AuthButton.swift in Sources */,
 				D5FB52B42BF6217E0091B68A /* TextInputArea.swift in Sources */,
 				D5FB52B62BF62EFF0091B68A /* MessageListController.swift in Sources */,

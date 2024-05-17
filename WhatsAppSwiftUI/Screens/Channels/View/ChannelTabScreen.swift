@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChannelTabScreen: View {
     @State private var searchText = ""
+    @State private var showChatPartnerPickerScreen = false
     
     var body: some View {
         NavigationStack {
@@ -32,6 +33,8 @@ struct ChannelTabScreen: View {
             .toolbar {
                 leadingNavItem()
                 trailingNavItem()
+            }.sheet(isPresented: $showChatPartnerPickerScreen) {
+                ChatPartnerPickerScreen()
             }
         }
     }
@@ -100,7 +103,7 @@ extension ChannelTabScreen {
     }
     
     private func newChatButton() -> some View {
-        Button("", image: .plus, action: { })
+        Button("", image: .plus, action: { showChatPartnerPickerScreen.toggle() })
         
         
     }

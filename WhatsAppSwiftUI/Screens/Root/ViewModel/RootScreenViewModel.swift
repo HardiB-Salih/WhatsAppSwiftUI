@@ -19,7 +19,9 @@ final class RootScreenViewModel : ObservableObject {
     
    
     private func observeAuthState() {
-        cancellable = AuthManager.shared.authState.sink { [weak self] latestAuthState in
+        cancellable = AuthManager.shared.authState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] latestAuthState in
             self?.authState = latestAuthState
         }
     }
