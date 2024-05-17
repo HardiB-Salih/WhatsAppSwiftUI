@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct LoginScreen: View {
-    @State private var email = ""
-    @State private var password = ""
+    @StateObject private var authVM = AuthViewModel()
     
     var body: some View {
         NavigationStack {
             VStack {
                 Spacer()
                 AuthHeaderView()
-                AuthTextFeild(text: $email, inputType: .email)
-                AuthTextFeild(text: $password, inputType: .password)
+                AuthTextFeild(text: $authVM.email, inputType: .email)
+                AuthTextFeild(text: $authVM.password, inputType: .password)
                 forgotPasswordButton()
                 AuthButton(title: "Log in now", action: {})
+                    .disabled(authVM.disableLoginButton)
                 Spacer()
                 
                 Divider()
@@ -49,7 +49,7 @@ struct LoginScreen: View {
     
     private func signupButton() -> some View {
         NavigationLink {
-            Text("Sign Up Page")
+            SignupScreen(authVM: authVM)
         } label: {
             HStack {
                 Image(systemName: "sparkles")

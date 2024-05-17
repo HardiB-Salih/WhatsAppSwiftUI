@@ -19,8 +19,10 @@ struct AuthTextFeild: View {
             switch inputType {
             case .password:
                 SecureField(inputType.placeholder, text: $text).fontWeight(.semibold)
+                    .keyboardType(inputType.keybordType)
             default:
                 TextField(inputType.placeholder, text: $text).fontWeight(.semibold)
+                    .keyboardType(inputType.keybordType)
             }
             
         }

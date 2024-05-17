@@ -17,6 +17,8 @@
 		D52E16872BF74A5C002466D8 /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16862BF74A5C002466D8 /* AuthHeaderView.swift */; };
 		D52E16892BF74B3A002466D8 /* AuthTextFeild.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16882BF74B3A002466D8 /* AuthTextFeild.swift */; };
 		D52E168B2BF754CB002466D8 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E168A2BF754CB002466D8 /* AuthButton.swift */; };
+		D52E168E2BF76011002466D8 /* SignupScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E168D2BF76011002466D8 /* SignupScreen.swift */; };
+		D52E16912BF764CA002466D8 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16902BF764CA002466D8 /* AuthViewModel.swift */; };
 		D56356082BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356072BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift */; };
 		D563560A2BF4C70F00F0FDE1 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356092BF4C70F00F0FDE1 /* MainTabView.swift */; };
 		D563560C2BF4C72600F0FDE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D563560B2BF4C72600F0FDE1 /* Assets.xcassets */; };
@@ -50,6 +52,8 @@
 		D52E16862BF74A5C002466D8 /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
 		D52E16882BF74B3A002466D8 /* AuthTextFeild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextFeild.swift; sourceTree = "<group>"; };
 		D52E168A2BF754CB002466D8 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
+		D52E168D2BF76011002466D8 /* SignupScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupScreen.swift; sourceTree = "<group>"; };
+		D52E16902BF764CA002466D8 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		D56356042BF4C70F00F0FDE1 /* WhatsAppSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatsAppSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D56356072BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppSwiftUIApp.swift; sourceTree = "<group>"; };
 		D56356092BF4C70F00F0FDE1 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
@@ -97,6 +101,8 @@
 		D52E16822BF74964002466D8 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				D52E168F2BF764B0002466D8 /* ViewModel */,
+				D52E168C2BF75F5F002466D8 /* Components */,
 				D52E16832BF74974002466D8 /* View */,
 			);
 			path = Auth;
@@ -106,11 +112,27 @@
 			isa = PBXGroup;
 			children = (
 				D52E16842BF7498E002466D8 /* LoginScreen.swift */,
+				D52E168D2BF76011002466D8 /* SignupScreen.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D52E168C2BF75F5F002466D8 /* Components */ = {
+			isa = PBXGroup;
+			children = (
 				D52E16882BF74B3A002466D8 /* AuthTextFeild.swift */,
 				D52E16862BF74A5C002466D8 /* AuthHeaderView.swift */,
 				D52E168A2BF754CB002466D8 /* AuthButton.swift */,
 			);
-			path = View;
+			path = Components;
+			sourceTree = "<group>";
+		};
+		D52E168F2BF764B0002466D8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D52E16902BF764CA002466D8 /* AuthViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		D56355FB2BF4C70E00F0FDE1 = {
@@ -435,6 +457,8 @@
 				D5FB52B42BF6217E0091B68A /* TextInputArea.swift in Sources */,
 				D5FB52B62BF62EFF0091B68A /* MessageListController.swift in Sources */,
 				D563561A2BF4FD4600F0FDE1 /* CallsTabScreen.swift in Sources */,
+				D52E168E2BF76011002466D8 /* SignupScreen.swift in Sources */,
+				D52E16912BF764CA002466D8 /* AuthViewModel.swift in Sources */,
 				D5FB52BB2BF6379E0091B68A /* MessageItem.swift in Sources */,
 				D563561D2BF5092200F0FDE1 /* Intiger.swift in Sources */,
 				D5FB52D42BF69E6F0091B68A /* CustomSlider.swift in Sources */,
