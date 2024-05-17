@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCUOdAR2RFBqd1Wieb7WO-Ckd5GADD0VgQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1087176309250</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>app.hardibsalih.WhatsAppSwiftUI</string>
+	<key>PROJECT_ID</key>
+	<string>whatsappswiftui-40cc5</string>
+	<key>STORAGE_BUCKET</key>
+	<string>whatsappswiftui-40cc5.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1087176309250:ios:e918e350b5df4df568051b</string>
+</dict>
+</plist>

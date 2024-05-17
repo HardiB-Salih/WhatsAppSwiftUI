@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//MARK: -BubbleTailModifiers
 private struct BubbleTailModifiers: ViewModifier {
     var direction: MessageDirection
     
@@ -17,7 +18,6 @@ private struct BubbleTailModifiers: ViewModifier {
             }
     }
 }
-
 
 extension View {
     func applyTail(_ direction: MessageDirection) -> some View {
