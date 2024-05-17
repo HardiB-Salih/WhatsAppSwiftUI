@@ -11,16 +11,16 @@ import SwiftUI
 struct CustomSlider<Component: View>: View {
     @Binding var value: Double
     var range: ClosedRange<Double>
-    var knobWidth: CGFloat?
+    var thumbWidth: CGFloat?
     let viewBuilder: (SliderComponents) -> Component
 
-    init(value: Binding<Double>, range: ClosedRange<Double>, knobWidth: CGFloat? = nil,
+    init(value: Binding<Double>, range: ClosedRange<Double>, thumbWidth: CGFloat? = nil,
          _ viewBuilder: @escaping (SliderComponents) -> Component
     ) {
         _value = value
         self.range = range
         self.viewBuilder = viewBuilder
-        self.knobWidth = knobWidth
+        self.thumbWidth = thumbWidth
     }
 
     var body: some View {
@@ -40,7 +40,7 @@ struct CustomSlider<Component: View>: View {
         )
         let offsetX = self.getOffsetX(frame: frame)
 
-        let thumbSize = CGSize(width: knobWidth ?? frame.height, height: frame.height)
+        let thumbSize = CGSize(width: thumbWidth ?? frame.height, height: frame.height)
         let trackLeadingSize = CGSize(width: CGFloat(offsetX + thumbSize.width * 0.5), height:  frame.height)
         let trackTrailingSize = CGSize(width: frame.width - trackLeadingSize.width, height: frame.height)
 
@@ -58,10 +58,10 @@ struct CustomSlider<Component: View>: View {
     ///   - drag: The value of the drag gesture.
     ///   - frame: The frame of the slider.
     private func onDragChange(_ drag: DragGesture.Value, _ frame: CGRect) {
-        let width = (knob: Double(knobWidth ?? frame.size.height), view: Double(frame.size.width))
-        let xrange = ClosedRange(uncheckedBounds: (lower: 0, upper: width.view - width.knob))
+        let width = (thumb: Double(thumbWidth ?? frame.size.height), view: Double(frame.size.width))
+        let xrange = ClosedRange(uncheckedBounds: (lower: 0, upper: width.view - width.thumb))
         var value = Double(drag.startLocation.x + drag.translation.width) // knob center x
-        value -= 0.5 * width.knob // offset from center to leading edge of knob
+        value -= 0.5 * width.thumb // offset from center to leading edge of knob
         value = value > xrange.upperBound ? xrange.upperBound : value // limit to leading edge
         value = value < xrange.lowerBound ? xrange.lowerBound : value // limit to trailing edge
         value = value.convert(fromRange: xrange, toRange: range)
@@ -73,8 +73,8 @@ struct CustomSlider<Component: View>: View {
     ///   - frame: The frame of the slider.
     /// - Returns: The horizontal offset for the slider thumb.
     private func getOffsetX(frame: CGRect) -> CGFloat {
-        let width = (knob: knobWidth ?? frame.size.height, view: frame.size.width)
-        let xrange = 0.0...(Double(width.view - width.knob))
+        let width = (thumb: thumbWidth ?? frame.size.height, view: frame.size.width)
+        let xrange = 0.0...(Double(width.view - width.thumb))
         let result = self.value.convert(fromRange: range, toRange: xrange)
         return CGFloat(result)
     }
