@@ -32,6 +32,11 @@ struct LoginScreen: View {
             .background(
                 .teal.opacity(0.8).gradient
             )
+            .alert(isPresented: $authVM.errorState.showError) {
+                Alert(title: Text(authVM.errorState.errorMessage),
+                      dismissButton: .default(Text("OK"))
+                )
+            }
         }
     }
     

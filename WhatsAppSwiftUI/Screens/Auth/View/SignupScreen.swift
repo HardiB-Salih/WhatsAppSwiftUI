@@ -14,14 +14,21 @@ struct SignupScreen: View {
     var body: some View {
         VStack {
             Spacer()
+            
             AuthHeaderView()
+            
             AuthTextFeild(text: $authVM.email, inputType: .email)
+            
             AuthTextFeild(text: $authVM.username, inputType: .custom("Username", "at"))
+            
             AuthTextFeild(text: $authVM.password, inputType: .password)
             
-            AuthButton(title: "Create account", action: {})
-                .disabled(authVM.disableSignupButton)
-                .padding(.vertical)
+            AuthButton(title: "Create account") {
+                Task { try await authVM.handleSignUp() }
+            }
+            .disabled(authVM.disableSignupButton)
+            .padding(.vertical)
+            
             Spacer()
             
             Divider()
@@ -35,6 +42,7 @@ struct SignupScreen: View {
                            endPoint: .bottomTrailing)
         )
         .navigationBarBackButtonHidden()
+        
         
     }
     

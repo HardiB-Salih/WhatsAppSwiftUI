@@ -22,7 +22,7 @@ struct WhatsAppSwiftUIApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainTabView()
+            RootScreen()
         }
     }
 }
