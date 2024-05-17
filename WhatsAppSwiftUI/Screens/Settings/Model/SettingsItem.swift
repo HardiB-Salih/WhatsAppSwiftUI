@@ -137,4 +137,10 @@ extension SettingsItem {
         backgroundColor: .gray,
         title: "Contact Details"
     )
+    
+    static let logout = SettingsItem(
+        imageName: "chevron.backward.circle.fill",
+        backgroundColor: .red,
+        title: "Log Out"
+    )
 }

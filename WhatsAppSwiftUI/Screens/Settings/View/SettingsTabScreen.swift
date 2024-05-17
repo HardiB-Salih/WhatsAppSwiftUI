@@ -17,7 +17,7 @@ struct SettingsTabScreen: View {
                 Section {
                     profileInfo()
                     SettingItemView(item: .avatar)
-                }.lineLimit(1)
+                }
                 
                 Section {
                     SettingItemView(item: .broadCastLists)
@@ -36,6 +36,13 @@ struct SettingsTabScreen: View {
                 Section {
                     SettingItemView(item: .help)
                     SettingItemView(item: .tellFriend)
+                }
+                
+                Section {
+                    SettingItemView(item: .logout)
+                        .onTapGesture {
+                            Task { try? await AuthManager.shared.logOut()}
+                        }
                 }
             }
             .navigationTitle("Settings")

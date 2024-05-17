@@ -38,4 +38,16 @@ final class AuthViewModel: ObservableObject {
         
     }
     
+    func handleLogin() async throws {
+        isLoading = true
+        do {
+            try await AuthManager.shared.login(with: email, password: password)
+        } catch {
+            errorState.errorMessage = error.localizedDescription
+            errorState.showError = true
+            isLoading = false
+        }
+        
+    }
+    
 }

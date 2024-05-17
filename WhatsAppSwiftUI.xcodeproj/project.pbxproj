@@ -22,6 +22,8 @@
 		D52E16942BF76EDD002466D8 /* AuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16932BF76EDD002466D8 /* AuthProvider.swift */; };
 		D52E16992BF79631002466D8 /* RootScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16982BF79631002466D8 /* RootScreen.swift */; };
 		D52E169B2BF79643002466D8 /* RootScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E169A2BF79643002466D8 /* RootScreenViewModel.swift */; };
+		D52E169E2BF7A1B7002466D8 /* UserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E169D2BF7A1B7002466D8 /* UserItem.swift */; };
+		D52E16A12BF7A395002466D8 /* FirebaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16A02BF7A395002466D8 /* FirebaseConstants.swift */; };
 		D56356082BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356072BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift */; };
 		D563560A2BF4C70F00F0FDE1 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356092BF4C70F00F0FDE1 /* MainTabView.swift */; };
 		D563560C2BF4C72600F0FDE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D563560B2BF4C72600F0FDE1 /* Assets.xcassets */; };
@@ -60,6 +62,8 @@
 		D52E16932BF76EDD002466D8 /* AuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthProvider.swift; sourceTree = "<group>"; };
 		D52E16982BF79631002466D8 /* RootScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootScreen.swift; sourceTree = "<group>"; };
 		D52E169A2BF79643002466D8 /* RootScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootScreenViewModel.swift; sourceTree = "<group>"; };
+		D52E169D2BF7A1B7002466D8 /* UserItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItem.swift; sourceTree = "<group>"; };
+		D52E16A02BF7A395002466D8 /* FirebaseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConstants.swift; sourceTree = "<group>"; };
 		D56356042BF4C70F00F0FDE1 /* WhatsAppSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatsAppSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D56356072BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppSwiftUIApp.swift; sourceTree = "<group>"; };
 		D56356092BF4C70F00F0FDE1 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
@@ -107,6 +111,7 @@
 		D52E16822BF74964002466D8 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				D52E169C2BF7A1AA002466D8 /* Model */,
 				D52E16922BF76EB2002466D8 /* Services */,
 				D52E168F2BF764B0002466D8 /* ViewModel */,
 				D52E168C2BF75F5F002466D8 /* Components */,
@@ -175,6 +180,22 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		D52E169C2BF7A1AA002466D8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D52E169D2BF7A1B7002466D8 /* UserItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D52E169F2BF7A366002466D8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D52E16A02BF7A395002466D8 /* FirebaseConstants.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		D56355FB2BF4C70E00F0FDE1 = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +215,7 @@
 		D56356062BF4C70F00F0FDE1 /* WhatsAppSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				D52E169F2BF7A366002466D8 /* Utils */,
 				D5FB52C02BF644560091B68A /* Helpper */,
 				D563561F2BF50A0400F0FDE1 /* Screens */,
 				D563561E2BF509F600F0FDE1 /* Manager */,
@@ -477,6 +499,7 @@
 			files = (
 				D5FB52BF2BF6422F0091B68A /* BubbleTailView.swift in Sources */,
 				D5FB52BD2BF638EC0091B68A /* BubbleTextView.swift in Sources */,
+				D52E16A12BF7A395002466D8 /* FirebaseConstants.swift in Sources */,
 				D5FB52A92BF611A30091B68A /* SettingsTabScreen.swift in Sources */,
 				D5FB52B82BF632D60091B68A /* MessageListView.swift in Sources */,
 				D52E169B2BF79643002466D8 /* RootScreenViewModel.swift in Sources */,
@@ -504,6 +527,7 @@
 				D52E168E2BF76011002466D8 /* SignupScreen.swift in Sources */,
 				D52E16912BF764CA002466D8 /* AuthViewModel.swift in Sources */,
 				D5FB52BB2BF6379E0091B68A /* MessageItem.swift in Sources */,
+				D52E169E2BF7A1B7002466D8 /* UserItem.swift in Sources */,
 				D563561D2BF5092200F0FDE1 /* Intiger.swift in Sources */,
 				D5FB52D42BF69E6F0091B68A /* CustomSlider.swift in Sources */,
 				D56356082BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift in Sources */,

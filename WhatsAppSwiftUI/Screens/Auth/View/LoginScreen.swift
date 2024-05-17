@@ -18,7 +18,9 @@ struct LoginScreen: View {
                 AuthTextFeild(text: $authVM.email, inputType: .email)
                 AuthTextFeild(text: $authVM.password, inputType: .password)
                 forgotPasswordButton()
-                AuthButton(title: "Log in now", action: {})
+                AuthButton(title: "Log in now") {
+                    Task {try await authVM.handleLogin() }
+                }
                     .disabled(authVM.disableLoginButton)
                 Spacer()
                 

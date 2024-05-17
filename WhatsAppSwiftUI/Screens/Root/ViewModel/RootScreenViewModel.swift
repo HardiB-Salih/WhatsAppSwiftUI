@@ -8,16 +8,18 @@
 import Foundation
 import Combine
 
+@MainActor
 final class RootScreenViewModel : ObservableObject {
     @Published private(set) var authState: AuthState = AuthState.pending
     private var cancellable : AnyCancellable?
     
     init() {
-        listenForAuthState()
+        observeAuthState()
     }
     
-    func listenForAuthState() {
-        cancellable = AuthManager.shared.authState.receive(on: DispatchQueue.main).sink { [weak self] latestAuthState in
+   
+    private func observeAuthState() {
+        cancellable = AuthManager.shared.authState.sink { [weak self] latestAuthState in
             self?.authState = latestAuthState
         }
     }

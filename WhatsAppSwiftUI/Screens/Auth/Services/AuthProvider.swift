@@ -19,6 +19,7 @@ enum AuthState {
 enum AuthError: Error {
     case accountCreationFailed(description: String)
     case failedToSaveUserInfo(description: String)
+    case failedToLogin(description: String)
     
     var title: String {
         switch self {
@@ -26,6 +27,8 @@ enum AuthError: Error {
             return "Account Creation Failed"
         case .failedToSaveUserInfo:
             return "Failed to Save User Info"
+        case .failedToLogin:
+            return "Failed to Log in"
         }
     }
 }
@@ -36,6 +39,8 @@ extension AuthError: LocalizedError {
         case .accountCreationFailed(let description):
             return "\(title): \(description)"
         case .failedToSaveUserInfo(let description):
+            return "\(title): \(description)"
+        case .failedToLogin(description: let description):
             return "\(title): \(description)"
         }
     }
@@ -103,7 +108,14 @@ final class AuthManager: AuthProvider {
     }
     
     func login(with email: String, password: String) async throws {
-        
+        do {
+            let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
+            fetchCurrentUserInfo()
+            print("🙋‍♂️ \(authResult.user.email ?? "") is Logged In")
+        } catch {
+            print("🔐 Faild To Log in: \(error.localizedDescription)")
+            throw AuthError.failedToLogin(description: error.localizedDescription)
+        }
     }
     
     func createAccount(for username: String, email: String, password: String) async throws {
@@ -125,7 +137,13 @@ final class AuthManager: AuthProvider {
     }
     
     func logOut() async throws {
-        
+        do {
+            try Auth.auth().signOut()
+            authState.send(.loggedOut)
+            print("👋 Succefully logged out")
+        } catch {
+            print("🔐 Faild To Log out current user: \(error.localizedDescription)")
+        }
     }
 }
 
@@ -134,8 +152,9 @@ final class AuthManager: AuthProvider {
 extension AuthManager {
     private func saveUserInfoDatabase(user : UserItem) async throws  {
         do {
-            let newDictionary = ["uid": user.uid, "email": user.email, "username": user.username]
-            try await Database.database().reference().child("users").child(user.uid).setValue(newDictionary)
+            // String Constants made in UserItem
+            let newDictionary : [String: Any] = [.uid: user.uid, .email: user.email, .username: user.username]
+            try await FirebaseConstants.UserRef.child(user.uid).setValue(newDictionary)
         } catch {
             print("🔐 Faild to save user info to Database: \(error.localizedDescription)")
             throw AuthError.failedToSaveUserInfo(description: error.localizedDescription)
@@ -145,7 +164,7 @@ extension AuthManager {
     
     private func fetchCurrentUserInfo() {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
-        Database.database().reference().child("users").child(currentUid).observe(.value) {[ weak self ] snapshot in
+        FirebaseConstants.UserRef.child(currentUid).observe(.value) {[ weak self ] snapshot in
             
             guard let userDict = snapshot.value as? [String: Any] else { return }
             let loggedInUser = UserItem(dictionary: userDict)
@@ -158,43 +177,6 @@ extension AuthManager {
             print("🔐 Faild to get current user Info: \(error.localizedDescription)")
         }
     }
-}
-
-
-
-//MARK: -UserItem
-struct UserItem: Identifiable, Decodable, Hashable {
-    let uid: String
-    let username: String
-    let email: String
-    var bio: String? = nil
-    var profileImageUrl: String? = nil
-    
-    var id: String {
-        return uid
-    }
-    
-    var bioUnweappede: String {
-        return bio ?? "Hey there! I am using AhatsApp."
-    }
-}
-
-extension UserItem {
-    init(dictionary: [String: Any]) {
-        self.uid = dictionary[.uid] as? String ?? ""
-        self.username = dictionary[.username] as? String ?? ""
-        self.email = dictionary[.email] as? String ?? ""
-        self.bio = dictionary[.bio] as? String? ?? nil
-        self.profileImageUrl = dictionary[.profileImageUrl] as? String? ?? nil
-    }
-}
-
-extension String {
-    static let uid = "uid"
-    static let username = "username"
-    static let email = "email"
-    static let bio = "bio"
-    static let profileImageUrl = "profileImageUrl"
 }
 
 //MARK: - observe & observeSingleEvent
