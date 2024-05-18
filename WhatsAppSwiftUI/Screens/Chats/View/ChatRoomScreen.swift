@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct ChatRoomScreen: View {
-    
+    let channel: ChannelItem
     @Environment(\.dismiss) var dismiss
     
-    init(){
+    init(channel: ChannelItem){
+        self.channel = channel
         UIHelperManager.makeNavigationBarOpaque()
     }
     
@@ -45,7 +46,7 @@ struct ChatRoomScreen: View {
 
 #Preview {
     NavigationStack {
-        ChatRoomScreen()
+        ChatRoomScreen(channel: .placeholder)
     }
 }
 
@@ -63,7 +64,7 @@ extension ChatRoomScreen {
             Circle()
                 .frame(width: 35, height: 35)
             
-            Text("User Name")
+            Text(channel.title)
                 .font(.footnote)
                 .fontWeight(.semibold)
         }

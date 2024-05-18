@@ -65,3 +65,14 @@ extension MessageItem {
 
     ]
 }
+
+//let messageDict: [String: Any] = [
+//    "type": newChannelBroadcast,
+//    "timestamp": timestamp,
+//    "ownderUid": currentUid
+//]
+extension String {
+    static let type = "type"
+    static let timestamp = "timestamp"
+    static let ownderUid = "ownderUid"
+}

@@ -79,5 +79,5 @@ extension MessageListController: UITableViewDelegate, UITableViewDataSource {
 }
 
 #Preview(body: {
-    ChatRoomScreen()
+    ChatRoomScreen(channel: .placeholder)
 })

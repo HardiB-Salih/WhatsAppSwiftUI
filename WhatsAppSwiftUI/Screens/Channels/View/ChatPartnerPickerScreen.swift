@@ -12,32 +12,36 @@ struct ChatPartnerPickerScreen: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel = ChatPartnerPickerViewModel()
     
+    // send back data to previus page
+    var onCreate: (_ newChaneel: ChannelItem) -> Void
+    
     var body: some View {
         NavigationStack(path: $viewModel.navStack) {
             List {
                 ForEach(ChatPartnerPickerOption.allCases) { item in
-                    HeaderItemView(item: item)
-                        .onTapGesture {
-                            switch item.title {
-                            case "New Group":
-                                viewModel.navStack.append(.addGroupChatMenmbers)
-                            default:
-                                break
-                                
-                            }
-                            
-                        }
+                    HeaderItemView(item: item) {
+                        guard  item == ChatPartnerPickerOption.newGroup else {return }
+                        viewModel.navStack.append(.groupPartnerPicker)
+                    }
                 }
                 
                 Section {
-                    ForEach(0.to(12), id: \.self) { _ in
-                        ChatPartnerRowView(user: .placeholder)
+                    ForEach(viewModel.users) {  user in
+                        ChatPartnerRowView(user: user)
+                            .onTapGesture {
+                                viewModel.createDirectChannel(user, completion: onCreate)
+                            }
                     }
                 } header: {
                     Text("Contacts on WhatsApp")
                         .textCase(nil)
                         .bold()
                 }
+                
+                if viewModel.isPaginatable {
+                    loadMoreUserView()
+                }
+                
             }
             .searchable(text: $searchText,
                         placement: .navigationBarDrawer(displayMode: .always),
@@ -48,23 +52,45 @@ struct ChatPartnerPickerScreen: View {
                                    destination: { route in
                 destinationView(for: route)
             })
+            .alert(isPresented: $viewModel.errorState.showError) {
+                Alert(title: Text("Uh Oh 🤷"),
+                      message: Text(viewModel.errorState.errorMessage),
+                      dismissButton: .default(Text("OK"))
+                )
+            }
+            
+            
+            
             .toolbar {
                 trailingNavItem()
+            }
+            .onAppear {
+                viewModel.deSelectAllChatPartners()
             }
         }
     }
     
-    
+    //MARK: loadMoreUser here
+    private func loadMoreUserView() -> some View {
+        ProgressView()
+            .frame(maxWidth: .infinity)
+            .listRowBackground(Color.clear)
+            .task {
+                await viewModel.fetchUsers()
+            }
+    }
 }
 
+
 extension ChatPartnerPickerScreen {
+    /// user this to add more than one scree in the list of the navStack
     @ViewBuilder
     private func destinationView(for route: ChannelCreationRoute) -> some View {
         switch route {
-        case .addGroupChatMenmbers:
-            AddGroupChatMenmbersScreen(viewModel: viewModel)
+        case .groupPartnerPicker:
+            GroupPartnerPickerScreen(viewModel: viewModel)
         case .setUpGroupChat:
-            Text("SET UP GROUP CHAT")
+            NewGroupSetUpScreen(viewModel: viewModel, onCreate: onCreate)
         }
     }
 }
@@ -90,9 +116,10 @@ extension ChatPartnerPickerScreen {
 extension ChatPartnerPickerScreen {
     private struct HeaderItemView: View {
         let item : ChatPartnerPickerOption
+        let action: () ->Void
         var body: some View {
             Button{
-                // Add the info
+                action()
             } label: {
                 HStack {
                     Image(systemName: item.iconName)
@@ -139,5 +166,5 @@ enum ChatPartnerPickerOption: String, CaseIterable, Identifiable {
 
 
 #Preview {
-    ChatPartnerPickerScreen()
+    ChatPartnerPickerScreen  { channel in }
 }
