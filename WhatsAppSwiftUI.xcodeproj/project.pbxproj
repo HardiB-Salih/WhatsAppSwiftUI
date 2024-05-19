@@ -44,6 +44,13 @@
 		D563561A2BF4FD4600F0FDE1 /* CallsTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356192BF4FD4600F0FDE1 /* CallsTabScreen.swift */; };
 		D563561D2BF5092200F0FDE1 /* Intiger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563561C2BF5092200F0FDE1 /* Intiger.swift */; };
 		D56356292BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356282BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift */; };
+		D592DD9A2BF9F9AB007464C8 /* ChatRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592DD992BF9F9AA007464C8 /* ChatRoomViewModel.swift */; };
+		D592DD9C2BFA080E007464C8 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592DD9B2BFA080E007464C8 /* MessageService.swift */; };
+		D592DD9E2BFA3746007464C8 /* ChannelCreationTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592DD9D2BFA3746007464C8 /* ChannelCreationTextView.swift */; };
+		D592DDA02BFA3A5B007464C8 /* AdminMessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592DD9F2BFA3A5B007464C8 /* AdminMessageTextView.swift */; };
+		D592DDA42BFA41DA007464C8 /* CircularProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592DDA32BFA41DA007464C8 /* CircularProfileImageView.swift */; };
+		D592DDA72BFA4229007464C8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D592DDA62BFA4229007464C8 /* Kingfisher */; };
+		D592DDA92BFA514E007464C8 /* Date + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592DDA82BFA514E007464C8 /* Date + Extension.swift */; };
 		D5FB52A22BF6003E0091B68A /* ChannelTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A12BF6003E0091B68A /* ChannelTabScreen.swift */; };
 		D5FB52A62BF6084A0091B68A /* ChannelItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A52BF6084A0091B68A /* ChannelItemView.swift */; };
 		D5FB52A92BF611A30091B68A /* SettingsTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A82BF611A30091B68A /* SettingsTabScreen.swift */; };
@@ -96,6 +103,12 @@
 		D56356192BF4FD4600F0FDE1 /* CallsTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsTabScreen.swift; sourceTree = "<group>"; };
 		D563561C2BF5092200F0FDE1 /* Intiger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intiger.swift; sourceTree = "<group>"; };
 		D56356282BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesTabScreen.swift; sourceTree = "<group>"; };
+		D592DD992BF9F9AA007464C8 /* ChatRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModel.swift; sourceTree = "<group>"; };
+		D592DD9B2BFA080E007464C8 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
+		D592DD9D2BFA3746007464C8 /* ChannelCreationTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCreationTextView.swift; sourceTree = "<group>"; };
+		D592DD9F2BFA3A5B007464C8 /* AdminMessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminMessageTextView.swift; sourceTree = "<group>"; };
+		D592DDA32BFA41DA007464C8 /* CircularProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProfileImageView.swift; sourceTree = "<group>"; };
+		D592DDA82BFA514E007464C8 /* Date + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Extension.swift"; sourceTree = "<group>"; };
 		D5FB52A12BF6003E0091B68A /* ChannelTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelTabScreen.swift; sourceTree = "<group>"; };
 		D5FB52A52BF6084A0091B68A /* ChannelItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelItemView.swift; sourceTree = "<group>"; };
 		D5FB52A82BF611A30091B68A /* SettingsTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabScreen.swift; sourceTree = "<group>"; };
@@ -119,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D592DDA72BFA4229007464C8 /* Kingfisher in Frameworks */,
 				D52E167D2BF73D6D002466D8 /* FirebaseMessaging in Frameworks */,
 				D52E167B2BF73D6D002466D8 /* FirebaseDatabaseSwift in Frameworks */,
 				D52E16792BF73D6D002466D8 /* FirebaseDatabase in Frameworks */,
@@ -134,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				D52A8ABD2BF8E1B300D63B64 /* UserServices.swift */,
+				D592DD9B2BFA080E007464C8 /* MessageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -262,6 +277,7 @@
 		D56356062BF4C70F00F0FDE1 /* WhatsAppSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				D592DDA12BFA41A9007464C8 /* Components */,
 				D52A8ABC2BF8E19F00D63B64 /* Services */,
 				D52E169F2BF7A366002466D8 /* Utils */,
 				D5FB52C02BF644560091B68A /* Helpper */,
@@ -290,6 +306,7 @@
 			children = (
 				D563561C2BF5092200F0FDE1 /* Intiger.swift */,
 				D52A8AC42BF90FD000D63B64 /* String + Extensions.swift */,
+				D592DDA82BFA514E007464C8 /* Date + Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -384,6 +401,22 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		D592DD982BF9F98D007464C8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D592DD992BF9F9AA007464C8 /* ChatRoomViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D592DDA12BFA41A9007464C8 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D592DDA32BFA41DA007464C8 /* CircularProfileImageView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		D5FB52A02BF600250091B68A /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -418,6 +451,7 @@
 		D5FB52AF2BF61E320091B68A /* Chats */ = {
 			isa = PBXGroup;
 			children = (
+				D592DD982BF9F98D007464C8 /* ViewModel */,
 				D5FB52B92BF6378B0091B68A /* Models */,
 				D5FB52B02BF61E510091B68A /* View */,
 			);
@@ -469,6 +503,8 @@
 				D5FB52BE2BF6422F0091B68A /* BubbleTailView.swift */,
 				D5FB52C42BF660720091B68A /* BubblePhotoView.swift */,
 				D5FB52C62BF670960091B68A /* BubbleAudioView.swift */,
+				D592DD9D2BFA3746007464C8 /* ChannelCreationTextView.swift */,
+				D592DD9F2BFA3A5B007464C8 /* AdminMessageTextView.swift */,
 			);
 			path = Bubbles;
 			sourceTree = "<group>";
@@ -495,6 +531,7 @@
 				D52E167A2BF73D6D002466D8 /* FirebaseDatabaseSwift */,
 				D52E167C2BF73D6D002466D8 /* FirebaseMessaging */,
 				D52E167E2BF73D6D002466D8 /* FirebaseStorage */,
+				D592DDA62BFA4229007464C8 /* Kingfisher */,
 			);
 			productName = WhatsAppSwiftUI;
 			productReference = D56356042BF4C70F00F0FDE1 /* WhatsAppSwiftUI.app */;
@@ -526,6 +563,7 @@
 			mainGroup = D56355FB2BF4C70E00F0FDE1;
 			packageReferences = (
 				D52E16752BF73D6D002466D8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D592DDA52BFA4229007464C8 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = D56356052BF4C70F00F0FDE1 /* Products */;
 			projectDirPath = "";
@@ -579,18 +617,24 @@
 				D52A8ABB2BF8B14E00D63B64 /* NewGroupSetUpScreen.swift in Sources */,
 				D52E16872BF74A5C002466D8 /* AuthHeaderView.swift in Sources */,
 				D563560A2BF4C70F00F0FDE1 /* MainTabView.swift in Sources */,
+				D592DD9C2BFA080E007464C8 /* MessageService.swift in Sources */,
 				D5FB52C32BF6448D0091B68A /* CustomModifiers.swift in Sources */,
 				D5FB52C52BF660720091B68A /* BubblePhotoView.swift in Sources */,
 				D52E16892BF74B3A002466D8 /* AuthTextFeild.swift in Sources */,
+				D592DDA42BFA41DA007464C8 /* CircularProfileImageView.swift in Sources */,
 				D56356292BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift in Sources */,
 				D52A8AC12BF8FE7200D63B64 /* ChannelItem.swift in Sources */,
 				D52E16A32BF7BB81002466D8 /* ChatPartnerPickerScreen.swift in Sources */,
 				D52E168B2BF754CB002466D8 /* AuthButton.swift in Sources */,
 				D5FB52B42BF6217E0091B68A /* TextInputArea.swift in Sources */,
 				D5FB52B62BF62EFF0091B68A /* MessageListController.swift in Sources */,
+				D592DDA02BFA3A5B007464C8 /* AdminMessageTextView.swift in Sources */,
 				D563561A2BF4FD4600F0FDE1 /* CallsTabScreen.swift in Sources */,
 				D52A8AC72BF92A8B00D63B64 /* MessageItem + Type.swift in Sources */,
 				D52E168E2BF76011002466D8 /* SignupScreen.swift in Sources */,
+				D592DD9E2BFA3746007464C8 /* ChannelCreationTextView.swift in Sources */,
+				D592DDA92BFA514E007464C8 /* Date + Extension.swift in Sources */,
+				D592DD9A2BF9F9AB007464C8 /* ChatRoomViewModel.swift in Sources */,
 				D52E16912BF764CA002466D8 /* AuthViewModel.swift in Sources */,
 				D5FB52BB2BF6379E0091B68A /* MessageItem.swift in Sources */,
 				D52A8AC52BF90FD000D63B64 /* String + Extensions.swift in Sources */,
@@ -812,6 +856,14 @@
 				minimumVersion = 10.26.0;
 			};
 		};
+		D592DDA52BFA4229007464C8 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -839,6 +891,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D52E16752BF73D6D002466D8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		D592DDA62BFA4229007464C8 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D592DDA52BFA4229007464C8 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

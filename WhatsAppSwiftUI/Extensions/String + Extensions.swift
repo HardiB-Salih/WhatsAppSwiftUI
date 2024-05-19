@@ -7,8 +7,19 @@
 
 import Foundation
 
+//extension String {
+//    var isEmptyOrWhitespaces: Bool { return !trimmingCharacters(in: .whitespacesAndNewlines).isEmpty}
+//}
+
 extension String {
-    var isEmptyOrWhitespaces: Bool { return !trimmingCharacters(in: .whitespacesAndNewlines).isEmpty}
+    var isEmptyOrWhitespaces: Bool {
+        return trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    
+    func truncated(to maxLength: Int = 20) -> String {
+        let trailingChars = count > maxLength ? "..." : ""
+        return String(prefix(maxLength) + trailingChars)
+    }
 }
 
 

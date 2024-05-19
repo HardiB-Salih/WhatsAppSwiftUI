@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import Combine
 
 class MessageListController: UIViewController {
     
@@ -15,9 +16,26 @@ class MessageListController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
+        setUpMessageLisners()
+    }
+    
+    init(_ viewModel: ChatRoomViewModel){
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    deinit {
+        subscription.forEach { $0.cancel() }
+        subscription.removeAll()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: -Properties
+    private let viewModel: ChatRoomViewModel
+    private var subscription = Set<AnyCancellable>()
     private let cellIdentifier = "MessageListControllerCells"
     // Lazy property for tableView with an anonymous closure
     private lazy var tableView : UITableView = {
@@ -45,19 +63,28 @@ class MessageListController: UIViewController {
         ])
     }
     
+    private func setUpMessageLisners() {
+        let delay = 200
+        viewModel.$messages
+            .debounce(for: .milliseconds(delay), scheduler: DispatchQueue.main)
+            .sink {[weak self] _ in
+            self?.tableView.reloadData()
+            }.store(in: &subscription)
+    }
+    
 }
 
 // MARK: -UITableViewDelegate & UITableViewDataSource
 extension MessageListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MessageItem.stubMessages.count
+        return viewModel.messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-        let message = MessageItem.stubMessages[indexPath.row]
+        let message = viewModel.messages[indexPath.row]
         
         cell.contentConfiguration = UIHostingConfiguration {
             switch message.type {
@@ -67,6 +94,16 @@ extension MessageListController: UITableViewDelegate, UITableViewDataSource {
                 BubblePhotoView(item: message)
             case .audio:
                 BubbleAudioView(item: message)
+            case .admin(let adminType):
+                switch adminType {
+                case .channelCreation:
+                    ChannelCreationTextView()
+                    if viewModel.channel.isGroupChat {
+                        AdminMessageTextView(channel: viewModel.channel)
+                    }
+                default :
+                    Text("Unknown")
+                }
             }
         }
         return cell
@@ -78,6 +115,7 @@ extension MessageListController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-#Preview(body: {
-    ChatRoomScreen(channel: .placeholder)
-})
+#Preview {
+    MessageListView(viewModel: ChatRoomViewModel(channel: .placeholder))
+}
+

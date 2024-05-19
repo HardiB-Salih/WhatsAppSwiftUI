@@ -11,7 +11,8 @@ import Combine
 @MainActor
 final class RootScreenViewModel : ObservableObject {
     @Published private(set) var authState: AuthState = AuthState.pending
-    private var cancellable : AnyCancellable?
+    private var cancellable = Set<AnyCancellable>()
+
     
     init() {
         observeAuthState()
@@ -19,10 +20,10 @@ final class RootScreenViewModel : ObservableObject {
     
    
     private func observeAuthState() {
-        cancellable = AuthManager.shared.authState
+        AuthManager.shared.authState
             .receive(on: DispatchQueue.main)
             .sink { [weak self] latestAuthState in
-            self?.authState = latestAuthState
-        }
+                self?.authState = latestAuthState
+            }.store(in: &cancellable)
     }
 }

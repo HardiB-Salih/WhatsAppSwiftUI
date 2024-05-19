@@ -7,13 +7,19 @@
 
 import Foundation
 import SwiftUI
+import Firebase
 
 struct MessageItem: Identifiable {
     
-    let id : String = UUID().uuidString
+    let id : String
     let text: String
     let type: MessageType
-    let direction: MessageDirection
+    let ownerUid: String
+    let timestamp: Date
+    var direction: MessageDirection {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return .received}
+        return ownerUid == currentUid ? .sent : .received
+    }
 }
 
 
@@ -42,37 +48,43 @@ enum MessageDirection {
     }
 }
 
-enum MessageType {
-    case text, photo, video, audio
-}
+
 
 // MARK: Placeholder
 extension MessageItem {
-    static let sentPlaceholder = MessageItem(text: "Holly Molly", 
+    static let sentPlaceholder = MessageItem(id: UUID().uuidString,
+                                             text: "Holly Molly",
                                              type: .text,
-                                             direction: .sent)
-    
-    static let receivedPlaceholder = MessageItem(text: "How are you Dude How is everything going on with you.",
+                                             ownerUid: "1", timestamp: Date())
+    static let receivedPlaceholder = MessageItem(id: UUID().uuidString,
+                                                 text: "How are you Dude How is everything going on with you.",
                                                  type: .text,
-                                                 direction: .received)
+                                                 ownerUid: "2", timestamp: Date())
     
     static let stubMessages: [MessageItem] = [
-        MessageItem(text: "Text Message", type: .text, direction: .sent),
-        MessageItem(text: "Check out this photo", type: .photo, direction: .received),
-        MessageItem(text: "Check out this video", type: .video, direction: .sent),
-        MessageItem(text: "Check out this video", type: .audio, direction: .received)
-
-
+        MessageItem(id: UUID().uuidString, text: "Text Message", type: .text, ownerUid: "3", timestamp: Date()),
+        MessageItem(id: UUID().uuidString,text: "Check out this photo", type: .photo, ownerUid: "4", timestamp: Date()),
+        MessageItem(id: UUID().uuidString,text: "Check out this video", type: .video, ownerUid: "5", timestamp: Date()),
+        MessageItem(id: UUID().uuidString,text: "Check out this video", type: .audio, ownerUid: "6", timestamp: Date())
     ]
 }
 
-//let messageDict: [String: Any] = [
-//    "type": newChannelBroadcast,
-//    "timestamp": timestamp,
-//    "ownderUid": currentUid
-//]
+extension MessageItem {
+    init(id: String, dictionary: [String: Any]) {
+        self.id = id
+        self.text = dictionary[.text] as? String ?? ""
+        
+        let type = dictionary[.type] as? String ?? ""
+        self.type = MessageType(type) ?? .text
+        self.ownerUid = dictionary[.ownerUid] as? String ?? ""
+        let timeInterval = dictionary[.timestamp] as? TimeInterval ?? 0
+        self.timestamp = Date(timeIntervalSince1970: timeInterval)
+    }
+}
+
 extension String {
-    static let type = "type"
+    static let text = "text"
+    static let `type` = "type"
     static let timestamp = "timestamp"
-    static let ownderUid = "ownderUid"
+    static let ownerUid = "ownderUid"
 }

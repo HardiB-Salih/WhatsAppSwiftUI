@@ -10,34 +10,39 @@ import SwiftUI
 struct ChatRoomScreen: View {
     let channel: ChannelItem
     @Environment(\.dismiss) var dismiss
+    @StateObject private var viewModel: ChatRoomViewModel
     
-    init(channel: ChannelItem){
-        self.channel = channel
+    init(channel: ChannelItem) {
         UIHelperManager.makeNavigationBarOpaque()
+        self.channel = channel
+        _viewModel = StateObject(wrappedValue: ChatRoomViewModel(channel: channel))
+        
     }
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             Image("chatbackground")
                 .resizable()
-                .scaledToFit()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .opacity(0.7)
-                .ignoresSafeArea()
+                .ignoresSafeArea(edges: [.leading, .trailing, .bottom])
             
-            MessageListView()
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarBackButtonHidden()
-                .toolbar(.hidden, for: .tabBar)
-                .toolbar {
-                    leadingNavItem()
-                    trailingNavItem()
-                }
+            MessageListView(viewModel: viewModel)
                 .safeAreaInset(edge: .bottom) {
-                    TextInputArea()
-                        .padding(.horizontal)
+                    TextInputArea(textMessage: $viewModel.textMessage) {
+                        viewModel.sendMessageOrAudio()
+                    }
+                    .padding(.horizontal)
                 }
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
+        .toolbar(.hidden, for: .tabBar)
+        .toolbar {
+            leadingNavItem()
+            trailingNavItem()
+        }
+        
         
         
         
@@ -51,6 +56,7 @@ struct ChatRoomScreen: View {
 }
 
 extension ChatRoomScreen {
+    
     @ToolbarContentBuilder
     private func leadingNavItem()-> some ToolbarContent {
         ToolbarItemGroup(placement: .topBarLeading) {
@@ -61,11 +67,9 @@ extension ChatRoomScreen {
     
     private func chatInfo() -> some View {
         HStack {
-            Circle()
-                .frame(width: 35, height: 35)
+            CircularProfileImageView(channel, size: .xxSmall)
             
-            Text(channel.title)
-                .font(.footnote)
+            Text(channel.title.truncated())
                 .fontWeight(.semibold)
         }
     }

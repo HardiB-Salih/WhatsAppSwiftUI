@@ -199,7 +199,7 @@ final class ChatPartnerPickerViewModel: ObservableObject {
         let messageDict: [String: Any] = [
             .type: newChannelBroadcast,
             .timestamp: timestamp,
-            .ownderUid: currentUid
+            .ownerUid: currentUid
         ]
         
         

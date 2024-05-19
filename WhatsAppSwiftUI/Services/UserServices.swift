@@ -8,9 +8,31 @@
 import Foundation
 import Firebase
 import FirebaseDatabase
+import FirebaseDatabaseSwift
 
 /// A service for paginating users from Firebase Realtime Database.
 struct UserServices {
+    
+    
+    static func getUsers(with uids: [String], completion: @escaping (UserNode)-> Void ) {
+        var users: [UserItem] = []
+        
+        for uid in uids {
+            let query = FirebaseConstants.UserRef.child(uid)
+            query.observeSingleEvent(of: .value) { snapshot in
+                guard let user = try? snapshot.data(as: UserItem.self) else { return }
+                users.append(user)
+                if users.count == uids.count {
+                    completion(.init(users: users))
+                }
+            } withCancel: { error in
+                completion(.emptyUserNode)
+            }
+        }
+    }
+    
+    
+    
     
     /// Paginate users from Firebase Realtime Database.
     ///

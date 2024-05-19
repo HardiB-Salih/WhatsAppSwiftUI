@@ -24,7 +24,7 @@ struct SelectedChatPartnerView: View {
     
     private func selectedChatPartner(user: UserItem) -> some View {
         VStack(alignment: .center) {
-            Circle().frame(width: 60, height: 60)
+            CircularProfileImageView(user.profileImageUrl , size: .medium)
                 .overlay (alignment: .topTrailing){
                     Image(systemName: "xmark")
                         .imageScale(.small)

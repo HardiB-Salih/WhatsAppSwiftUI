@@ -9,33 +9,30 @@ import SwiftUI
 
 struct ChannelItemView: View {
     let messageType : MessageType
-    
+    let channel: ChannelItem
     var body: some View {
         HStack (alignment: .top){
-            Image(systemName: "person.fill")
-                .resizable()
-                .scaledToFit()
-                .foregroundStyle(.white)
-                .frame(width: 30, height: 30)
-                .padding()
-                .background(Color(.gray))
-                .clipShape(Circle())
+            CircularProfileImageView(channel, size: .medium)
             
             
             VStack(alignment: .leading, spacing: 5) {
-                Text("Qauser12")
+                Text(channel.title)
+                    .lineLimit(1)
                     .fontWeight(.bold)
                 
+                Text(channel.lastMessage)
+                    .lineLimit(2)
+                    .foregroundStyle(.gray)
                     
-                HStack(alignment: .center, spacing: 4) {
-                    Image(systemName: messageType.icon)
-                    Text(messageType.title)
-                }.foregroundStyle(Color(.systemGray2))
+//                HStack(alignment: .center, spacing: 4) {
+//                    Image(systemName: messageType.icon)
+//                    Text(messageType.title)
+//                }.foregroundStyle(Color(.systemGray2))
             }
             
             Spacer()
             
-            Text("5:50 PM")
+            Text(channel.lastMessageTimestamp.dayOrTimeRepresentaion)
                 .foregroundStyle(Color(.systemGray2))
         }
     }
@@ -66,5 +63,5 @@ extension ChannelItemView {
 }
 
 #Preview {
-    ChannelItemView(messageType: .voiceMessage)
+    ChannelItemView(messageType: .voiceMessage, channel: .placeholder)
 }
