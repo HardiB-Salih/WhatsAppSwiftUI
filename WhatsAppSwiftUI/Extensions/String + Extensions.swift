@@ -15,6 +15,9 @@ extension String {
     var isEmptyOrWhitespaces: Bool {
         return trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
+    var isNotEmptyOrWhitespaces: Bool {
+        return !isEmptyOrWhitespaces
+    }
     
     func truncated(to maxLength: Int = 20) -> String {
         let trailingChars = count > maxLength ? "..." : ""

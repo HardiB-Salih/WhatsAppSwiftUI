@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TextInputArea: View {
     @Binding var textMessage: String
-    let onSendHandler: () -> Void
+    let actionHandler: (_ action: UserAction) -> Void
     
     var body: some View {
         HStack (alignment: .bottom) {
@@ -20,7 +20,7 @@ struct TextInputArea: View {
                 
                 
                 Button(action: {
-                    // Send Photo Or Video
+                    actionHandler(.presentPhotoPicker)
                 }, label: {
                     Image(systemName:  "photo.on.rectangle.angled")
                         .padding(12)
@@ -42,7 +42,9 @@ struct TextInputArea: View {
     
     
     private func audioOrTextButton() -> some View {
-        Button(action: onSendHandler, label: {
+        Button(action: {
+            textMessage.isEmptyOrWhitespaces ? actionHandler(.sendAudio) : actionHandler(.sendMessage)
+        }, label: {
             Image(systemName: textMessage.isEmptyOrWhitespaces ? "mic.fill" : "paperplane.fill")
                 .foregroundStyle(.black)
                 .padding(12)
@@ -52,6 +54,14 @@ struct TextInputArea: View {
     }
 }
 
+extension TextInputArea {
+    enum UserAction {
+        case presentPhotoPicker
+        case sendMessage
+        case sendAudio
+    }
+}
+
 #Preview {
-    TextInputArea(textMessage: .constant(""), onSendHandler: { })
+    TextInputArea(textMessage: .constant("")) { a in }
 }

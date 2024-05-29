@@ -25,7 +25,10 @@ final class ChannelTabViewModel: ObservableObject {
     typealias ChannelId = String
     @Published var channelDictionary : [ChannelId: ChannelItem] = [:]
 
-    init() {
+    private let currentUser: UserItem
+    
+    init(_ currentUser: UserItem ) {
+        self.currentUser = currentUser
         fetchCurrentUserChannels()
     }
     func onNewChannelCreattion(_ channel: ChannelItem) {
@@ -53,12 +56,14 @@ final class ChannelTabViewModel: ObservableObject {
     
     private func getChannel(with channelId: String) {
         FirebaseConstants.ChannelsRef.child(channelId).observe(.value) { [weak self] snapshot in
+            guard let self = self else { return } // we have to make sure the context is there
             guard let dict = snapshot.value as? [String : Any] else { return }
             var channel = ChannelItem(dict)
-            self?.getChannelMebers(channel: channel) { members in
+            self.getChannelMebers(channel: channel) { members in
                 channel.members = members
-                self?.channelDictionary[channelId] = channel
-                self?.reloadData()
+                channel.members.append(self.currentUser)
+                self.channelDictionary[channelId] = channel
+                self.reloadData()
 //                self?.channels.append(channel)
                 print("💿 Channel \(channel.title)")
             }

@@ -12,21 +12,24 @@ struct BubblePhotoView: View {
     
     var body: some View {
         
-        HStack {
+        HStack (alignment: .bottom, spacing: 5){
+            
+            if item.showGroupPartnerInfo {
+                CircularProfileImageView(item.sender?.profileImageUrl ,size: .xxSmall)
+                    .offset(y: 5)
+            }
             if item.direction == .sent { Spacer() }
             
-            HStack {
-                if item.direction == .sent { shareButton() }
-                messageImageView()
-                    .overlay(playButton().opacity(item.type == .video ? 1 : 0))
-                    
-                if item.direction == .received { shareButton() }
-            }
+            messageImageView()
+                .overlay(playButton().opacity(item.type == .video ? 1 : 0))
             
             
             if item.direction == .received { Spacer() }
 
         }
+        .frame(maxWidth: .infinity, alignment: item.alignment)
+        .padding(.leading, item.leadingPadding)
+        .padding(.trailing, item.traillingPadding)
     }
     
     private func playButton() -> some View {
@@ -59,11 +62,13 @@ struct BubblePhotoView: View {
                     timestampMessage()
                 })
             
-            Text(item.text)
-                .padding(.horizontal, 8)
-                .padding(.bottom, 8)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .frame(width: 220)
+            if item.text.isNotEmptyOrWhitespaces {
+                Text(item.text)
+                    .padding(.horizontal, 8)
+                    .padding(.bottom, 8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(width: 220)
+            }
         }
         .background(item.backgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
@@ -104,5 +109,11 @@ struct BubblePhotoView: View {
 
 
 #Preview {
-    BubblePhotoView(item: .sentPlaceholder)
+    ScrollView {
+        BubblePhotoView(item: .sentPlaceholder)
+        BubblePhotoView(item: .receivedPlaceholder)
+
+    }
+    .frame(maxWidth: .infinity)
+    .background(Color(.systemGray6))
 }

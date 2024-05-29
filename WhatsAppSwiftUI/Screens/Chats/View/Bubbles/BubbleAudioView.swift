@@ -15,7 +15,15 @@ struct BubbleAudioView: View {
 
     
     var body: some View {
-        VStack (alignment: item.horizontalAlignment, spacing: 3){
+        
+        HStack (alignment: .bottom, spacing: 5){
+            
+            if item.showGroupPartnerInfo {
+                CircularProfileImageView(item.sender?.profileImageUrl ,size: .xxSmall)
+            }
+            
+            if item.direction == .sent { timestampTextView() }
+            
             HStack {
                 playButton()
                 
@@ -33,12 +41,12 @@ struct BubbleAudioView: View {
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .applyTail(item.direction)
             
-            timestampTextView()
+            if item.direction == .received { timestampTextView() }
         }
         .shadow(color: Color(.systemGray3).opacity(0.1), radius: 5, x: 0, y: 20)
         .frame(maxWidth: .infinity, alignment: item.alignment)
-        .padding(.leading, item.direction == .received ? 5 : 100)
-        .padding(.trailing, item.direction == .received ? 100 : 5)
+        .padding(.leading, item.leadingPadding)
+        .padding(.trailing, item.traillingPadding)
         
     }
     
@@ -64,24 +72,20 @@ struct BubbleAudioView: View {
     }
     
     private func timestampTextView() -> some View {
-        HStack {
-            Text("3:35 PM")
-                .font(.footnote)
-                .foregroundStyle(.gray)
-            
-            if item.direction == .sent {
-                Image(.seen)
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: 15, height: 15)
-                    .scaledToFit()
-                    .foregroundStyle(Color(.systemBlue))
-            }
-        }
+        Text("3:35 PM")
+            .font(.footnote)
+            .foregroundStyle(.gray)
     }
 }
 
 #Preview {
-    BubbleAudioView(item: .sentPlaceholder)
+    
+    ScrollView {
+        BubbleAudioView(item: .receivedPlaceholder)
+        BubbleAudioView(item: .sentPlaceholder)
+
+    }
+    .frame(maxWidth: .infinity)
+    .background(Color(.systemGray6))
 }
 

@@ -12,6 +12,7 @@ import Firebase
 struct MessageItem: Identifiable {
     
     let id : String
+    let isGroupChat: Bool
     let text: String
     let type: MessageType
     let ownerUid: String
@@ -20,6 +21,9 @@ struct MessageItem: Identifiable {
         guard let currentUid = Auth.auth().currentUser?.uid else { return .received}
         return ownerUid == currentUid ? .sent : .received
     }
+    var sender: UserItem?
+    
+    private let horizantalPadding:CGFloat = 25
 }
 
 
@@ -37,6 +41,23 @@ extension MessageItem {
     var horizontalAlignment: HorizontalAlignment {
         return direction == .received ? .leading : .trailing
     }
+    
+    
+    var showGroupPartnerInfo: Bool {
+        return isGroupChat && direction == .received
+    }
+    
+    var leadingPadding: CGFloat {
+        return direction == .received ? 0 : horizantalPadding
+    }
+    
+    var traillingPadding: CGFloat {
+        return direction == .received ? horizantalPadding : 0
+    }
+    
+    
+    
+    
 }
 
 // MARK: ENUMS
@@ -52,28 +73,28 @@ enum MessageDirection {
 
 // MARK: Placeholder
 extension MessageItem {
-    static let sentPlaceholder = MessageItem(id: UUID().uuidString,
+    static let sentPlaceholder = MessageItem(id: UUID().uuidString, isGroupChat: false,
                                              text: "Holly Molly",
                                              type: .text,
                                              ownerUid: "1", timestamp: Date())
-    static let receivedPlaceholder = MessageItem(id: UUID().uuidString,
+    static let receivedPlaceholder = MessageItem(id: UUID().uuidString, isGroupChat: true,
                                                  text: "How are you Dude How is everything going on with you.",
                                                  type: .text,
                                                  ownerUid: "2", timestamp: Date())
     
     static let stubMessages: [MessageItem] = [
-        MessageItem(id: UUID().uuidString, text: "Text Message", type: .text, ownerUid: "3", timestamp: Date()),
-        MessageItem(id: UUID().uuidString,text: "Check out this photo", type: .photo, ownerUid: "4", timestamp: Date()),
-        MessageItem(id: UUID().uuidString,text: "Check out this video", type: .video, ownerUid: "5", timestamp: Date()),
-        MessageItem(id: UUID().uuidString,text: "Check out this video", type: .audio, ownerUid: "6", timestamp: Date())
+        MessageItem(id: UUID().uuidString, isGroupChat: true, text: "Text Message", type: .text, ownerUid: "3", timestamp: Date()),
+        MessageItem(id: UUID().uuidString, isGroupChat: false,text: "Check out this photo", type: .photo, ownerUid: "4", timestamp: Date()),
+        MessageItem(id: UUID().uuidString, isGroupChat: true,text: "Check out this video", type: .video, ownerUid: "5", timestamp: Date()),
+        MessageItem(id: UUID().uuidString, isGroupChat: false,text: "Check out this video", type: .audio, ownerUid: "6", timestamp: Date())
     ]
 }
 
 extension MessageItem {
-    init(id: String, dictionary: [String: Any]) {
+    init(id: String, isGroupChat: Bool , dictionary: [String: Any]) {
         self.id = id
+        self.isGroupChat = isGroupChat
         self.text = dictionary[.text] as? String ?? ""
-        
         let type = dictionary[.type] as? String ?? ""
         self.type = MessageType(type) ?? .text
         self.ownerUid = dictionary[.ownerUid] as? String ?? ""

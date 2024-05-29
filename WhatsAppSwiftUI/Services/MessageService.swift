@@ -34,12 +34,12 @@ struct MessageService {
     
     
     static func getMessages(for channel: ChannelItem, completion: @escaping ([MessageItem])-> Void) {
-        FirebaseConstants.MessagesRef.child(channel.id).observe(.value) { snapshot in
+        FirebaseConstants.MessagesRef.child(channel.id).observe(.value) { snapshot  in
             guard let dict = snapshot.value as? [String: Any] else { return }
             var messages: [MessageItem] = []
             dict.forEach { key, value in
                 let messageDict = value as? [String: Any] ?? [:]
-                let message = MessageItem(id: key, dictionary: messageDict)
+                let message = MessageItem(id: key, isGroupChat: channel.isGroupChat, dictionary: messageDict)
                 messages.append(message)
                 if messages.count == snapshot.childrenCount{
                     messages.sort { $0.timestamp < $1.timestamp}

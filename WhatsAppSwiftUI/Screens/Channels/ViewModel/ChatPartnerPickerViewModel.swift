@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Firebase
+import Combine
 
 enum ChannelCreationRoute {
     case groupPartnerPicker
@@ -25,13 +26,30 @@ final class ChatPartnerPickerViewModel: ObservableObject {
     @Published var selectedChatPartner = [UserItem]()
     @Published private(set) var users = [UserItem]()
     @Published var errorState : (showError: Bool, errorMessage: String) = ( false , "Uh Oh" )
+    private var authStateSubscribsion : AnyCancellable?
     
-    private var lastCursor: String?
+    private var lastCursor : String?
+    private var currentUser: UserItem?
     
     
     init() {
-        Task {
-            await fetchUsers()
+        listenForAuthState()
+    }
+    
+    deinit {
+        authStateSubscribsion?.cancel()
+        authStateSubscribsion = nil
+    }
+    
+    private func listenForAuthState() {
+        authStateSubscribsion = AuthManager.shared.authState.receive(on: DispatchQueue.main).sink { [ weak self ] authState in
+            switch authState {
+            case .loggedIn(let loggedInUser):
+                self?.currentUser = loggedInUser
+                Task { await self?.fetchUsers() }
+            default:
+                break
+            }
         }
     }
     
@@ -122,6 +140,9 @@ final class ChatPartnerPickerViewModel: ObservableObject {
                 let channelDict = snapshot.value as! [String : Any]
                 var dirrectChannel = ChannelItem(channelDict)
                 dirrectChannel.members = selectedChatPartner
+                if let currentUser = currentUser {
+                    dirrectChannel.members.append(currentUser)
+                }
                 completion(dirrectChannel)
             } else {
                 // Other wise Create this
@@ -221,12 +242,14 @@ final class ChatPartnerPickerViewModel: ObservableObject {
             /// user-direct-channels/currentUid/otherUid/channelId
             FirebaseConstants.UserDirectChannelsRef.child(currentUid).child(chatPartner.uid).setValue([ channelId: true ])
             FirebaseConstants.UserDirectChannelsRef.child(chatPartner.uid).child(currentUid).setValue([ channelId: true ])
-
         }
         
         
         var newChannelItem = ChannelItem(channelDict)
         newChannelItem.members = selectedChatPartner
+        if let currentUser = currentUser {
+            newChannelItem.members.append(currentUser)
+        }
         return .success(newChannelItem)
     }
 }
