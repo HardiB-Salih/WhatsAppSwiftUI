@@ -174,7 +174,4 @@ final class ChatRoomViewModel : ObservableObject {
             showMediaPlayer(fileURL)
         }
     }
-    
 }
-
-
