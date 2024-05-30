@@ -54,6 +54,7 @@
 		D592DDA42BFA41DA007464C8 /* CircularProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592DDA32BFA41DA007464C8 /* CircularProfileImageView.swift */; };
 		D592DDA72BFA4229007464C8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D592DDA62BFA4229007464C8 /* Kingfisher */; };
 		D592DDA92BFA514E007464C8 /* Date + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592DDA82BFA514E007464C8 /* Date + Extension.swift */; };
+		D59A1E3B2C08D26E00508D64 /* MediaPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59A1E3A2C08D26E00508D64 /* MediaPlayerView.swift */; };
 		D5FB52A22BF6003E0091B68A /* ChannelTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A12BF6003E0091B68A /* ChannelTabScreen.swift */; };
 		D5FB52A62BF6084A0091B68A /* ChannelItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A52BF6084A0091B68A /* ChannelItemView.swift */; };
 		D5FB52A92BF611A30091B68A /* SettingsTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A82BF611A30091B68A /* SettingsTabScreen.swift */; };
@@ -115,6 +116,7 @@
 		D592DD9F2BFA3A5B007464C8 /* AdminMessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminMessageTextView.swift; sourceTree = "<group>"; };
 		D592DDA32BFA41DA007464C8 /* CircularProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProfileImageView.swift; sourceTree = "<group>"; };
 		D592DDA82BFA514E007464C8 /* Date + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Extension.swift"; sourceTree = "<group>"; };
+		D59A1E3A2C08D26E00508D64 /* MediaPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerView.swift; sourceTree = "<group>"; };
 		D5FB52A12BF6003E0091B68A /* ChannelTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelTabScreen.swift; sourceTree = "<group>"; };
 		D5FB52A52BF6084A0091B68A /* ChannelItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelItemView.swift; sourceTree = "<group>"; };
 		D5FB52A82BF611A30091B68A /* SettingsTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabScreen.swift; sourceTree = "<group>"; };
@@ -420,6 +422,7 @@
 			isa = PBXGroup;
 			children = (
 				D592DDA32BFA41DA007464C8 /* CircularProfileImageView.swift */,
+				D59A1E3A2C08D26E00508D64 /* MediaPlayerView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				D5FB52B82BF632D60091B68A /* MessageListView.swift in Sources */,
 				D55F208F2C05003A00EB07F9 /* MediaAtachmentPreview.swift in Sources */,
 				D52E169B2BF79643002466D8 /* RootScreenViewModel.swift in Sources */,
+				D59A1E3B2C08D26E00508D64 /* MediaPlayerView.swift in Sources */,
 				D56356182BF4D38900F0FDE1 /* UpadatesTabScreen.swift in Sources */,
 				D52E16852BF7498E002466D8 /* LoginScreen.swift in Sources */,
 				D52E16AA2BF7F82D002466D8 /* GroupPartnerPickerScreen.swift in Sources */,

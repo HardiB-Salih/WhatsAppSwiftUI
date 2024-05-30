@@ -44,14 +44,24 @@ struct ChatRoomScreen: View {
             leadingNavItem()
             trailingNavItem()
         }
+        .fullScreenCover(isPresented: $viewModel.videoPlayerState.show, content: {
+            if let player =  viewModel.videoPlayerState.player {
+                MediaPlayerView(player: player) {
+                    viewModel.dismissMediaPlayer()
+                }
+            }
+            
+        })
     }
     
     
     private func bottomSafeAreaView() -> some View {
         VStack (spacing: 0 ) {
             if viewModel.showPhotoPickerPriview {
-                MediaAtachmentPreview(mediaAttachments: viewModel.mediaAttachments)
-                    .padding(.bottom, 8)
+                MediaAtachmentPreview(mediaAttachments: viewModel.mediaAttachments) { action in
+                    viewModel.handlleMediaAttachmentPriview(action)
+                }
+                .padding(.bottom, 8)
             }
             
             TextInputArea(textMessage: $viewModel.textMessage) { action in

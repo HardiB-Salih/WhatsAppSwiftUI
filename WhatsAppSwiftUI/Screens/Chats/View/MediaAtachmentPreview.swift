@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MediaAtachmentPreview: View {
     let mediaAttachments : [MediaAttachment]
+    let actionHandler: (_ action: UserAction) -> Void
+    
     var body: some View {
         
         ScrollView (.horizontal, showsIndicators: false) {
@@ -45,7 +47,7 @@ struct MediaAtachmentPreview: View {
             
                 .overlay {
                     if attachment.type == .video(UIImage(), url: .stubURL) {
-                        playButton()
+                        playButton(attachment: attachment)
                     }
                 }
             
@@ -67,8 +69,11 @@ struct MediaAtachmentPreview: View {
         })
     }
     
-    private func playButton(_ systemName: String = "play.fill") -> some View {
-        Button(action: {}, label: {
+    private func playButton(_ systemName: String = "play.fill", attachment: MediaAttachment) -> some View {
+        Button(action: {
+            actionHandler(.play(attachment))
+            
+        }, label: {
             Image(systemName: systemName)
                 .scaledToFit()
                 .imageScale(.large)
@@ -84,10 +89,10 @@ struct MediaAtachmentPreview: View {
     }
     
     
-    private func audioAttachmentView() -> some View {
+    private func audioAttachmentView(attachment: MediaAttachment) -> some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [.green, .green.opacity(0.8), .teal]), startPoint: .topLeading, endPoint: .bottom)
-            playButton("mic.fill")
+            playButton("mic.fill", attachment: attachment)
                 .padding(.bottom, 8)
         }
         .frame(width: Constant.imageDimention * 2, height: Constant.imageDimention)
@@ -117,11 +122,24 @@ extension MediaAtachmentPreview {
         static let listHeight: CGFloat = 100
         static let imageDimention : CGFloat = 80
     }
+    
+    enum UserAction {
+        case play(_ attachment: MediaAttachment)
+    }
 }
+
+
+
+
+
+
+
 
 #Preview {
     ScrollView{
-        MediaAtachmentPreview(mediaAttachments: [])
+        MediaAtachmentPreview(mediaAttachments: [] ) { _ in
+            
+        }
     }
     .background(Color.gray)
 }

@@ -18,6 +18,12 @@ final class ChatRoomViewModel : ObservableObject {
 //    @Published var selectedPhotos : [UIImage] = []
     @Published var mediaAttachments : [MediaAttachment] = []
     
+    @Published var videoPlayerState: (show: Bool, player: AVPlayer?) = (false , nil)
+    
+    
+    
+    
+    
     var showPhotoPickerPriview: Bool {
         return !mediaAttachments.isEmpty
     }
@@ -39,6 +45,7 @@ final class ChatRoomViewModel : ObservableObject {
         currentUser = nil
     }
     
+
     
     private func listenToAuthState() {
         AuthManager.shared.authState.receive(on: DispatchQueue.main).sink {[weak self] authState in
@@ -121,6 +128,8 @@ final class ChatRoomViewModel : ObservableObject {
     private func onPhotoPickerSelection() {
         $photoPickerItems.sink { [ weak self ] photoItems in
             guard let self else { return }
+            // we remove all medea that added to the attachment when the photo picker reshow
+            self.mediaAttachments.removeAll()
             Task { try await self.parsePhotoPickerItems(photoItems)}
         }.store(in: &subscritions)
     }
@@ -147,7 +156,24 @@ final class ChatRoomViewModel : ObservableObject {
     }
     
     
-   
+    func dismissMediaPlayer(){
+        videoPlayerState.player?.replaceCurrentItem(with: nil)
+        videoPlayerState.player = nil
+        videoPlayerState.show = false
+    }
+    
+    func showMediaPlayer(_ fileURL: URL){
+        videoPlayerState.show = true
+        videoPlayerState.player = AVPlayer(url: fileURL)
+    }
+    
+    func handlleMediaAttachmentPriview(_ action: MediaAtachmentPreview.UserAction) {
+        switch action {
+        case .play(let attachment):
+            guard let fileURL = attachment.fileURL else { return }
+            showMediaPlayer(fileURL)
+        }
+    }
     
 }
 

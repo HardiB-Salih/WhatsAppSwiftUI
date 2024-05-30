@@ -42,6 +42,20 @@ struct MediaAttachment: Identifiable {
             return UIImage()
         }
     }
+    
+    
+    var fileURL: URL? {
+        switch type {
+        case .photo(_):
+            return nil
+        case .video(_, let url):
+            return url
+        case .audio:
+            return nil
+        }
+    }
+    
+    
 }
 
 enum MediaAtachmentType: Equatable {
