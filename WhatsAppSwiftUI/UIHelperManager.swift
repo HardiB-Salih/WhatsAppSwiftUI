@@ -12,7 +12,7 @@ import UIKit
 let UIHelperManager = _UIHelperManager()
 class _UIHelperManager {
     
-    
+    //MARK: - TabBar
     /// Configures the tab bar to have an opaque background.
     ///
     /// This function sets up the `UITabBarAppearance` for the tab bar and applies
@@ -24,7 +24,18 @@ class _UIHelperManager {
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
 
+    /// Changes the background color of the UITabBar.
+    /// - Parameter color: The UIColor to set as the background color of the UITabBar.
+    func changeTabBarBackgroundColor(to color: UIColor) {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = color
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
     
+    //MARK: - NavigationBar
+    /// Configures the navigation bar to have an opaque background.
     func makeNavigationBarOpaque() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -32,22 +43,16 @@ class _UIHelperManager {
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().compactAppearance = appearance
     }
-    /// Sets the navigation bar to an opaque appearance with customizable colors.
+
+    /// Changes the background color of the navigation bar.
     ///
-    /// - Parameters:
-    ///   - backgroundColor: The background color of the navigation bar.
-    ///   - titleColor: The color of the title text in the navigation bar.
-    ///   - largeTitleColor: The color of the large title text in the navigation bar.
-//    func makeNavigationBarOpaque(backgroundColor: UIColor, titleColor: UIColor, largeTitleColor: UIColor) {
-//        let appearance = UINavigationBarAppearance()
-//        appearance.configureWithOpaqueBackground()
-//        appearance.backgroundColor = backgroundColor
-//        appearance.titleTextAttributes = [.foregroundColor: titleColor]
-//        appearance.largeTitleTextAttributes = [.foregroundColor: largeTitleColor]
-//        
-//        UINavigationBar.appearance().standardAppearance = appearance
-//        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-//        UINavigationBar.appearance().compactAppearance = appearance
-//    }
-    
+    /// - Parameter color: The desired background color for the navigation bar.
+    func setNavigationBarBackgroundColor(_ color: UIColor) {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = color
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+    }
 }

@@ -47,6 +47,8 @@
 		D563561A2BF4FD4600F0FDE1 /* CallsTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356192BF4FD4600F0FDE1 /* CallsTabScreen.swift */; };
 		D563561D2BF5092200F0FDE1 /* Intiger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563561C2BF5092200F0FDE1 /* Intiger.swift */; };
 		D56356292BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356282BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift */; };
+		D58EF3302C118B050087CD71 /* VoiceRecorderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EF32F2C118B050087CD71 /* VoiceRecorderService.swift */; };
+		D58EF3322C11A2D40087CD71 /* TimeInterval + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EF3312C11A2D40087CD71 /* TimeInterval + Extension.swift */; };
 		D592DD9A2BF9F9AB007464C8 /* ChatRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592DD992BF9F9AA007464C8 /* ChatRoomViewModel.swift */; };
 		D592DD9C2BFA080E007464C8 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592DD9B2BFA080E007464C8 /* MessageService.swift */; };
 		D592DD9E2BFA3746007464C8 /* ChannelCreationTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592DD9D2BFA3746007464C8 /* ChannelCreationTextView.swift */; };
@@ -110,6 +112,8 @@
 		D56356192BF4FD4600F0FDE1 /* CallsTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsTabScreen.swift; sourceTree = "<group>"; };
 		D563561C2BF5092200F0FDE1 /* Intiger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intiger.swift; sourceTree = "<group>"; };
 		D56356282BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesTabScreen.swift; sourceTree = "<group>"; };
+		D58EF32F2C118B050087CD71 /* VoiceRecorderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceRecorderService.swift; sourceTree = "<group>"; };
+		D58EF3312C11A2D40087CD71 /* TimeInterval + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval + Extension.swift"; sourceTree = "<group>"; };
 		D592DD992BF9F9AA007464C8 /* ChatRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModel.swift; sourceTree = "<group>"; };
 		D592DD9B2BFA080E007464C8 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		D592DD9D2BFA3746007464C8 /* ChannelCreationTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCreationTextView.swift; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 			children = (
 				D52A8ABD2BF8E1B300D63B64 /* UserServices.swift */,
 				D592DD9B2BFA080E007464C8 /* MessageService.swift */,
+				D58EF32F2C118B050087CD71 /* VoiceRecorderService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -316,6 +321,7 @@
 				D52A8AC42BF90FD000D63B64 /* String + Extensions.swift */,
 				D592DDA82BFA514E007464C8 /* Date + Extension.swift */,
 				D50450BA2C0712AB00CD1F46 /* photoPickerItems + Extension.swift */,
+				D58EF3312C11A2D40087CD71 /* TimeInterval + Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -646,11 +652,13 @@
 				D5FB52B62BF62EFF0091B68A /* MessageListController.swift in Sources */,
 				D592DDA02BFA3A5B007464C8 /* AdminMessageTextView.swift in Sources */,
 				D563561A2BF4FD4600F0FDE1 /* CallsTabScreen.swift in Sources */,
+				D58EF3302C118B050087CD71 /* VoiceRecorderService.swift in Sources */,
 				D52A8AC72BF92A8B00D63B64 /* MessageItem + Type.swift in Sources */,
 				D52E168E2BF76011002466D8 /* SignupScreen.swift in Sources */,
 				D592DD9E2BFA3746007464C8 /* ChannelCreationTextView.swift in Sources */,
 				D592DDA92BFA514E007464C8 /* Date + Extension.swift in Sources */,
 				D592DD9A2BF9F9AB007464C8 /* ChatRoomViewModel.swift in Sources */,
+				D58EF3322C11A2D40087CD71 /* TimeInterval + Extension.swift in Sources */,
 				D52E16912BF764CA002466D8 /* AuthViewModel.swift in Sources */,
 				D5FB52BB2BF6379E0091B68A /* MessageItem.swift in Sources */,
 				D52A8AC52BF90FD000D63B64 /* String + Extensions.swift in Sources */,
@@ -794,6 +802,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WhatsAppSwiftUI/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "WhatsApp need you to access your microphone so you can send audio message";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -822,6 +831,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WhatsAppSwiftUI/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "WhatsApp need you to access your microphone so you can send audio message";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

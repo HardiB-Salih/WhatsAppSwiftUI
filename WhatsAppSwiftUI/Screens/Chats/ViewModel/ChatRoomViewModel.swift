@@ -11,46 +11,53 @@ import PhotosUI
 
 final class ChatRoomViewModel : ObservableObject {
     @Published var textMessage = ""
-    @Published var messages = [MessageItem]()
+    @Published var isRecordingVoiceMessage = false
+    @Published var elapsedVoiceMessageTime: TimeInterval = 0
+
     
+    @Published var messages = [MessageItem]()
     @Published var showPhotoPicker: Bool = false
     @Published var photoPickerItems : [PhotosPickerItem] = []
-//    @Published var selectedPhotos : [UIImage] = []
+    //    @Published var selectedPhotos : [UIImage] = []
     @Published var mediaAttachments : [MediaAttachment] = []
     
     @Published var videoPlayerState: (show: Bool, player: AVPlayer?) = (false , nil)
     
     
-    
-    
-    
     var showPhotoPickerPriview: Bool {
-        return !mediaAttachments.isEmpty
+        return !mediaAttachments.isEmpty || !photoPickerItems.isEmpty
     }
     
     private var currentUser: UserItem?
     private(set) var channel: ChannelItem
     private var subscritions = Set<AnyCancellable>()
+    let voiceRecorderService = VoiceRecorderService()
     
     
     init(channel: ChannelItem) {
         self.channel = channel
         listenToAuthState()
         onPhotoPickerSelection()
+        setupVoiceRecorderListener()
     }
     
     deinit {
+        print("ChatViewModel has been deinited")
         subscritions.forEach { $0.cancel() }
         subscritions.removeAll()
         currentUser = nil
+        
+        //Handle removing audio in file
+        voiceRecorderService.tearDown()
+        
     }
     
-
+    
     
     private func listenToAuthState() {
         AuthManager.shared.authState.receive(on: DispatchQueue.main).sink {[weak self] authState in
             guard let self = self else { return } // we have to make sure the context is there
-
+            
             switch authState {
             case .loggedIn(let currentUser):
                 self.currentUser = currentUser
@@ -66,7 +73,21 @@ final class ChatRoomViewModel : ObservableObject {
         }.store(in: &subscritions)
     }
     
-
+    private func setupVoiceRecorderListener() {
+        voiceRecorderService.$isRecording.receive(on: DispatchQueue.main)
+            .sink { [weak self] isRecording in
+                guard let self  else { return }
+                self.isRecordingVoiceMessage = isRecording
+            }.store(in: &subscritions)
+        
+        voiceRecorderService.$elaspedTime.receive(on: DispatchQueue.main)
+            .sink { [weak self] elaspedTime in
+                guard let self  else { return }
+                self.elapsedVoiceMessageTime = elaspedTime
+            }.store(in: &subscritions)
+    }
+    
+    
     
     
     private func getMessages() {
@@ -94,17 +115,6 @@ final class ChatRoomViewModel : ObservableObject {
         }
     }
     
-    
-    func sendMessageOrAudio() {
-        if textMessage.isEmptyOrWhitespaces {
-            // Send audio
-            print("Send audio")
-        } else {
-            
-        }
-    }
-    
-    
     func sendTextMessage() {
         guard let currentUser else { return }
         MessageService.sendTextMessage(to: channel, from: currentUser, textMessage) { [weak self] in
@@ -120,16 +130,40 @@ final class ChatRoomViewModel : ObservableObject {
             showPhotoPicker = true
         case .sendMessage:
             sendTextMessage()
-        case .sendAudio:
-            print("Send audio")
+        case .recordAudio:
+            toggleAudioRecorder()
         }
     }
+    
+    private func toggleAudioRecorder() {
+        if voiceRecorderService.isRecording {
+            // stop Recording
+            voiceRecorderService.stopRecording { [ weak self ] audioURL, audioDuration in
+                self?.createAudioAttachment(from: audioURL, audioDuration)
+            }
+        } else {
+            // start Recording
+            voiceRecorderService.startRecording()
+        }
+    }
+    
+    
+    private func createAudioAttachment(from audioURL: URL?, _ audioDuration: TimeInterval) {
+        guard let audioURL else { return }
+        let id = UUID().uuidString
+        let audioAttachment = MediaAttachment(id: id, type: .audio(audioURL, audioDuration))
+        mediaAttachments.insert(audioAttachment, at: 0)
+    }
+    
+    
     
     private func onPhotoPickerSelection() {
         $photoPickerItems.sink { [ weak self ] photoItems in
             guard let self else { return }
             // we remove all medea that added to the attachment when the photo picker reshow
-            self.mediaAttachments.removeAll()
+//            self.mediaAttachments.removeAll()
+            let audioRecordings = mediaAttachments.filter({ $0.type == .audio(.stubURL, .stubTimeInterval) })
+            self.mediaAttachments = audioRecordings
             Task { try await self.parsePhotoPickerItems(photoItems)}
         }.store(in: &subscritions)
     }
@@ -140,16 +174,17 @@ final class ChatRoomViewModel : ObservableObject {
             if photosItem.isVideo {
                 // Video Gose Here
                 if let movie = try? await photosItem.loadTransferable(type: VideoPickerTransferable.self),
-                    let thumbnail = try await movie.url.generateVideoThumbnail() {
-                    let videoAttachment = MediaAttachment(id: UUID().uuidString, type: .video(thumbnail, url: movie.url))
+                   let thumbnail = try await movie.url.generateVideoThumbnail(), let itemIdentifier = photosItem.itemIdentifier {
+                    let videoAttachment = MediaAttachment(id: itemIdentifier, type: .video(thumbnail, url: movie.url))
                     self.mediaAttachments.insert(videoAttachment, at: 0)
                 }
             } else {
                 guard
                     let data = try await photosItem.loadTransferable(type: Data.self),
-                    let thumbnail: UIImage = UIImage(data: data)
+                    let thumbnail: UIImage = UIImage(data: data),
+                    let itemIdentifier = photosItem.itemIdentifier
                 else { return }
-                let photoAttachment = MediaAttachment(id: UUID().uuidString, type: .photo(thumbnail))
+                let photoAttachment = MediaAttachment(id: itemIdentifier, type: .photo(thumbnail))
                 self.mediaAttachments.insert(photoAttachment, at: 0)
             }
         }
@@ -172,6 +207,27 @@ final class ChatRoomViewModel : ObservableObject {
         case .play(let attachment):
             guard let fileURL = attachment.fileURL else { return }
             showMediaPlayer(fileURL)
+        case .remove(let attachment):
+            remove(attachment)
+            guard let fileURL = attachment.fileURL else { return }
+            if attachment.type == .audio(.stubURL, .stubTimeInterval) {
+                voiceRecorderService.deleteRecordings(at: fileURL)
+            }
         }
     }
+    
+    
+    
+    private func remove(_ item: MediaAttachment) {
+        guard let attachmentIndex = mediaAttachments.firstIndex(where: { $0.id == item.id }) else { return }
+        mediaAttachments.remove(at: attachmentIndex)
+        
+        guard let photoIndex = photoPickerItems.firstIndex(where: { $0.itemIdentifier == item.id }) else { return }
+        photoPickerItems.remove(at: photoIndex)
+        
+    }
+    
+    
+    
+    
 }

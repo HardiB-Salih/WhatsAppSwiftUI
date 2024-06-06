@@ -29,13 +29,18 @@ struct ChatRoomScreen: View {
                 .ignoresSafeArea(edges: [.leading, .trailing, .bottom])
             
             MessageListView(viewModel: viewModel)
-                .photosPicker(isPresented: $viewModel.showPhotoPicker, 
+                .photosPicker(isPresented: $viewModel.showPhotoPicker,
                               selection: $viewModel.photoPickerItems,
-                              maxSelectionCount: 6 )
+                              maxSelectionCount: 6,
+                              photoLibrary: .shared()
+                )
                 .safeAreaInset(edge: .bottom) {
                     bottomSafeAreaView()
                         .padding(.horizontal)
                 }
+        }
+        .onDisappear {
+            viewModel.voiceRecorderService.tearDown()
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
@@ -54,31 +59,28 @@ struct ChatRoomScreen: View {
         })
     }
     
-    
     private func bottomSafeAreaView() -> some View {
         VStack (spacing: 0 ) {
             if viewModel.showPhotoPickerPriview {
-                MediaAtachmentPreview(mediaAttachments: viewModel.mediaAttachments) { action in
-                    viewModel.handlleMediaAttachmentPriview(action)
+                withAnimation(.spring(.smooth)) {
+                    MediaAtachmentPreview(mediaAttachments: viewModel.mediaAttachments) { action in
+                        viewModel.handlleMediaAttachmentPriview(action)
+                    }
+                    .padding(.bottom, 8)
                 }
-                .padding(.bottom, 8)
             }
             
-            TextInputArea(textMessage: $viewModel.textMessage) { action in
+            TextInputArea(textMessage: $viewModel.textMessage, 
+                          isRecording: $viewModel.isRecordingVoiceMessage,
+                          elapsedTime: $viewModel.elapsedVoiceMessageTime ) { action in
                 viewModel.handleInputAreaActions(action)
             }
         }
     }
 }
 
-#Preview {
-    NavigationStack {
-        ChatRoomScreen(channel: .placeholder)
-    }
-}
 
 extension ChatRoomScreen {
-    
     @ToolbarContentBuilder
     private func leadingNavItem()-> some ToolbarContent {
         ToolbarItemGroup(placement: .topBarLeading) {
@@ -90,7 +92,6 @@ extension ChatRoomScreen {
     private func chatInfo() -> some View {
         HStack {
             CircularProfileImageView(channel, size: .xxSmall)
-            
             Text(channel.title.truncated())
                 .fontWeight(.semibold)
         }
@@ -98,6 +99,7 @@ extension ChatRoomScreen {
     
     private func backButton() -> some View {
         Button("", systemImage: "chevron.left", action: {
+            
             dismiss()
         }).tint(.black)
     }
@@ -119,3 +121,10 @@ extension ChatRoomScreen {
     }
     
 }
+
+
+//#Preview {
+//    NavigationStack {
+//        ChatRoomScreen(channel: .placeholder)
+//    }
+//}

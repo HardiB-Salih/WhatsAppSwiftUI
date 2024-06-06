@@ -12,12 +12,14 @@ struct MediaAtachmentPreview: View {
     let actionHandler: (_ action: UserAction) -> Void
     
     var body: some View {
-        
         ScrollView (.horizontal, showsIndicators: false) {
             HStack {
-//                audioAttachmentView()
                 ForEach(mediaAttachments) { attachment in
-                    thumnaleImageView(attachment)
+                    if attachment.type == .audio(.stubURL, .stubTimeInterval) {
+                        audioAttachmentView(attachment: attachment)
+                    } else {
+                        thumnaleImageView(attachment)
+                    } 
                 }
             }
             
@@ -34,7 +36,9 @@ struct MediaAtachmentPreview: View {
     }
     
     private func thumnaleImageView(_ attachment: MediaAttachment) -> some View {
-        Button(action: {},
+        Button(action: {
+            
+        },
                label: {
             Image(uiImage: attachment.thumbnail)
                 .resizable()
@@ -42,7 +46,7 @@ struct MediaAtachmentPreview: View {
                 .frame(width: Constant.imageDimention, height: Constant.imageDimention)
                 .clipShape(RoundedRectangle(cornerRadius:12, style: .continuous))
                 .overlay(alignment: .topTrailing) {
-                    cancelButton()
+                    cancelButton(attachment: attachment)
                 }
             
                 .overlay {
@@ -53,8 +57,10 @@ struct MediaAtachmentPreview: View {
             
         })
     }
-    private func cancelButton() -> some View {
-        Button(action: {}, label: {
+    private func cancelButton(attachment: MediaAttachment) -> some View {
+        Button(action: {
+            actionHandler(.remove(attachment))
+        }, label: {
             Image(systemName: "xmark")
                 .scaledToFit()
                 .imageScale(.small)
@@ -99,10 +105,11 @@ struct MediaAtachmentPreview: View {
         
         
         .overlay(alignment: .topTrailing) {
-            cancelButton()
+            cancelButton(attachment: attachment)
         }
         .overlay(alignment: .bottomLeading) {
-            Text("mp3 file name here")
+            Text(attachment.fileURL?.absoluteString ?? "")
+                .lineLimit(1)
                 .font(.caption)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.vertical, 1)
@@ -125,6 +132,7 @@ extension MediaAtachmentPreview {
     
     enum UserAction {
         case play(_ attachment: MediaAttachment)
+        case remove(_ attachment: MediaAttachment)
     }
 }
 
