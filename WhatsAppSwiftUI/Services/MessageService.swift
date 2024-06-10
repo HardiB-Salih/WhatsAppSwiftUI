@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseDatabase
 
 struct MessageService {
     
@@ -32,6 +33,34 @@ struct MessageService {
         onComplete()
     }
     
+    static func sendMediaMessage(toChannel channel: ChannelItem, params: MessageUploadParams, completion: @escaping SimpleCompletionHandler) {
+        let timestamp = Date().timeIntervalSince1970
+        guard let messageId = FirebaseConstants.MessagesRef.childByAutoId().key else { return }
+        
+        let chaneelDictionary: [String: Any] = [
+            .lastMessage: params.text,
+            .lastMessageTimestamp: timestamp,
+            .lastMessageType: params.type.title
+        ]
+        
+        var messageDictionary : [String: Any] = [
+            .text: params.text,
+            .type: params.type.title,
+            .timestamp: timestamp,
+            .ownerUid: params.ownerUID
+        ]
+        
+        
+        //Photo Messages
+        messageDictionary[.thumbnailUrl] = params.thumbnailUrl ?? nil
+        messageDictionary[.thumbnailWidth] = params.thumbnailWidth ?? nil
+        messageDictionary[.thumbnailHeight] = params.thumbnailHeight ?? nil
+
+        FirebaseConstants.ChannelsRef.child(channel.id).updateChildValues(chaneelDictionary)
+        FirebaseConstants.MessagesRef.child(channel.id).child(messageId).setValue(messageDictionary)
+        completion()
+    }
+    
     
     static func getMessages(for channel: ChannelItem, completion: @escaping ([MessageItem])-> Void) {
         FirebaseConstants.MessagesRef.child(channel.id).observe(.value) { snapshot  in
@@ -50,10 +79,38 @@ struct MessageService {
         } withCancel: { error in
             print("Failed to retrive messages for \(channel.title)")
         }
-
-
     }
     
+    
+
+}
+
+
+
+struct MessageUploadParams {
+    let channel : ChannelItem
+    let text : String
+    let type: MessageType
+    let attachment: MediaAttachment
+    var thumbnailUrl: String?
+    var videoUrl: String?
+    var sender: UserItem
+    var audioURL: String?
+    var audioDuration: TimeInterval?
+    
+    var ownerUID: String {
+        return sender.uid
+    }
+    
+    var thumbnailWidth: CGFloat? {
+        guard type == .photo || type == .photo else { return nil }
+        return attachment.thumbnail.size.width
+    }
+    
+    var thumbnailHeight: CGFloat? {
+        guard type == .photo || type == .photo else { return nil }
+        return attachment.thumbnail.size.height
+    }
     
     
 }

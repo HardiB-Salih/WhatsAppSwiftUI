@@ -126,11 +126,13 @@ extension String {
     static let lastMessage = "lastMessage"
     static let creationDate = "creationDate"
     static let lastMessageTimestamp = "lastMessageTimestamp"
+    static let lastMessageType = "lastMessageType"
     static let membersCount = "membersCount"
     static let adminUids = "adminUids"
     static let membersUids = "membersUids"
-    static let thumbnailUrl = "thumbnailUrl"
     static let members = "members"
     static let createdBy = "createdBy"
-
+    static let thumbnailUrl = "thumbnailUrl"
+    static let thumbnailWidth = "thumbnailWidth"
+    static let thumbnailHeight = "thumbnailHeight"
 }

@@ -72,7 +72,8 @@ struct ChatRoomScreen: View {
             
             TextInputArea(textMessage: $viewModel.textMessage, 
                           isRecording: $viewModel.isRecordingVoiceMessage,
-                          elapsedTime: $viewModel.elapsedVoiceMessageTime ) { action in
+                          elapsedTime: $viewModel.elapsedVoiceMessageTime, 
+                          showInnerMic: viewModel.showInnerMic ) { action in
                 viewModel.handleInputAreaActions(action)
             }
         }
@@ -121,7 +122,6 @@ extension ChatRoomScreen {
     }
     
 }
-
 
 //#Preview {
 //    NavigationStack {

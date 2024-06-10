@@ -20,9 +20,11 @@ final class ChatRoomViewModel : ObservableObject {
     @Published var photoPickerItems : [PhotosPickerItem] = []
     //    @Published var selectedPhotos : [UIImage] = []
     @Published var mediaAttachments : [MediaAttachment] = []
-    
     @Published var videoPlayerState: (show: Bool, player: AVPlayer?) = (false , nil)
     
+    var showInnerMic : Bool {
+        return mediaAttachments.isEmpty && textMessage.isEmptyOrWhitespaces
+    }
     
     var showPhotoPickerPriview: Bool {
         return !mediaAttachments.isEmpty || !photoPickerItems.isEmpty
@@ -115,8 +117,19 @@ final class ChatRoomViewModel : ObservableObject {
         }
     }
     
-    func sendTextMessage() {
+    //MARK: Send Messages
+    func sendMessage() {
         guard let currentUser else { return }
+        
+        if mediaAttachments.isEmpty {
+            sendTextMessage(currentUser)
+        } else {
+            sendMultipleMediaMessages(textMessage, mediaAttachment: mediaAttachments)
+        }
+    }
+    
+    //MARK: sendTextMessage
+    func sendTextMessage(_ currentUser: UserItem) {
         MessageService.sendTextMessage(to: channel, from: currentUser, textMessage) { [weak self] in
             print("Message service is sending")
             self?.textMessage = ""
@@ -124,12 +137,68 @@ final class ChatRoomViewModel : ObservableObject {
     }
     
     
+    //MARK: sendMultipleMediaMessages
+    func sendMultipleMediaMessages(_ text: String, mediaAttachment: [MediaAttachment]){
+        mediaAttachment.forEach { attachment in
+            switch attachment.type {
+            case .photo:
+                sendPhotoMessage(text: text, attachment: attachment)
+            case .video:
+                break
+            case .audio:
+                break
+                
+            }
+        }
+    }
+        
+        //MARK: Send Photo Message
+        func sendPhotoMessage(text: String, attachment: MediaAttachment) {
+            ///Upload the Image to storage bucket
+            uploadImageToStorage(attachment: attachment) { [weak self] imageUrl in
+                guard let self = self, let currentUser = currentUser else { return}
+                ///Store meta data to our databse
+                let uploadParams = MessageUploadParams(channel: channel, 
+                                                       text: text,
+                                                       type: .photo,
+                                                       attachment: attachment,
+                                                       thumbnailUrl: imageUrl.absoluteString,
+                                                       sender: currentUser)
+                
+                MessageService.sendMediaMessage(toChannel: channel, params: uploadParams) {
+                    //TODO: Scroll to bottom uplon image upload success
+                }
+            }
+        }
+        
+        //MARK: uploadImageToStorage
+        func uploadImageToStorage(attachment: MediaAttachment, completion: @escaping CompletionHandler<URL>) {
+            FirebaseHelper.upload(withUIImage: attachment.thumbnail, for: .photoMessage) { result in
+                switch result {
+                case .success(let url):
+                    completion(url)
+                case .failure(let error):
+                    print("🙀 Failed to upload image storage: \(error.localizedDescription)")
+                }
+            } progressHandler: { progress in
+                print("Upload image Progress \(progress)")
+            }
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     func handleInputAreaActions(_ action: TextInputArea.UserAction) {
         switch action {
         case .presentPhotoPicker:
             showPhotoPicker = true
         case .sendMessage:
-            sendTextMessage()
+            sendMessage()
         case .recordAudio:
             toggleAudioRecorder()
         }

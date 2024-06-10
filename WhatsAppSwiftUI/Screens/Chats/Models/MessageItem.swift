@@ -22,6 +22,7 @@ struct MessageItem: Identifiable {
         return ownerUid == currentUid ? .sent : .received
     }
     var sender: UserItem?
+    var thumbnailUrl: String?
     
     private let horizantalPadding:CGFloat = 25
 }
@@ -54,6 +55,11 @@ extension MessageItem {
     var traillingPadding: CGFloat {
         return direction == .received ? horizantalPadding : 0
     }
+    
+    var thumbnailURL: URL? {
+        return URL(string: thumbnailUrl ?? "")
+    }
+    
     
     
     
@@ -100,6 +106,7 @@ extension MessageItem {
         self.ownerUid = dictionary[.ownerUid] as? String ?? ""
         let timeInterval = dictionary[.timestamp] as? TimeInterval ?? 0
         self.timestamp = Date(timeIntervalSince1970: timeInterval)
+        self.thumbnailUrl = dictionary[.thumbnailUrl] as? String ?? nil
     }
 }
 

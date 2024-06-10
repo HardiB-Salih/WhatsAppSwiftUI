@@ -13,8 +13,12 @@ struct TextInputArea: View {
     @Binding var textMessage: String
     @Binding var isRecording : Bool
     @Binding var elapsedTime : TimeInterval
+    var showInnerMic: Bool
     let actionHandler: (_ action: UserAction) -> Void
 
+    private var isSendButtonEnabled: Bool {
+        return showInnerMic || isRecording
+    }
     
     var body: some View {
         HStack (alignment: .bottom) {
@@ -75,9 +79,11 @@ struct TextInputArea: View {
             TextField("Message", text: $textMessage, axis: .vertical)
                 .padding(10)
                 .keyboardType(.default)
-            
             photoPickerButton()
-
+            
+            if !showInnerMic {
+                audioButton()
+            }
         }
     }
     
@@ -88,7 +94,20 @@ struct TextInputArea: View {
             actionHandler(.presentPhotoPicker)
         }, label: {
             Image(systemName:  "photo.on.rectangle.angled")
-                .padding(12)
+                .padding(.vertical, 12)
+                .padding(.trailing, 12)
+                .tint(.black)
+        })
+    }
+    
+    //MARK: - photoPickerButton
+    private func audioButton() -> some View {
+        Button(action: {
+            actionHandler(.recordAudio)
+        }, label: {
+            Image(systemName: "mic.fill")
+                .padding(.vertical, 12)
+                .padding(.trailing, 12)
                 .tint(.black)
         })
     }
@@ -96,13 +115,13 @@ struct TextInputArea: View {
     //MARK: - audioOrTextButton
     private func audioOrTextButton() -> some View {
         Button(action: {
-            if textMessage.isEmptyOrWhitespaces {
+            if isSendButtonEnabled {
                 actionHandler(.recordAudio)
             } else {
                 actionHandler(.sendMessage)
             }
         }, label: {
-            Image(systemName: textMessage.isEmptyOrWhitespaces ? isRecording ? "square.fill": "mic.fill" : "paperplane.fill")
+            Image(systemName: isSendButtonEnabled ? isRecording ? "square.fill": "mic.fill" : "paperplane.fill")
                 .foregroundStyle(.white)
                 .padding(12)
                 .background(Color(isRecording ? .systemRed : .systemGreen))
@@ -123,7 +142,7 @@ extension TextInputArea {
 }
 
 #Preview {
-    TextInputArea(textMessage: .constant(""), isRecording: .constant(false), elapsedTime: .constant(0)) { action in
+    TextInputArea(textMessage: .constant(""), isRecording: .constant(false), elapsedTime: .constant(0), showInnerMic: false) { action in
         switch action {
         case .presentPhotoPicker:
             break
