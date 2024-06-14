@@ -58,6 +58,8 @@
 		D592DDA72BFA4229007464C8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D592DDA62BFA4229007464C8 /* Kingfisher */; };
 		D592DDA92BFA514E007464C8 /* Date + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592DDA82BFA514E007464C8 /* Date + Extension.swift */; };
 		D59A1E3B2C08D26E00508D64 /* MediaPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59A1E3A2C08D26E00508D64 /* MediaPlayerView.swift */; };
+		D5C56BAD2C1AB09D00A83E8C /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C56BAC2C1AB09D00A83E8C /* UIApplication+Extensions.swift */; };
+		D5C56BAF2C1AB4F900A83E8C /* UIWindowScene+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C56BAE2C1AB4F900A83E8C /* UIWindowScene+Extension.swift */; };
 		D5FB52A22BF6003E0091B68A /* ChannelTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A12BF6003E0091B68A /* ChannelTabScreen.swift */; };
 		D5FB52A62BF6084A0091B68A /* ChannelItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A52BF6084A0091B68A /* ChannelItemView.swift */; };
 		D5FB52A92BF611A30091B68A /* SettingsTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A82BF611A30091B68A /* SettingsTabScreen.swift */; };
@@ -123,6 +125,8 @@
 		D592DDA32BFA41DA007464C8 /* CircularProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProfileImageView.swift; sourceTree = "<group>"; };
 		D592DDA82BFA514E007464C8 /* Date + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Extension.swift"; sourceTree = "<group>"; };
 		D59A1E3A2C08D26E00508D64 /* MediaPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerView.swift; sourceTree = "<group>"; };
+		D5C56BAC2C1AB09D00A83E8C /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
+		D5C56BAE2C1AB4F900A83E8C /* UIWindowScene+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindowScene+Extension.swift"; sourceTree = "<group>"; };
 		D5FB52A12BF6003E0091B68A /* ChannelTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelTabScreen.swift; sourceTree = "<group>"; };
 		D5FB52A52BF6084A0091B68A /* ChannelItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelItemView.swift; sourceTree = "<group>"; };
 		D5FB52A82BF611A30091B68A /* SettingsTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabScreen.swift; sourceTree = "<group>"; };
@@ -324,6 +328,8 @@
 				D592DDA82BFA514E007464C8 /* Date + Extension.swift */,
 				D50450BA2C0712AB00CD1F46 /* photoPickerItems + Extension.swift */,
 				D58EF3312C11A2D40087CD71 /* TimeInterval + Extension.swift */,
+				D5C56BAC2C1AB09D00A83E8C /* UIApplication+Extensions.swift */,
+				D5C56BAE2C1AB4F900A83E8C /* UIWindowScene+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -637,6 +643,7 @@
 				D52A8ABE2BF8E1B400D63B64 /* UserServices.swift in Sources */,
 				D52E16992BF79631002466D8 /* RootScreen.swift in Sources */,
 				D52E16942BF76EDD002466D8 /* AuthProvider.swift in Sources */,
+				D5C56BAD2C1AB09D00A83E8C /* UIApplication+Extensions.swift in Sources */,
 				D52E16A82BF7E60C002466D8 /* ChatPartnerPickerViewModel.swift in Sources */,
 				D5FB52A62BF6084A0091B68A /* ChannelItemView.swift in Sources */,
 				D52A8ABB2BF8B14E00D63B64 /* NewGroupSetUpScreen.swift in Sources */,
@@ -644,6 +651,7 @@
 				D563560A2BF4C70F00F0FDE1 /* MainTabView.swift in Sources */,
 				D592DD9C2BFA080E007464C8 /* MessageService.swift in Sources */,
 				D5FB52C32BF6448D0091B68A /* CustomModifiers.swift in Sources */,
+				D5C56BAF2C1AB4F900A83E8C /* UIWindowScene+Extension.swift in Sources */,
 				D5FB52C52BF660720091B68A /* BubblePhotoView.swift in Sources */,
 				D52E16892BF74B3A002466D8 /* AuthTextFeild.swift in Sources */,
 				D50450BD2C07162100CD1F46 /* MediaPickerItem_Types.swift in Sources */,

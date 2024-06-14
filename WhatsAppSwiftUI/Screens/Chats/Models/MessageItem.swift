@@ -23,8 +23,14 @@ struct MessageItem: Identifiable {
     }
     var sender: UserItem?
     var thumbnailUrl: String?
+    var thumbnailWidth: CGFloat?
+    var thumbnailHeight: CGFloat?
+    var videoURL: String?
+    var audioURL: String?
+    var audioDuration: TimeInterval?
     
     private let horizantalPadding:CGFloat = 25
+    
 }
 
 
@@ -61,8 +67,19 @@ extension MessageItem {
     }
     
     
+    //MARK: Set The Image Size Dinamicly
+    var imageSize: CGSize {
+        let photoWidth = thumbnailWidth ?? 0
+        let photoHeight = thumbnailHeight ?? 0
+        let imageHeight = CGFloat(photoHeight / photoWidth * imageWith)
+        return CGSize(width: imageWith, height: imageHeight)
+    }
     
-    
+    var imageWith: CGFloat {
+        ///UIScreen.width / 1,5
+        let photoWidth = (UIWindowScene.current?.screenWidth ?? 0) / 1.5
+        return photoWidth
+    }
     
 }
 
@@ -76,13 +93,13 @@ enum MessageDirection {
 }
 
 
-
 // MARK: Placeholder
 extension MessageItem {
     static let sentPlaceholder = MessageItem(id: UUID().uuidString, isGroupChat: false,
                                              text: "Holly Molly",
                                              type: .text,
                                              ownerUid: "1", timestamp: Date())
+    
     static let receivedPlaceholder = MessageItem(id: UUID().uuidString, isGroupChat: true,
                                                  text: "How are you Dude How is everything going on with you.",
                                                  type: .text,
@@ -107,6 +124,13 @@ extension MessageItem {
         let timeInterval = dictionary[.timestamp] as? TimeInterval ?? 0
         self.timestamp = Date(timeIntervalSince1970: timeInterval)
         self.thumbnailUrl = dictionary[.thumbnailUrl] as? String ?? nil
+        self.thumbnailWidth = dictionary[.thumbnailWidth] as? CGFloat ?? 0
+        self.thumbnailHeight = dictionary[.thumbnailHeight] as? CGFloat ?? 0
+        self.videoURL = dictionary[.videoURL] as? String ?? nil
+        self.audioURL = dictionary[.audioURL] as? String ?? nil
+        self.audioDuration = dictionary[.audioDuration] as? TimeInterval ?? nil
+
+
     }
 }
 
@@ -115,4 +139,10 @@ extension String {
     static let `type` = "type"
     static let timestamp = "timestamp"
     static let ownerUid = "ownderUid"
+    static let thumbnailUrl = "thumbnailUrl"
+    static let thumbnailWidth = "thumbnailWidth"
+    static let thumbnailHeight = "thumbnailHeight"
+    static let videoURL = "videoURL"
+    static let audioURL = "audioURL"
+    static let audioDuration = "audioDuration"
 }

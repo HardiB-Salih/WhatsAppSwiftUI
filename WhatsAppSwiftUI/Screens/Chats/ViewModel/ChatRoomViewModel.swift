@@ -13,7 +13,7 @@ final class ChatRoomViewModel : ObservableObject {
     @Published var textMessage = ""
     @Published var isRecordingVoiceMessage = false
     @Published var elapsedVoiceMessageTime: TimeInterval = 0
-
+    
     
     @Published var messages = [MessageItem]()
     @Published var showPhotoPicker: Bool = false
@@ -21,6 +21,7 @@ final class ChatRoomViewModel : ObservableObject {
     //    @Published var selectedPhotos : [UIImage] = []
     @Published var mediaAttachments : [MediaAttachment] = []
     @Published var videoPlayerState: (show: Bool, player: AVPlayer?) = (false , nil)
+    @Published var scrollToBottomRequest: (scroll: Bool, animated: Bool) = (false, false)
     
     var showInnerMic : Bool {
         return mediaAttachments.isEmpty && textMessage.isEmptyOrWhitespaces
@@ -123,16 +124,24 @@ final class ChatRoomViewModel : ObservableObject {
         
         if mediaAttachments.isEmpty {
             sendTextMessage(currentUser)
+            textMessage = ""
         } else {
             sendMultipleMediaMessages(textMessage, mediaAttachment: mediaAttachments)
+            clearTextInputArea()
         }
+    }
+    
+    private func clearTextInputArea() {
+        mediaAttachments.removeAll()
+        photoPickerItems.removeAll()
+        textMessage = ""
+        UIApplication.dismissKeyboard()
     }
     
     //MARK: sendTextMessage
     func sendTextMessage(_ currentUser: UserItem) {
-        MessageService.sendTextMessage(to: channel, from: currentUser, textMessage) { [weak self] in
+        MessageService.sendTextMessage(to: channel, from: currentUser, textMessage) {
             print("Message service is sending")
-            self?.textMessage = ""
         }
     }
     
@@ -144,50 +153,95 @@ final class ChatRoomViewModel : ObservableObject {
             case .photo:
                 sendPhotoMessage(text: text, attachment: attachment)
             case .video:
-                break
+                sendVideoMessage(text: text, attachment: attachment)
             case .audio:
                 break
-                
             }
         }
     }
-        
-        //MARK: Send Photo Message
-        func sendPhotoMessage(text: String, attachment: MediaAttachment) {
-            ///Upload the Image to storage bucket
-            uploadImageToStorage(attachment: attachment) { [weak self] imageUrl in
-                guard let self = self, let currentUser = currentUser else { return}
+    
+    //MARK: Send Photo Message
+    func sendPhotoMessage(text: String, attachment: MediaAttachment) {
+        ///Upload the Image to storage bucket
+        uploadImageToStorage(attachment: attachment) { [weak self] imageUrl in
+            guard let self = self, let currentUser = currentUser else { return}
+            ///Store meta data to our databse
+            let uploadParams = MessageUploadParams(channel: channel,
+                                                   text: text,
+                                                   type: .photo,
+                                                   attachment: attachment,
+                                                   thumbnailUrl: imageUrl.absoluteString,
+                                                   sender: currentUser)
+            
+            MessageService.sendMediaMessage(toChannel: channel, params: uploadParams) {
+                //TODO: Scroll to bottom uplon image upload success
+                self.scrollToBottom(animated: true)
+            }
+        }
+    }
+    
+    //MARK: uploadImageToStorage
+    func uploadImageToStorage(attachment: MediaAttachment, completion: @escaping CompletionHandler<URL>) {
+        FirebaseHelper.upload(withUIImage: attachment.thumbnail, for: .photoMessage) { result in
+            switch result {
+            case .success(let url):
+                completion(url)
+            case .failure(let error):
+                print("🙀 Failed to upload image storage: \(error.localizedDescription)")
+            }
+        } progressHandler: { progress in
+            print("Upload image Progress \(progress)")
+        }
+    }
+    
+    private func scrollToBottom(animated: Bool) {
+        scrollToBottomRequest.scroll = true
+        scrollToBottomRequest.animated = animated
+    }
+    
+    
+    
+    //MARK: Send Video Message
+    func sendVideoMessage(text: String, attachment: MediaAttachment) {
+        ///upload video file to the storage
+        uploadFileToStorage(attachment: attachment, for: .videoMessage) { [weak self] videoURL in
+            guard let self = self, let currentUser else { return}
+            self.uploadImageToStorage(attachment: attachment) { imageURL in
                 ///Store meta data to our databse
-                let uploadParams = MessageUploadParams(channel: channel, 
+                let uploadParams = MessageUploadParams(channel: self.channel,
                                                        text: text,
-                                                       type: .photo,
+                                                       type: .video,
                                                        attachment: attachment,
-                                                       thumbnailUrl: imageUrl.absoluteString,
+                                                       thumbnailUrl: imageURL.absoluteString,
+                                                       videoUrl: videoURL.absoluteString,
                                                        sender: currentUser)
-                
-                MessageService.sendMediaMessage(toChannel: channel, params: uploadParams) {
+                MessageService.sendMediaMessage(toChannel: self.channel, params: uploadParams) {
                     //TODO: Scroll to bottom uplon image upload success
+                    self.scrollToBottom(animated: true)
                 }
             }
         }
-        
-        //MARK: uploadImageToStorage
-        func uploadImageToStorage(attachment: MediaAttachment, completion: @escaping CompletionHandler<URL>) {
-            FirebaseHelper.upload(withUIImage: attachment.thumbnail, for: .photoMessage) { result in
-                switch result {
-                case .success(let url):
-                    completion(url)
-                case .failure(let error):
-                    print("🙀 Failed to upload image storage: \(error.localizedDescription)")
-                }
-            } progressHandler: { progress in
-                print("Upload image Progress \(progress)")
+    }
+    
+    
+    //MARK: uploadFileToStorage
+    func uploadFileToStorage(
+        attachment: MediaAttachment,
+        for type: FirebaseHelper.UploadType,
+        completion: @escaping CompletionHandler<URL>) {
+            
+        guard let fileURL = attachment.fileURL else { return }
+        FirebaseHelper.upload(withFileURL: fileURL , for: type) { result in
+            switch result {
+            case .success(let url):
+                completion(url)
+            case .failure(let error):
+                print("🙀 Failed to upload file storage: \(error.localizedDescription)")
             }
+        } progressHandler: { progress in
+            print("Upload file Progress \(progress)")
         }
-    
-    
-    
-    
+    }
     
     
     
@@ -230,7 +284,7 @@ final class ChatRoomViewModel : ObservableObject {
         $photoPickerItems.sink { [ weak self ] photoItems in
             guard let self else { return }
             // we remove all medea that added to the attachment when the photo picker reshow
-//            self.mediaAttachments.removeAll()
+            //            self.mediaAttachments.removeAll()
             let audioRecordings = mediaAttachments.filter({ $0.type == .audio(.stubURL, .stubTimeInterval) })
             self.mediaAttachments = audioRecordings
             Task { try await self.parsePhotoPickerItems(photoItems)}

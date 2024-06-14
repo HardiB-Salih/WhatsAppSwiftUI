@@ -132,7 +132,5 @@ extension String {
     static let membersUids = "membersUids"
     static let members = "members"
     static let createdBy = "createdBy"
-    static let thumbnailUrl = "thumbnailUrl"
-    static let thumbnailWidth = "thumbnailWidth"
-    static let thumbnailHeight = "thumbnailHeight"
+
 }
