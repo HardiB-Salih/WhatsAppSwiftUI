@@ -26,6 +26,7 @@ struct MessageItem: Identifiable {
     var thumbnailWidth: CGFloat?
     var thumbnailHeight: CGFloat?
     var videoURL: String?
+    
     var audioURL: String?
     var audioDuration: TimeInterval?
     
@@ -124,8 +125,8 @@ extension MessageItem {
         let timeInterval = dictionary[.timestamp] as? TimeInterval ?? 0
         self.timestamp = Date(timeIntervalSince1970: timeInterval)
         self.thumbnailUrl = dictionary[.thumbnailUrl] as? String ?? nil
-        self.thumbnailWidth = dictionary[.thumbnailWidth] as? CGFloat ?? 0
-        self.thumbnailHeight = dictionary[.thumbnailHeight] as? CGFloat ?? 0
+        self.thumbnailWidth = dictionary[.thumbnailWidth] as? CGFloat ?? nil
+        self.thumbnailHeight = dictionary[.thumbnailHeight] as? CGFloat ?? nil
         self.videoURL = dictionary[.videoURL] as? String ?? nil
         self.audioURL = dictionary[.audioURL] as? String ?? nil
         self.audioDuration = dictionary[.audioDuration] as? TimeInterval ?? nil

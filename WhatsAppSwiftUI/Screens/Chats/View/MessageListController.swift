@@ -135,6 +135,12 @@ extension MessageListController: UITableViewDelegate, UITableViewDataSource {
                   let videoURL = URL(string: videoURLString)
             else { return }
             viewModel.showMediaPlayer(videoURL)
+            
+        case .audio:
+            guard let audiooURLString = messageItem.audioURL,
+                  let audioURL = URL(string: audiooURLString)
+            else { return }
+            viewModel.showMediaPlayer(audioURL)
         default:
             break
         }
