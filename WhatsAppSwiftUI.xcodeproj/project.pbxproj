@@ -48,6 +48,8 @@
 		D563561D2BF5092200F0FDE1 /* Intiger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563561C2BF5092200F0FDE1 /* Intiger.swift */; };
 		D56356292BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356282BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift */; };
 		D56670702C15592900A2FAF2 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D566706F2C15592900A2FAF2 /* FirebaseHelper.swift */; };
+		D5854E072C2694DC00AC3884 /* VoiceMessagePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5854E062C2694DC00AC3884 /* VoiceMessagePlayer.swift */; };
+		D5854E092C26C7C900AC3884 /* VideoMessagePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5854E082C26C7C900AC3884 /* VideoMessagePlayer.swift */; };
 		D58EF3302C118B050087CD71 /* VoiceRecorderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EF32F2C118B050087CD71 /* VoiceRecorderService.swift */; };
 		D58EF3322C11A2D40087CD71 /* TimeInterval + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EF3312C11A2D40087CD71 /* TimeInterval + Extension.swift */; };
 		D592DD9A2BF9F9AB007464C8 /* ChatRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592DD992BF9F9AA007464C8 /* ChatRoomViewModel.swift */; };
@@ -116,6 +118,8 @@
 		D563561C2BF5092200F0FDE1 /* Intiger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intiger.swift; sourceTree = "<group>"; };
 		D56356282BF50B7F00F0FDE1 /* CommunitiesTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunitiesTabScreen.swift; sourceTree = "<group>"; };
 		D566706F2C15592900A2FAF2 /* FirebaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
+		D5854E062C2694DC00AC3884 /* VoiceMessagePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessagePlayer.swift; sourceTree = "<group>"; };
+		D5854E082C26C7C900AC3884 /* VideoMessagePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessagePlayer.swift; sourceTree = "<group>"; };
 		D58EF32F2C118B050087CD71 /* VoiceRecorderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceRecorderService.swift; sourceTree = "<group>"; };
 		D58EF3312C11A2D40087CD71 /* TimeInterval + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval + Extension.swift"; sourceTree = "<group>"; };
 		D592DD992BF9F9AA007464C8 /* ChatRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModel.swift; sourceTree = "<group>"; };
@@ -428,6 +432,8 @@
 			isa = PBXGroup;
 			children = (
 				D592DD992BF9F9AA007464C8 /* ChatRoomViewModel.swift */,
+				D5854E062C2694DC00AC3884 /* VoiceMessagePlayer.swift */,
+				D5854E082C26C7C900AC3884 /* VideoMessagePlayer.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -630,6 +636,7 @@
 				D52E169B2BF79643002466D8 /* RootScreenViewModel.swift in Sources */,
 				D59A1E3B2C08D26E00508D64 /* MediaPlayerView.swift in Sources */,
 				D56356182BF4D38900F0FDE1 /* UpadatesTabScreen.swift in Sources */,
+				D5854E072C2694DC00AC3884 /* VoiceMessagePlayer.swift in Sources */,
 				D52E16852BF7498E002466D8 /* LoginScreen.swift in Sources */,
 				D52E16AA2BF7F82D002466D8 /* GroupPartnerPickerScreen.swift in Sources */,
 				D52A8AC32BF9038E00D63B64 /* ChannelTabViewModel.swift in Sources */,
@@ -674,6 +681,7 @@
 				D52E16912BF764CA002466D8 /* AuthViewModel.swift in Sources */,
 				D5FB52BB2BF6379E0091B68A /* MessageItem.swift in Sources */,
 				D52A8AC52BF90FD000D63B64 /* String + Extensions.swift in Sources */,
+				D5854E092C26C7C900AC3884 /* VideoMessagePlayer.swift in Sources */,
 				D52E169E2BF7A1B7002466D8 /* UserItem.swift in Sources */,
 				D52A8AB92BF8A81000D63B64 /* SelectedChatPartnerView.swift in Sources */,
 				D563561D2BF5092200F0FDE1 /* Intiger.swift in Sources */,
