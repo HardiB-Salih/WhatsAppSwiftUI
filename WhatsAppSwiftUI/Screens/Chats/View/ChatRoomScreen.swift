@@ -12,6 +12,7 @@ struct ChatRoomScreen: View {
     let channel: ChannelItem
     @Environment(\.dismiss) var dismiss
     @StateObject private var viewModel: ChatRoomViewModel
+    @StateObject private var voiceMessagePlayer = VoiceMessagePlayer()
     
     init(channel: ChannelItem) {
         UIHelperManager.makeNavigationBarOpaque()
@@ -57,6 +58,7 @@ struct ChatRoomScreen: View {
             }
             
         })
+        .environmentObject(voiceMessagePlayer)
     }
     
     private func bottomSafeAreaView() -> some View {

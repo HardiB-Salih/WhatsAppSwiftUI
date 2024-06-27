@@ -22,6 +22,7 @@ struct MessageItem: Identifiable {
         return ownerUid == currentUid ? .sent : .received
     }
     var sender: UserItem?
+    
     var thumbnailUrl: String?
     var thumbnailWidth: CGFloat?
     var thumbnailHeight: CGFloat?
@@ -80,6 +81,11 @@ extension MessageItem {
         ///UIScreen.width / 1,5
         let photoWidth = (UIWindowScene.current?.screenWidth ?? 0) / 1.5
         return photoWidth
+    }
+    
+    
+    var audioDurationInString: String {
+        return audioDuration?.formatElapsedTime ?? "00:00"
     }
     
 }

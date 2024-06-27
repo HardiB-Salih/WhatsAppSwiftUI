@@ -13,14 +13,19 @@ struct CustomSlider<Component: View>: View {
     var range: ClosedRange<Double>
     var thumbWidth: CGFloat?
     let viewBuilder: (SliderComponents) -> Component
+    var onEditingChanged: (Bool) -> Void = { _ in }
 
-    init(value: Binding<Double>, range: ClosedRange<Double>, thumbWidth: CGFloat? = nil,
+    init(value: Binding<Double>,
+         range: ClosedRange<Double>,
+         thumbWidth: CGFloat? = nil,
+         onEditingChanged: @escaping (Bool) -> Void = { _ in },
          _ viewBuilder: @escaping (SliderComponents) -> Component
     ) {
         _value = value
         self.range = range
         self.viewBuilder = viewBuilder
         self.thumbWidth = thumbWidth
+        self.onEditingChanged = onEditingChanged
     }
 
     var body: some View {
@@ -35,9 +40,15 @@ struct CustomSlider<Component: View>: View {
     /// - Returns: A view representing the custom slider.
     private func view(geometry: GeometryProxy) -> some View {
         let frame = geometry.frame(in: .global)
-        let drag = DragGesture(minimumDistance: 0).onChanged({ drag in
-            self.onDragChange(drag, frame) }
-        )
+        let drag = DragGesture(minimumDistance: 0)
+            .onChanged { drag in
+                self.onEditingChanged(true)
+                self.onDragChange(drag, frame)
+            }
+            .onEnded { _ in
+                self.onEditingChanged(false)
+            }
+        
         let offsetX = self.getOffsetX(frame: frame)
 
         let thumbSize = CGSize(width: thumbWidth ?? frame.height, height: frame.height)
@@ -103,7 +114,7 @@ struct SliderModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
         .frame(width: size.width)
-        .position(x: size.width*0.5, y: size.height*0.5)
+        .position(x: size.width * 0.5, y: size.height * 0.5)
         .offset(x: offset)
     }
 }
@@ -120,4 +131,3 @@ extension Double {
         return value
     }
 }
-

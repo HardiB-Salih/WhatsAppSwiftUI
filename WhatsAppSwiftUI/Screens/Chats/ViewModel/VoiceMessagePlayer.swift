@@ -12,10 +12,10 @@ import AVFoundation
 final class VoiceMessagePlayer: ObservableObject {
     
     private var player: AVPlayer?
-    private var currentUrl: URL?
-    private var playerItem: AVPlayerItem?
-    private var playbackState: PlaybackState = .stopped
-    private var currentTime = CMTime.zero
+    private(set) var currentUrl: URL?
+    @Published private(set) var playerItem: AVPlayerItem?
+    @Published private(set) var playbackState: PlaybackState = .stopped
+    @Published private(set) var currentTime = CMTime.zero
     private var currentTimeObserver: Any?
     
     deinit {
@@ -112,5 +112,9 @@ extension VoiceMessagePlayer {
     /// Enum representing the playback state of the voice message player.
     enum PlaybackState {
         case stopped, playing, paused
+        
+        var icon: String {
+            return self == .playing ? "pause.fill" : "play.fill"
+        }
     }
 }

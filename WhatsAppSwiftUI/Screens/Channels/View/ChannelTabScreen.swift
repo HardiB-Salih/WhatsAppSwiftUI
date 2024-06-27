@@ -126,7 +126,8 @@ extension ChannelTabScreen {
     }
     
     private func newChatButton() -> some View {
-        Button("", image: .plus, action: { viewModel.showChatPartnerPickerScreen = true })
+        Button("", image: .plus, 
+               action: { viewModel.showChatPartnerPickerScreen = true })
         
         
     }

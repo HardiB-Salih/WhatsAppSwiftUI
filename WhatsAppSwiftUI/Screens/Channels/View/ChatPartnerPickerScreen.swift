@@ -25,6 +25,7 @@ struct ChatPartnerPickerScreen: View {
                     }
                 }
                 
+                //MARK: List Of User and creating direct Chat
                 Section {
                     ForEach(viewModel.users) {  user in
                         ChatPartnerRowView(user: user)
