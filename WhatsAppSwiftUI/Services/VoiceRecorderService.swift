@@ -109,8 +109,9 @@ final class VoiceRecorderService {
     /// Starts recording audio, setting up the audio session and audio recorder.
     /// The audio will be saved to a file in the documents directory.
     func startRecording() {
+        ///genarateHapticFeedback(
+        genarateHapticFeedback()
         /// setup AudioSession
-        
         let audioSession = AVAudioSession.sharedInstance()
         
         do {
@@ -135,6 +136,8 @@ final class VoiceRecorderService {
             AVNumberOfChannelsKey: 1,
             AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
         ]
+        
+       
         
         do {
             audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: settings)
@@ -177,6 +180,9 @@ final class VoiceRecorderService {
     /// - Parameter completion: A completion handler that provides the URL of the recorded audio file
     ///   and the duration of the recording.
     func stopRecording(completion: ((_ audioURL: URL?, _ audioDuration: TimeInterval)-> Void)? = nil) {
+        ///genarateHapticFeedback
+        genarateHapticFeedback()
+        
         guard isRecording else { return }
         let audioDuration = elaspedTime
         audioRecorder?.stop()
@@ -185,6 +191,8 @@ final class VoiceRecorderService {
         elaspedTime = 0
         
         let audioSession = AVAudioSession.sharedInstance()
+        
+       
         
         do {
             try audioSession.setActive(true)
@@ -243,4 +251,17 @@ final class VoiceRecorderService {
                 
             }
     }
+    
+    
+    
+    
+    
+    
+    private func genarateHapticFeedback() {
+        let systemSoundID: SystemSoundID = 1118
+        AudioServicesPlaySystemSound(systemSoundID)
+        Haptic.impact(.medium)
+    }
+    
+    
 }

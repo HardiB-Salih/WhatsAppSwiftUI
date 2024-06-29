@@ -37,6 +37,7 @@
 		D52E16A52BF7C4DE002466D8 /* ChatPartnerRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16A42BF7C4DE002466D8 /* ChatPartnerRowView.swift */; };
 		D52E16A82BF7E60C002466D8 /* ChatPartnerPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16A72BF7E60C002466D8 /* ChatPartnerPickerViewModel.swift */; };
 		D52E16AA2BF7F82D002466D8 /* GroupPartnerPickerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16A92BF7F82C002466D8 /* GroupPartnerPickerScreen.swift */; };
+		D55CF0782C30067100B7D9B8 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55CF0772C30067100B7D9B8 /* Haptics.swift */; };
 		D55F208F2C05003A00EB07F9 /* MediaAtachmentPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55F208E2C05003A00EB07F9 /* MediaAtachmentPreview.swift */; };
 		D56356082BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356072BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift */; };
 		D563560A2BF4C70F00F0FDE1 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356092BF4C70F00F0FDE1 /* MainTabView.swift */; };
@@ -106,6 +107,7 @@
 		D52E16A42BF7C4DE002466D8 /* ChatPartnerRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPartnerRowView.swift; sourceTree = "<group>"; };
 		D52E16A72BF7E60C002466D8 /* ChatPartnerPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPartnerPickerViewModel.swift; sourceTree = "<group>"; };
 		D52E16A92BF7F82C002466D8 /* GroupPartnerPickerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPartnerPickerScreen.swift; sourceTree = "<group>"; };
+		D55CF0772C30067100B7D9B8 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		D55F208E2C05003A00EB07F9 /* MediaAtachmentPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaAtachmentPreview.swift; sourceTree = "<group>"; };
 		D56356042BF4C70F00F0FDE1 /* WhatsAppSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatsAppSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D56356072BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppSwiftUIApp.swift; sourceTree = "<group>"; };
@@ -517,6 +519,7 @@
 				D5FB52D32BF69E6F0091B68A /* CustomSlider.swift */,
 				D5FB52C12BF644640091B68A /* Modifiers */,
 				D566706F2C15592900A2FAF2 /* FirebaseHelper.swift */,
+				D55CF0772C30067100B7D9B8 /* Haptics.swift */,
 			);
 			path = Helpper;
 			sourceTree = "<group>";
@@ -625,6 +628,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D55CF0782C30067100B7D9B8 /* Haptics.swift in Sources */,
 				D56670702C15592900A2FAF2 /* FirebaseHelper.swift in Sources */,
 				D5FB52BF2BF6422F0091B68A /* BubbleTailView.swift in Sources */,
 				D5FB52BD2BF638EC0091B68A /* BubbleTextView.swift in Sources */,

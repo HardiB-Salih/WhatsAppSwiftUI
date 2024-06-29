@@ -9,14 +9,27 @@ import SwiftUI
 import AVKit
 
 struct BubbleAudioView: View {
-    let item: MessageItem
+    private let item: MessageItem
     @State private var sliderValue: Double = 0
-    @State private var sliderRange: ClosedRange<Double> = 0...20
+    @State private var sliderRange: ClosedRange<Double>
     @EnvironmentObject private var voiceMessagePlayer: VoiceMessagePlayer
 //    @State private var sliderRange: (Double, Double) = (0, 20)
     @State private var playbackState: VoiceMessagePlayer.PlaybackState = .playing
     @State private var playbackTime = "00:00"
     @State private var isDraggingSlider = false
+    
+    
+    init(item: MessageItem) {
+        self.item = item
+        let voiceDuration = item.audioDuration ?? 20
+        self._sliderRange = State(wrappedValue: 0...voiceDuration)
+    }
+    
+    
+    private var isCorrectVoiceMessage: Bool {
+        return voiceMessagePlayer.currentUrl?.absoluteString == item.audioURL
+    }
+    
     
     var body: some View {
         
@@ -63,18 +76,12 @@ struct BubbleAudioView: View {
             guard voiceMessagePlayer.currentUrl?.absoluteString == item.audioURL else { return }
             listen(to: currentTime)
         }
-        .onReceive(voiceMessagePlayer.$playerItem) { playerItem in
-            guard voiceMessagePlayer.currentUrl?.absoluteString == item.audioURL else { return }
-            guard let audioDuration = item.audioDuration else { return }
-            sliderRange = 0...audioDuration
-        }
-        
     }
     
     private func customSlider() -> some View {
         CustomSlider(value: $sliderValue, range: sliderRange, onEditingChanged: { editing in
             isDraggingSlider = editing
-            if editing {
+            if editing && isCorrectVoiceMessage {
                 voiceMessagePlayer.seek(to: sliderValue)
             }
         }) { modifiers in
@@ -100,7 +107,7 @@ struct BubbleAudioView: View {
     }
     
     private func timestampTextView() -> some View {
-        Text("3:35 PM")
+        Text(item.timestamp.formatToTime)
             .font(.footnote)
             .foregroundStyle(.gray)
     }
@@ -121,12 +128,14 @@ extension BubbleAudioView {
     }
     
     private func observePlaybackState(_ state: VoiceMessagePlayer.PlaybackState) {
-        if state == .stopped {
+        switch state {
+        case .stopped:
             playbackState = .stopped
             sliderValue = 0
-        } else {
-            guard voiceMessagePlayer.currentUrl?.absoluteString == item.audioURL else { return }
-            playbackState = state
+        case .playing, .paused:
+            if isCorrectVoiceMessage {
+                playbackState = state
+            }
         }
     }
     
