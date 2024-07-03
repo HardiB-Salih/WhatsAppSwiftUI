@@ -51,6 +51,8 @@
 		D56670702C15592900A2FAF2 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D566706F2C15592900A2FAF2 /* FirebaseHelper.swift */; };
 		D5854E072C2694DC00AC3884 /* VoiceMessagePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5854E062C2694DC00AC3884 /* VoiceMessagePlayer.swift */; };
 		D5854E092C26C7C900AC3884 /* VideoMessagePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5854E082C26C7C900AC3884 /* VideoMessagePlayer.swift */; };
+		D586543A2C35525A006AD73E /* MessageCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58654392C35525A006AD73E /* MessageCollectionController.swift */; };
+		D586543C2C355909006AD73E /* MessageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D586543B2C355909006AD73E /* MessageCollectionView.swift */; };
 		D58EF3302C118B050087CD71 /* VoiceRecorderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EF32F2C118B050087CD71 /* VoiceRecorderService.swift */; };
 		D58EF3322C11A2D40087CD71 /* TimeInterval + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EF3312C11A2D40087CD71 /* TimeInterval + Extension.swift */; };
 		D592DD9A2BF9F9AB007464C8 /* ChatRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592DD992BF9F9AA007464C8 /* ChatRoomViewModel.swift */; };
@@ -122,6 +124,8 @@
 		D566706F2C15592900A2FAF2 /* FirebaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		D5854E062C2694DC00AC3884 /* VoiceMessagePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessagePlayer.swift; sourceTree = "<group>"; };
 		D5854E082C26C7C900AC3884 /* VideoMessagePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessagePlayer.swift; sourceTree = "<group>"; };
+		D58654392C35525A006AD73E /* MessageCollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCollectionController.swift; sourceTree = "<group>"; };
+		D586543B2C355909006AD73E /* MessageCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCollectionView.swift; sourceTree = "<group>"; };
 		D58EF32F2C118B050087CD71 /* VoiceRecorderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceRecorderService.swift; sourceTree = "<group>"; };
 		D58EF3312C11A2D40087CD71 /* TimeInterval + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval + Extension.swift"; sourceTree = "<group>"; };
 		D592DD992BF9F9AA007464C8 /* ChatRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModel.swift; sourceTree = "<group>"; };
@@ -430,6 +434,24 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		D586543D2C35596E006AD73E /* Old-TableView */ = {
+			isa = PBXGroup;
+			children = (
+				D5FB52B52BF62EFF0091B68A /* MessageListController.swift */,
+				D5FB52B72BF632D60091B68A /* MessageListView.swift */,
+			);
+			path = "Old-TableView";
+			sourceTree = "<group>";
+		};
+		D586543E2C355995006AD73E /* New-CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				D58654392C35525A006AD73E /* MessageCollectionController.swift */,
+				D586543B2C355909006AD73E /* MessageCollectionView.swift */,
+			);
+			path = "New-CollectionView";
+			sourceTree = "<group>";
+		};
 		D592DD982BF9F98D007464C8 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -493,11 +515,11 @@
 		D5FB52B02BF61E510091B68A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D586543E2C355995006AD73E /* New-CollectionView */,
+				D586543D2C35596E006AD73E /* Old-TableView */,
 				D5FB52C82BF689C40091B68A /* Bubbles */,
 				D5FB52B12BF61E680091B68A /* ChatRoomScreen.swift */,
 				D5FB52B32BF6217E0091B68A /* TextInputArea.swift */,
-				D5FB52B52BF62EFF0091B68A /* MessageListController.swift */,
-				D5FB52B72BF632D60091B68A /* MessageListView.swift */,
 				D55F208E2C05003A00EB07F9 /* MediaAtachmentPreview.swift */,
 			);
 			path = View;
@@ -647,6 +669,7 @@
 				D5FB52A22BF6003E0091B68A /* ChannelTabScreen.swift in Sources */,
 				D56356162BF4D00000F0FDE1 /* UIHelperManager.swift in Sources */,
 				D5FB52AB2BF614ED0091B68A /* SettingItemView.swift in Sources */,
+				D586543A2C35525A006AD73E /* MessageCollectionController.swift in Sources */,
 				D5FB52C72BF670960091B68A /* BubbleAudioView.swift in Sources */,
 				D5FB52AE2BF6172F0091B68A /* SettingsItem.swift in Sources */,
 				D5FB52B22BF61E680091B68A /* ChatRoomScreen.swift in Sources */,
@@ -678,6 +701,7 @@
 				D58EF3302C118B050087CD71 /* VoiceRecorderService.swift in Sources */,
 				D52A8AC72BF92A8B00D63B64 /* MessageItem + Type.swift in Sources */,
 				D52E168E2BF76011002466D8 /* SignupScreen.swift in Sources */,
+				D586543C2C355909006AD73E /* MessageCollectionView.swift in Sources */,
 				D592DD9E2BFA3746007464C8 /* ChannelCreationTextView.swift in Sources */,
 				D592DDA92BFA514E007464C8 /* Date + Extension.swift in Sources */,
 				D592DD9A2BF9F9AB007464C8 /* ChatRoomViewModel.swift in Sources */,

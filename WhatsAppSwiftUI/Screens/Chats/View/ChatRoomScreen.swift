@@ -29,7 +29,7 @@ struct ChatRoomScreen: View {
                 .opacity(0.7)
                 .ignoresSafeArea(edges: [.leading, .trailing, .bottom])
             
-            MessageListView(viewModel: viewModel)
+            MessageCollectionView(viewModel: viewModel)
                 .photosPicker(isPresented: $viewModel.showPhotoPicker,
                               selection: $viewModel.photoPickerItems,
                               maxSelectionCount: 6,

@@ -174,31 +174,3 @@ private extension UITableView {
         scrollToRow(at: lastRowIndexPath, at: scrollPosition, animated: animated)
     }
 }
-
-
-
-private extension UICollectionView {
-    ///  Scrolls to the last item of the collection view.
-    ///
-    /// Example
-    ///  ```swift
-    ///   let collectionView: UICollectionView = ...
-    ///   // Scroll to the last item in the collection view
-    ///   collectionView.scrollToLastItem(at: .bottom, animated: true)
-    ///  ```
-    ///
-    ///  - Parameters:
-    ///    - scrollPosition: The scroll position to use.
-    ///    - animated: Specify `true` to animate the scrolling behavior or `false` to adjust the scroll position immediately.
-    func scrollToLastItem(at scrollPosition: UICollectionView.ScrollPosition, animated: Bool) {
-        guard numberOfSections > 0 else { return }
-        
-        let lastSectionIndex = numberOfSections - 1
-        let lastItemIndex = numberOfItems(inSection: lastSectionIndex) - 1
-        
-        guard lastItemIndex >= 0 else { return }
-        
-        let lastItemIndexPath = IndexPath(item: lastItemIndex, section: lastSectionIndex)
-        scrollToItem(at: lastItemIndexPath, at: scrollPosition, animated: animated)
-    }
-}

@@ -27,3 +27,7 @@ struct MessageListView: UIViewControllerRepresentable {
 #Preview {
     MessageListView(viewModel: ChatRoomViewModel(channel: .placeholder))
 }
+
+
+
+
