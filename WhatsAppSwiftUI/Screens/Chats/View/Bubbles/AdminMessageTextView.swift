@@ -17,13 +17,10 @@ struct AdminMessageTextView: View {
             } else {
                 textView("\(channel.creatorName) created this group.")
                 textView("\(channel.creatorName) added you.")
-
             }
-                
         }
-        
+        .frame(maxWidth: .infinity)
     }
-    
     
     private func textView(_ text: String) -> some View {
         Text(text)

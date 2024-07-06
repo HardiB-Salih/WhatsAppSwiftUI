@@ -369,7 +369,20 @@ final class ChatRoomViewModel : ObservableObject {
         
     }
     
+
     
-    
+    /// Check if the message at the given indexPath is the first message of a new day.
+    /// - Parameters:
+    ///   - message: The current message item.
+    ///   - indexPath: The index of the current message.
+    /// - Returns: `true` if the current message is the first message of a new day; otherwise, `false`.
+    ///   The first message  (indexPath == 0) is considered an admin message and will return `false`.
+    func isNewDay(for message: MessageItem, at indexPath: Int) -> Bool {
+        // Return false if it's the first message (admin message)
+//        let priorIndex = max(0, (indexPath - 1))
+        if indexPath == 0 { return false }
+        let priorMessage = messages[indexPath - 1]
+        return !message.timestamp.isSameDay(as: priorMessage.timestamp)
+    }
     
 }

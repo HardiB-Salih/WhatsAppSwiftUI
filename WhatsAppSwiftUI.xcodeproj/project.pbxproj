@@ -37,6 +37,7 @@
 		D52E16A52BF7C4DE002466D8 /* ChatPartnerRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16A42BF7C4DE002466D8 /* ChatPartnerRowView.swift */; };
 		D52E16A82BF7E60C002466D8 /* ChatPartnerPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16A72BF7E60C002466D8 /* ChatPartnerPickerViewModel.swift */; };
 		D52E16AA2BF7F82D002466D8 /* GroupPartnerPickerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52E16A92BF7F82C002466D8 /* GroupPartnerPickerScreen.swift */; };
+		D54510362C39150500024C9B /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54510352C39150500024C9B /* BubbleView.swift */; };
 		D55CF0782C30067100B7D9B8 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55CF0772C30067100B7D9B8 /* Haptics.swift */; };
 		D55F208F2C05003A00EB07F9 /* MediaAtachmentPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55F208E2C05003A00EB07F9 /* MediaAtachmentPreview.swift */; };
 		D56356082BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56356072BF4C70F00F0FDE1 /* WhatsAppSwiftUIApp.swift */; };
@@ -109,6 +110,7 @@
 		D52E16A42BF7C4DE002466D8 /* ChatPartnerRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPartnerRowView.swift; sourceTree = "<group>"; };
 		D52E16A72BF7E60C002466D8 /* ChatPartnerPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPartnerPickerViewModel.swift; sourceTree = "<group>"; };
 		D52E16A92BF7F82C002466D8 /* GroupPartnerPickerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPartnerPickerScreen.swift; sourceTree = "<group>"; };
+		D54510352C39150500024C9B /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 		D55CF0772C30067100B7D9B8 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		D55F208E2C05003A00EB07F9 /* MediaAtachmentPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaAtachmentPreview.swift; sourceTree = "<group>"; };
 		D56356042BF4C70F00F0FDE1 /* WhatsAppSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatsAppSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -448,6 +450,7 @@
 			children = (
 				D58654392C35525A006AD73E /* MessageCollectionController.swift */,
 				D586543B2C355909006AD73E /* MessageCollectionView.swift */,
+				D54510352C39150500024C9B /* BubbleView.swift */,
 			);
 			path = "New-CollectionView";
 			sourceTree = "<group>";
@@ -680,6 +683,7 @@
 				D5C56BAD2C1AB09D00A83E8C /* UIApplication+Extensions.swift in Sources */,
 				D52E16A82BF7E60C002466D8 /* ChatPartnerPickerViewModel.swift in Sources */,
 				D5FB52A62BF6084A0091B68A /* ChannelItemView.swift in Sources */,
+				D54510362C39150500024C9B /* BubbleView.swift in Sources */,
 				D52A8ABB2BF8B14E00D63B64 /* NewGroupSetUpScreen.swift in Sources */,
 				D52E16872BF74A5C002466D8 /* AuthHeaderView.swift in Sources */,
 				D563560A2BF4C70F00F0FDE1 /* MainTabView.swift in Sources */,

@@ -120,28 +120,11 @@ extension MessageCollectionController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = messagesCollcetionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
         cell.backgroundColor = .clear
-        //        cell.selectionStyle = .none
         let message = viewModel.messages[indexPath.item]
-        
         cell.contentConfiguration = UIHostingConfiguration {
-            switch message.type {
-            case .text:
-                BubbleTextView(item: message)
-            case .photo, .video:
-                BubblePhotoView(item: message)
-            case .audio:
-                BubbleAudioView(item: message)
-            case .admin(let adminType):
-                switch adminType {
-                case .channelCreation:
-                    ChannelCreationTextView()
-                    if viewModel.channel.isGroupChat {
-                        AdminMessageTextView(channel: viewModel.channel)
-                    }
-                default :
-                    Text("Unknown")
-                }
-            }
+            BubbleView(message: message,
+                       channel: viewModel.channel,
+                       isNewDay: viewModel.isNewDay(for: message, at: indexPath.item))
         }
         return cell
     }
