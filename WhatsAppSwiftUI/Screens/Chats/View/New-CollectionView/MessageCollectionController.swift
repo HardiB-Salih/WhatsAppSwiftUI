@@ -124,7 +124,9 @@ extension MessageCollectionController: UICollectionViewDelegate, UICollectionVie
         cell.contentConfiguration = UIHostingConfiguration {
             BubbleView(message: message,
                        channel: viewModel.channel,
-                       isNewDay: viewModel.isNewDay(for: message, at: indexPath.item))
+                       isNewDay: viewModel.isNewDay(for: message, at: indexPath.item),
+                       showSenderName: viewModel.showSenderName(for: message, at: indexPath.item)
+            )
         }
         return cell
     }

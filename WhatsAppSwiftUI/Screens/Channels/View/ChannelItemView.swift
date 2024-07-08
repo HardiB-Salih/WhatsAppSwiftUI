@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ChannelItemView: View {
-    let messageType : MessageType
     let channel: ChannelItem
     var body: some View {
         HStack (alignment: .top){
@@ -20,14 +19,16 @@ struct ChannelItemView: View {
                     .lineLimit(1)
                     .fontWeight(.bold)
                 
-                Text(channel.lastMessage)
-                    .lineLimit(2)
-                    .foregroundStyle(.gray)
+                HStack (spacing: 0){
+                    Image(systemName: channel.lastMessageType.iconName)
+                        .imageScale(.small)
+                        .foregroundStyle(.gray)
+                        .padding(.trailing, 4)
                     
-//                HStack(alignment: .center, spacing: 4) {
-//                    Image(systemName: messageType.icon)
-//                    Text(messageType.title)
-//                }.foregroundStyle(Color(.systemGray2))
+                    Text(channel.previewMessage)
+                        .lineLimit(2)
+                        .foregroundStyle(.gray)
+                }
             }
             
             Spacer()
@@ -38,30 +39,6 @@ struct ChannelItemView: View {
     }
 }
 
-extension ChannelItemView {
-     enum MessageType : String {
-        case voiceMessage, photoMessage
-        
-        
-        fileprivate var title: String {
-            switch self {
-            case .voiceMessage:
-                return "Voice Message"
-            case .photoMessage:
-                return "Photo Message"
-            }
-        }
-        fileprivate var icon: String {
-            switch self {
-            case .voiceMessage:
-                return "mic.fill"
-            case .photoMessage:
-                return "photo"
-            }
-        }
-    }
-}
-
 #Preview {
-    ChannelItemView(messageType: .voiceMessage, channel: .placeholder)
+    ChannelItemView( channel: .placeholder)
 }

@@ -8,10 +8,10 @@
 import Foundation
 import Firebase
 
-struct ChannelItem: Identifiable , Hashable{
+struct ChannelItem: Identifiable , Hashable {
     var id: String
     var name: String?
-    var lastMessage: String
+    private var lastMessage: String
     var creationDate: Date
     var lastMessageTimestamp: Date
     var membersCount: Int
@@ -20,7 +20,7 @@ struct ChannelItem: Identifiable , Hashable{
     private var thumbnailUrl: String?
     var members: [UserItem]
     let createdBy: String
-    
+    let lastMessageType: MessageType
     
     var coverImageUrl: String? {
         if let thumbnailUrl = thumbnailUrl {
@@ -93,8 +93,23 @@ struct ChannelItem: Identifiable , Hashable{
         return members.count == membersCount
     }
     
+    var previewMessage: String {
+        switch lastMessageType {
+        case .admin:
+            return "Newly Created Chat!"
+        case .text:
+            return lastMessage
+        case .photo:
+            return "Photo Message"
+        case .video:
+            return "Video Message"
+        case .audio:
+            return "Audio Message"
+        }
+    }
     
-    static let placeholder: ChannelItem = ChannelItem.init(id: "1", lastMessage: "", creationDate: Date(), lastMessageTimestamp: Date(), membersCount: 2, adminUids: [], membersUids: [], members: [], createdBy: "")
+    
+    static let placeholder: ChannelItem = ChannelItem.init(id: "1", lastMessage: "Hello", creationDate: Date(), lastMessageTimestamp: Date(), membersCount: 2, adminUids: [], membersUids: [], members: [], createdBy: "", lastMessageType: .text)
 }
 
 extension ChannelItem {
@@ -116,6 +131,8 @@ extension ChannelItem {
         self.members = dictionary[.members] as? [UserItem] ?? []
         
         self.createdBy = dictionary[.createdBy] as? String ?? ""
+        let lastMessageValue = dictionary[.lastMessageType] as? String ?? "text"
+        self.lastMessageType = MessageType(lastMessageValue) ?? .text
     }
 }
 

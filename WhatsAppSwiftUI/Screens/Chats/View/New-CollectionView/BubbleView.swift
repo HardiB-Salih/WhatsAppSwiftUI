@@ -11,10 +11,12 @@ struct BubbleView: View {
     let message: MessageItem
     let channel: ChannelItem
     let isNewDay: Bool
+    let showSenderName: Bool
     
     var body: some View {
         VStack (alignment:.leading, spacing: 0){
             if isNewDay { newDayTimestamp().padding() }
+            if showSenderName { senderName() }
             composeDynamicBubbleView()
         }
     }
@@ -59,10 +61,20 @@ extension BubbleView {
             .frame(maxWidth: .infinity)
         
     }
+    
+    private func senderName() -> some View {
+        Text(message.sender?.username ?? "Unknown 🤷")
+            .lineLimit(1)
+            .foregroundStyle(.gray)
+            .font(.footnote)
+            .padding(.bottom, 2)
+            .padding(.horizontal)
+            .padding(.leading, 20)
+    }
 }
 
 #Preview {
-    BubbleView(message: .receivedPlaceholder, channel: .placeholder, isNewDay: false)
+    BubbleView(message: .receivedPlaceholder, channel: .placeholder, isNewDay: false, showSenderName: false)
 }
 
 

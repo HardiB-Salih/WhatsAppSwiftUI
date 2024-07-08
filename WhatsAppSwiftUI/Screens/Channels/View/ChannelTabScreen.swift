@@ -24,7 +24,7 @@ struct ChannelTabScreen: View {
                     Button {
                         viewModel.navRoutes.append(.chatRoom(channel))
                     } label: {
-                        ChannelItemView(messageType: .photoMessage, channel: channel)
+                        ChannelItemView(channel: channel)
                     }
                 }
                 

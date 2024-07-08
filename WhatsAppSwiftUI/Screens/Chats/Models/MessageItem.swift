@@ -88,6 +88,17 @@ extension MessageItem {
         return audioDuration?.formatElapsedTime ?? "00:00"
     }
     
+    var isSendByMe: Bool {
+        return ownerUid == Auth.auth().currentUser?.uid ?? ""
+    }
+     
+    func containsSameOwner(as message: MessageItem) -> Bool {
+        if let userA = message.sender, let userB = self.sender {
+            return userA == userB
+        } else {
+            return false
+        }
+    }
 }
 
 // MARK: ENUMS
