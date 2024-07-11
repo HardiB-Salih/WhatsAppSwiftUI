@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import Firebase
 import FirebaseDatabase
+import FirebaseDatabaseSwift
 
 struct MessageService {
     
@@ -26,7 +28,7 @@ struct MessageService {
             .type: MessageType.text.title,
             .timestamp: timestamp,
             .ownerUid: currentUser.uid
-        
+            
         ]
         
         FirebaseConstants.ChannelsRef.child(channel.id).updateChildValues(chaneelDictionary)
@@ -57,11 +59,11 @@ struct MessageService {
         messageDictionary[.thumbnailWidth] = params.thumbnailWidth ?? nil
         messageDictionary[.thumbnailHeight] = params.thumbnailHeight ?? nil
         messageDictionary[.videoURL] = params.videoUrl ?? nil
-
+        
         //Voice Messages
         messageDictionary[.audioURL] = params.audioURL ?? nil
         messageDictionary[.audioDuration] = params.audioDuration ?? nil
-
+        
         FirebaseConstants.ChannelsRef.child(channel.id).updateChildValues(chaneelDictionary)
         FirebaseConstants.MessagesRef.child(channel.id).child(messageId).setValue(messageDictionary)
         completion()
@@ -89,10 +91,64 @@ struct MessageService {
         }
     }
     
-    
+    static func getHistoricalMessages(
+        for channel: ChannelItem,
+        lastCursor: String?,
+        pageSize: UInt,
+        completion: @escaping (MessageNode) -> Void
+    ) {
+        var messageQuery: DatabaseQuery
+        if lastCursor == nil {
+            messageQuery = FirebaseConstants.MessagesRef.child(channel.id).queryLimited(toLast: pageSize)
+        } else {
+            messageQuery = FirebaseConstants.MessagesRef.child(channel.id)
+                .queryOrderedByKey()
+                .queryEnding(atValue: lastCursor)
+                .queryLimited(toLast: pageSize + 1)
+        }
+        
+        messageQuery.observeSingleEvent(of: .value) { mainSnapshot in
+            guard mainSnapshot.exists(),
+                  let allObjects = mainSnapshot.children.allObjects as? [DataSnapshot] else {
+                completion(.emptyMessageNode)
+                return
+            }
+            
+            var messages: [MessageItem] = allObjects.compactMap { messageSnapshot in
+                let messageDict = messageSnapshot.value as? [String: Any] ?? [:]
+                var message = MessageItem(id: messageSnapshot.key, isGroupChat: channel.isGroupChat, dictionary: messageDict)
+                let messageSender = channel.members.first { $0.uid == message.ownerUid }
+                message.sender = messageSender
+                return message
+            }
+            
+            messages.sort { $0.timestamp < $1.timestamp }
+            
+            if messages.count == mainSnapshot.childrenCount {
+                let filterdMessages = lastCursor == nil ? messages : messages.filter { $0.id != lastCursor }
+                let currentCursor = messages.first?.id
+                let messageNode = MessageNode(messages: filterdMessages, currentCursor: currentCursor)
+                completion(messageNode)
+            } else {
+                completion(.emptyMessageNode)
+            }
+            
+        } withCancel: { error in
+            print("Failed to retrieve messages for \(channel.title): \(error.localizedDescription)")
+            completion(.emptyMessageNode)
+        }
+    }
 
 }
 
+/// Represents a node in the user pagination, containing a list of users and a cursor.
+struct MessageNode {
+    var messages: [MessageItem]
+    var currentCursor: String? // The key of the last user retrieved in the current page.
+    
+    /// An empty UserNode instance for representing an empty state.
+    static let emptyMessageNode = MessageNode(messages: [], currentCursor: nil)
+}
 
 
 struct MessageUploadParams {

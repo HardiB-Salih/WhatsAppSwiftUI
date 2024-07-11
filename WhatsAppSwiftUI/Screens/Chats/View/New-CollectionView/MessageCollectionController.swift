@@ -37,6 +37,7 @@ class MessageCollectionController: UIViewController {
     private let viewModel: ChatRoomViewModel
     private var subscription = Set<AnyCancellable>()
     private let cellIdentifier = "MessageCollectionControllerCells"
+    private var lastScrollPostion: String?
     
     private lazy var pullToRefresh: UIRefreshControl = {
         let pullToRefresh = UIRefreshControl()
@@ -97,14 +98,26 @@ class MessageCollectionController: UIViewController {
             .sink {[weak self] scrollRequest in
                 if scrollRequest.scroll {
                     self?.messagesCollcetionView.scrollToLastItem(at: .bottom, animated: scrollRequest.animated)
-                    
                 }
-                
+            }.store(in: &subscription)
+        
+        viewModel.$isPaginating
+            .debounce(for: .milliseconds(delay), scheduler: DispatchQueue.main)
+            .sink {[weak self] isPaginating in
+                guard let self, let lastScrollPostion else { return }
+                if isPaginating == false {
+                    guard let index = viewModel.messages.firstIndex(where: { $0.id == lastScrollPostion }) else { return }
+                    let indexPath = IndexPath(item: index, section: 0)
+                    self.messagesCollcetionView.scrollToItem(at: indexPath, at: .top, animated: false)
+                    self.pullToRefresh.endRefreshing()
+                }
+
             }.store(in: &subscription)
     }
     
     @objc private func refreshData() {
-        messagesCollcetionView.refreshControl?.endRefreshing()
+        lastScrollPostion = viewModel.messages.first?.id
+        viewModel.getMessages()
     }
     
 }
