@@ -166,6 +166,6 @@ enum ChatPartnerPickerOption: String, CaseIterable, Identifiable {
 
 
 
-#Preview {
-    ChatPartnerPickerScreen  { channel in }
-}
+//#Preview {
+//    ChatPartnerPickerScreen  { channel in }
+//}

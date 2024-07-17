@@ -20,10 +20,12 @@ struct ChannelItemView: View {
                     .fontWeight(.bold)
                 
                 HStack (spacing: 0){
-                    Image(systemName: channel.lastMessageType.iconName)
-                        .imageScale(.small)
-                        .foregroundStyle(.gray)
-                        .padding(.trailing, 4)
+                    if channel.lastMessageType != .text {
+                        Image(systemName: channel.lastMessageType.iconName)
+                            .imageScale(.small)
+                            .foregroundStyle(.gray)
+                            .padding(.trailing, 4)
+                    }
                     
                     Text(channel.previewMessage)
                         .lineLimit(2)

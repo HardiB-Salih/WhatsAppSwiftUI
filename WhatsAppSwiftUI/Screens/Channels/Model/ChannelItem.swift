@@ -40,39 +40,34 @@ struct ChannelItem: Identifiable , Hashable {
     
     var membersExcludingMe: [UserItem] {
         guard let currentUid = Auth.auth().currentUser?.uid else { return [] }
-        return members.filter { $0.uid != currentUid}
+        return members.filter { $0.uid != currentUid }
     }
-    
+
     var title: String {
-        if let name = name {
+        if let name = name, !name.isEmpty {
             return name
-        }
-        
-        if isGroupChat {
+        } else if isGroupChat {
             return groupMemberNames
         } else {
             return membersExcludingMe.first?.username ?? "Unknown"
         }
     }
-    
-    private var groupMemberNames : String {
-//        let membersCount = membersExcludingMe.count
-        let membersCount = membersCount - 1
-        let fullname: [String] = membersExcludingMe.map { $0.username }
-        
+
+    private var groupMemberNames: String {
+        let membersCount = membersExcludingMe.count
+        let fullnames: [String] = membersExcludingMe.map { $0.username }
         
         if membersCount == 2 {
             // member1 and member2
-            return fullname.joined(separator: " and ")
+            return fullnames.joined(separator: " and ")
         } else if membersCount > 2 {
-            // member1, member2 and 10 other
+            // member1, member2 and x others
             let remainingCount = membersCount - 2
-            return fullname.prefix(2).joined(separator: ", ") + ", and \(remainingCount) others"
+            return fullnames.prefix(2).joined(separator: ", ") + ", and \(remainingCount) others"
         }
         
         return "Unknown"
     }
-    
     
     
     var isCreatedByMe: Bool {

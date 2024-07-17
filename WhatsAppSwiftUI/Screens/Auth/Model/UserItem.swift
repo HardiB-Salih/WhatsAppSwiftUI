@@ -24,9 +24,6 @@ struct UserItem: Identifiable, Decodable, Hashable {
     }
     
     static let placeholder = UserItem(uid: "!", username: "HardiB", email: "Hardib@gmail.com")
-    
-    
-
 }
 
 // MARK: - Initialization from Dictionary

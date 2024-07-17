@@ -24,6 +24,7 @@ final class ChatRoomViewModel : ObservableObject {
     @Published var scrollToBottomRequest: (scroll: Bool, animated: Bool) = (false, false)
     @Published var isPaginating = false
     private var currentCursor: String?
+    private var firstMessage: MessageItem?
     
     var showInnerMic : Bool {
         return mediaAttachments.isEmpty && textMessage.isEmptyOrWhitespaces
@@ -67,7 +68,7 @@ final class ChatRoomViewModel : ObservableObject {
             case .loggedIn(let currentUser):
                 self.currentUser = currentUser
                 if self.channel.allmemberFetched {
-                    self.getMessages()
+                    self.getHistoricalMessages()
                 } else {
                     self.getAllChannelMembers()
                 }
@@ -93,22 +94,52 @@ final class ChatRoomViewModel : ObservableObject {
     }
     
     
+    var isPaginatable: Bool {
+        return currentCursor != firstMessage?.id
+    }
     
-    
-    func getMessages() {
-        //        MessageService.getMessages(for: channel) { [weak self] messages in
-        //            self?.messages = messages
-        //            self?.scrollToBottom(animated: false)
-        //            print("message: \(messages.map { $0.text })")
-        //        }
+    func getHistoricalMessages() {
         isPaginating = currentUser != nil
         MessageService.getHistoricalMessages(for: channel, lastCursor: currentCursor, pageSize: 5) { [weak self] messageNode in
+            if self?.currentCursor == nil {
+                self?.getFirstMessage()
+                self?.listenForNewMessage()
+            }
             self?.currentCursor = messageNode.currentCursor
             self?.messages.insert(contentsOf: messageNode.messages, at: 0)
             self?.scrollToBottom(animated: false)
             self?.isPaginating = false
         }
     }
+    
+    
+    func paginateMoreMessage(){
+        guard isPaginatable else {
+            isPaginating = false
+            return
+        }
+        
+        getHistoricalMessages()
+    }
+    
+    private func getFirstMessage() {
+        MessageService.getFirstMessage(for: channel) { [weak self] firstMessage in
+            self?.firstMessage = firstMessage
+        }
+    }
+    
+    private func listenForNewMessage()  {
+        MessageService.listenForNewMessage(for: channel) { [weak self] newMessage in
+            guard let self = self, let newMessage = newMessage else { return }
+            
+            // Check if the message already exists in the array
+            if !self.messages.contains(where: { $0.id == newMessage.id }) {
+                self.messages.append(newMessage)
+                self.scrollToBottom(animated: true)
+            }
+        }
+    }
+
     
     
     
@@ -125,18 +156,15 @@ final class ChatRoomViewModel : ObservableObject {
         UserServices.getUsers(with: memberUidToFetch) {[ weak self ] userNode in
             guard let self = self else { return } // we have to make sure the context is there
             self.channel.members.append(contentsOf: userNode.users)
-            self.getMessages()
+            self.getHistoricalMessages()
             print("𐑼 getAllChannelMembers: \(channel.members.map ({ $0.username }))")
         }
     }
     
     //MARK: Send Messages
     func sendMessage() {
-        guard let currentUser else { return }
-        
         if mediaAttachments.isEmpty {
-            sendTextMessage(currentUser)
-            textMessage = ""
+            sendTextMessage(textMessage)
         } else {
             sendMultipleMediaMessages(textMessage, mediaAttachment: mediaAttachments)
             clearTextInputArea()
@@ -144,15 +172,17 @@ final class ChatRoomViewModel : ObservableObject {
     }
     
     private func clearTextInputArea() {
+        textMessage = ""
         mediaAttachments.removeAll()
         photoPickerItems.removeAll()
-        textMessage = ""
         UIApplication.dismissKeyboard()
     }
     
     //MARK: sendTextMessage
-    func sendTextMessage(_ currentUser: UserItem) {
-        MessageService.sendTextMessage(to: channel, from: currentUser, textMessage) {
+    func sendTextMessage(_ text: String) {
+        guard let currentUser else { return }
+        MessageService.sendTextMessage(to: channel, from: currentUser, text) {
+            textMessage = ""
             print("Message service is sending")
         }
     }
@@ -160,14 +190,15 @@ final class ChatRoomViewModel : ObservableObject {
     
     //MARK: sendMultipleMediaMessages
     func sendMultipleMediaMessages(_ text: String, mediaAttachment: [MediaAttachment]){
-        mediaAttachment.forEach { attachment in
+        for (index, attachment) in mediaAttachment.enumerated() {
+            let textMessage = index == 0 ? text : ""
             switch attachment.type {
             case .photo:
-                sendPhotoMessage(text: text, attachment: attachment)
+                sendPhotoMessage(text: textMessage, attachment: attachment)
             case .video:
-                sendVideoMessage(text: text, attachment: attachment)
+                sendVideoMessage(text: textMessage, attachment: attachment)
             case .audio:
-                sendVoiceMessage(text: text, attachment: attachment)
+                sendVoiceMessage(text: textMessage, attachment: attachment)
             }
         }
     }
@@ -229,6 +260,10 @@ final class ChatRoomViewModel : ObservableObject {
                 MessageService.sendMediaMessage(toChannel: self.channel, params: uploadParams) {
                     //TODO: Scroll to bottom uplon image upload success
                     self.scrollToBottom(animated: true)
+                }
+                
+                if text.isNotEmptyOrWhitespaces {
+                    self.sendTextMessage(text)
                 }
             }
         }

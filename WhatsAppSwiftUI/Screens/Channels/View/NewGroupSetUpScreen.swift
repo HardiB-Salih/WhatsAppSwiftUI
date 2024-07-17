@@ -73,7 +73,13 @@ extension NewGroupSetUpScreen {
     func topBarTrailing() -> some ToolbarContent {
         ToolbarItem( placement: .topBarTrailing) {
             Button("Create") {
-                viewModel.createGroupChannel(channelName, completion: onCreate)
+                if viewModel.isDirectChannel {
+                    guard let chatPartner = viewModel.selectedChatPartner.first else { return }
+                    viewModel.createDirectChannel(chatPartner, completion: onCreate)
+                } else {
+                    print(channelName)
+                    viewModel.createGroupChannel(channelName, completion: onCreate)
+                }
             }
             .bold()
             .disabled(viewModel.disableNextButton)
@@ -81,10 +87,10 @@ extension NewGroupSetUpScreen {
     }
 }
 
-#Preview {
-    NavigationStack {
-        NewGroupSetUpScreen(viewModel: ChatPartnerPickerViewModel()) { _ in
-            
-        }
-    }
-}
+//#Preview {
+//    NavigationStack {
+//        NewGroupSetUpScreen(viewModel: ChatPartnerPickerViewModel()) { _ in
+//            
+//        }
+//    }
+//}

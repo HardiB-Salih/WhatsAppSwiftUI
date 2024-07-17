@@ -138,7 +138,78 @@ struct MessageService {
             completion(.emptyMessageNode)
         }
     }
-
+    
+    
+    //    static func gitFirstMessage(for channel: ChannelItem, completion: @escaping (MessageItem)-> Void) {
+    //        let query = FirebaseConstants.MessagesRef.child(channel.id).queryLimited(toFirst: 1)
+    //        query.observeSingleEvent(of: .value) { snapshot in
+    //            guard let dictionary = snapshot.value as? [String: Any] else { return }
+    //            dictionary.forEach { key, value in
+    //                let messageDict = value as? [String: Any] ?? [:]
+    //                var firstMessage = MessageItem(id: key, isGroupChat: channel.isGroupChat, dictionary: messageDict)
+    //                let messageSender = channel.members.first { $0.uid == firstMessage.ownerUid }
+    //                firstMessage.sender = messageSender
+    //                completion(firstMessage)
+    //            }
+    //        } withCancel: { error in
+    //            print("Failed to retrieve messages for \(channel.title): \(error.localizedDescription)")
+    //        }
+    //    }
+    
+    static func getFirstMessage(for channel: ChannelItem, completion: @escaping (MessageItem?) -> Void) {
+        let query = FirebaseConstants.MessagesRef.child(channel.id).queryLimited(toFirst: 1)
+        query.observeSingleEvent(of: .value) { snapshot in
+            guard let dictionary = snapshot.value as? [String: Any] else {
+                print("No messages found for channel \(channel.title)")
+                completion(nil)
+                return
+            }
+            
+            for (key, value) in dictionary {
+                if let messageDict = value as? [String: Any] {
+                    var firstMessage = MessageItem(id: key, isGroupChat: channel.isGroupChat, dictionary: messageDict)
+                    if let messageSender = channel.members.first(where: { $0.uid == firstMessage.ownerUid }) {
+                        firstMessage.sender = messageSender
+                        completion(firstMessage)
+                        return // Exit after finding the first message
+                    } else {
+                        print("Sender not found for message in channel \(channel.title)")
+                        completion(nil)
+                        return
+                    }
+                } else {
+                    print("Invalid message format in channel \(channel.title)")
+                    completion(nil)
+                    return
+                }
+            }
+        } withCancel: { error in
+            print("Failed to retrieve messages for \(channel.title): \(error.localizedDescription)")
+            completion(nil)
+        }
+    }
+    
+    static func listenForNewMessage(for channel: ChannelItem, completion: @escaping (MessageItem?) -> Void) {
+        FirebaseConstants.MessagesRef.child(channel.id)
+            .queryLimited(toLast: 1)
+            .observe(.childAdded) { snapshot in
+            guard let messageDict = snapshot.value as? [String: Any] else {
+                completion(nil)
+                return
+            }
+            
+            let messageId = snapshot.key
+            var newMessage = MessageItem(id: messageId, isGroupChat: channel.isGroupChat, dictionary: messageDict)
+            let messageSender = channel.members.first { $0.uid == newMessage.ownerUid }
+            newMessage.sender = messageSender
+            completion(newMessage)
+        } withCancel: { error in
+            print("Failed to listen for new messages for \(channel.title): \(error.localizedDescription)")
+            completion(nil)
+        }
+    }
+    
+    
 }
 
 /// Represents a node in the user pagination, containing a list of users and a cursor.

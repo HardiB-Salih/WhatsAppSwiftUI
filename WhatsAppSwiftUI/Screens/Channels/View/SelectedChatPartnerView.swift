@@ -43,6 +43,6 @@ struct SelectedChatPartnerView: View {
     }
 }
 
-#Preview {
-    SelectedChatPartnerView(users: UserItem.placeholders) { _ in }
-}
+//#Preview {
+//    SelectedChatPartnerView(users: UserItem.placeholders) { _ in }
+//}

@@ -67,7 +67,7 @@ final class ChatPartnerPickerViewModel: ObservableObject {
     }
     
     
-    private var isDirectChannel: Bool {
+    var isDirectChannel: Bool {
         return selectedChatPartner.count == 1
     }
     
@@ -97,7 +97,7 @@ final class ChatPartnerPickerViewModel: ObservableObject {
     
     func fetchUsers() async {
         do {
-            let userNode = try await UserServices.paginateUser(lastCursor: lastCursor, pageSize: 5)
+            let userNode = try await UserServices.paginateUser(lastCursor: lastCursor, pageSize: 12)
             var filterdUsers = userNode.users
             guard let currentUid = Auth.auth().currentUser?.uid else { return }
             filterdUsers = filterdUsers.filter { $0.uid != currentUid }
@@ -132,7 +132,10 @@ final class ChatPartnerPickerViewModel: ObservableObject {
     }
     
     func createDirectChannel(_ chatParttner: UserItem, completion: @escaping (_ newChannel: ChannelItem) -> Void ) {
-        selectedChatPartner.append(chatParttner)
+        if selectedChatPartner.isEmpty {
+            selectedChatPartner.append(chatParttner)
+        }
+        
         Task {
             // If the Channel Already Exsit get it
             if let channelId = await verifyIfDirectChannelExits(with: chatParttner.uid) {
@@ -212,10 +215,11 @@ final class ChatPartnerPickerViewModel: ObservableObject {
             .createdBy: currentUid
         ]
         
-        if let newChannelName = channelName, newChannelName.isEmptyOrWhitespaces {
+        if let newChannelName = channelName, newChannelName.isNotEmptyOrWhitespaces {
             channelDict[.name] = newChannelName
             print(newChannelName)
         }
+        
         
         //message dictionary
         let messageDict: [String: Any] = [
