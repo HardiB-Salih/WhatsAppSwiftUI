@@ -10,7 +10,7 @@ import Foundation
 // MARK: - User Data Model
 struct UserItem: Identifiable, Decodable, Hashable {
     let uid: String
-    let username: String
+    var username: String
     let email: String
     var bio: String? = nil
     var profileImageUrl: String? = nil

@@ -66,6 +66,8 @@
 		D59A1E3B2C08D26E00508D64 /* MediaPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59A1E3A2C08D26E00508D64 /* MediaPlayerView.swift */; };
 		D5C56BAD2C1AB09D00A83E8C /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C56BAC2C1AB09D00A83E8C /* UIApplication+Extensions.swift */; };
 		D5C56BAF2C1AB4F900A83E8C /* UIWindowScene+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C56BAE2C1AB4F900A83E8C /* UIWindowScene+Extension.swift */; };
+		D5DB91662C50DDF20053B012 /* SettingTabViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DB91652C50DDF20053B012 /* SettingTabViewMode.swift */; };
+		D5DB91692C50F5680053B012 /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5DB91682C50F5680053B012 /* AlertKit */; };
 		D5FB52A22BF6003E0091B68A /* ChannelTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A12BF6003E0091B68A /* ChannelTabScreen.swift */; };
 		D5FB52A62BF6084A0091B68A /* ChannelItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A52BF6084A0091B68A /* ChannelItemView.swift */; };
 		D5FB52A92BF611A30091B68A /* SettingsTabScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52A82BF611A30091B68A /* SettingsTabScreen.swift */; };
@@ -139,6 +141,7 @@
 		D59A1E3A2C08D26E00508D64 /* MediaPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerView.swift; sourceTree = "<group>"; };
 		D5C56BAC2C1AB09D00A83E8C /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
 		D5C56BAE2C1AB4F900A83E8C /* UIWindowScene+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindowScene+Extension.swift"; sourceTree = "<group>"; };
+		D5DB91652C50DDF20053B012 /* SettingTabViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTabViewMode.swift; sourceTree = "<group>"; };
 		D5FB52A12BF6003E0091B68A /* ChannelTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelTabScreen.swift; sourceTree = "<group>"; };
 		D5FB52A52BF6084A0091B68A /* ChannelItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelItemView.swift; sourceTree = "<group>"; };
 		D5FB52A82BF611A30091B68A /* SettingsTabScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabScreen.swift; sourceTree = "<group>"; };
@@ -164,6 +167,7 @@
 			files = (
 				D592DDA72BFA4229007464C8 /* Kingfisher in Frameworks */,
 				D52E167D2BF73D6D002466D8 /* FirebaseMessaging in Frameworks */,
+				D5DB91692C50F5680053B012 /* AlertKit in Frameworks */,
 				D52E167B2BF73D6D002466D8 /* FirebaseDatabaseSwift in Frameworks */,
 				D52E16792BF73D6D002466D8 /* FirebaseDatabase in Frameworks */,
 				D52E167F2BF73D6D002466D8 /* FirebaseStorage in Frameworks */,
@@ -422,6 +426,7 @@
 		D56356262BF50B4A00F0FDE1 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				D5DB91642C50DDBE0053B012 /* ViewMode */,
 				D5FB52AC2BF617190091B68A /* Model */,
 				D5FB52A72BF6117E0091B68A /* View */,
 			);
@@ -472,6 +477,14 @@
 				D59A1E3A2C08D26E00508D64 /* MediaPlayerView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		D5DB91642C50DDBE0053B012 /* ViewMode */ = {
+			isa = PBXGroup;
+			children = (
+				D5DB91652C50DDF20053B012 /* SettingTabViewMode.swift */,
+			);
+			path = ViewMode;
 			sourceTree = "<group>";
 		};
 		D5FB52A02BF600250091B68A /* View */ = {
@@ -593,6 +606,7 @@
 				D52E167C2BF73D6D002466D8 /* FirebaseMessaging */,
 				D52E167E2BF73D6D002466D8 /* FirebaseStorage */,
 				D592DDA62BFA4229007464C8 /* Kingfisher */,
+				D5DB91682C50F5680053B012 /* AlertKit */,
 			);
 			productName = WhatsAppSwiftUI;
 			productReference = D56356042BF4C70F00F0FDE1 /* WhatsAppSwiftUI.app */;
@@ -625,6 +639,7 @@
 			packageReferences = (
 				D52E16752BF73D6D002466D8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				D592DDA52BFA4229007464C8 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				D5DB91672C50F5680053B012 /* XCRemoteSwiftPackageReference "AlertKit" */,
 			);
 			productRefGroup = D56356052BF4C70F00F0FDE1 /* Products */;
 			projectDirPath = "";
@@ -678,6 +693,7 @@
 				D5FB52B22BF61E680091B68A /* ChatRoomScreen.swift in Sources */,
 				D52E16A52BF7C4DE002466D8 /* ChatPartnerRowView.swift in Sources */,
 				D52A8ABE2BF8E1B400D63B64 /* UserServices.swift in Sources */,
+				D5DB91662C50DDF20053B012 /* SettingTabViewMode.swift in Sources */,
 				D52E16992BF79631002466D8 /* RootScreen.swift in Sources */,
 				D52E16942BF76EDD002466D8 /* AuthProvider.swift in Sources */,
 				D5C56BAD2C1AB09D00A83E8C /* UIApplication+Extensions.swift in Sources */,
@@ -942,6 +958,14 @@
 				minimumVersion = 7.11.0;
 			};
 		};
+		D5DB91672C50F5680053B012 /* XCRemoteSwiftPackageReference "AlertKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparrowcode/AlertKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.9;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -974,6 +998,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D592DDA52BFA4229007464C8 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		D5DB91682C50F5680053B012 /* AlertKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5DB91672C50F5680053B012 /* XCRemoteSwiftPackageReference "AlertKit" */;
+			productName = AlertKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -6,9 +6,17 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct SettingsTabScreen: View {
     @State private var searchText = ""
+    @StateObject private var settingTabViewMode : SettingTabViewMode
+    private let currentUser : UserItem
+    
+    init(_ currentUser : UserItem) {
+        self.currentUser = currentUser
+        self._settingTabViewMode = StateObject(wrappedValue: SettingTabViewMode(currentUser))
+    }
     
     var body: some View {
         NavigationStack {
@@ -16,7 +24,12 @@ struct SettingsTabScreen: View {
                 
                 Section {
                     profileInfo()
-                    SettingItemView(item: .avatar)
+                        .onTapGesture {
+                            settingTabViewMode.showUserEnfoEditor = true
+                        }
+                    PhotosPicker(selection: $settingTabViewMode.selectedPhotoItem, matching: .not(.videos)) {
+                        SettingItemView(item: .avatar)
+                    }
                 }
                 
                 Section {
@@ -49,22 +62,38 @@ struct SettingsTabScreen: View {
             .searchable(text: $searchText)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Save") { }
+                    Button("Save") { 
+                        settingTabViewMode.uploadProfilePhoto(currentUser.profileImageUrl)
+                    }
                         .tint(.black).fontWeight(.bold)
+                        .disabled(settingTabViewMode.disableSaveButton)
                 }
             }
+            .alert(isPresent:  $settingTabViewMode.showProgressHUD, view: settingTabViewMode.progressHUDView)
+            .alert(isPresent:  $settingTabViewMode.showSuccessHUD, view: settingTabViewMode.successHUDView)
+            .alert("Update Your Profile", isPresented: $settingTabViewMode.showUserEnfoEditor) {
+                
+                TextField("Usernamw", text: $settingTabViewMode.name)
+                TextField("Bio", text: $settingTabViewMode.bio)
+                Button("Update") { settingTabViewMode.updateUsernameAndBio()}
+                Button("Cancel", role: .cancel) { }
+
+            } message: {
+                Text("Enter your new username or bio")
+            }
+
         }
     }
     
     private func profileInfo() -> some View  {
         HStack (alignment: .top){
-            Circle()
-                .frame(width: 50, height: 50)
+            
+            profileImageView()
             
             VStack (alignment: .leading){
-                Text("HardiB. Salih").bold()
-                Text("Hey there! I am using whatsApp")
-                    .font(.caption)
+                Text(currentUser.username).bold()
+                Text(currentUser.bioUnweappede)
+                    .font(.callout)
                     .foregroundStyle(Color(.systemGray2))
             }
             
@@ -78,8 +107,21 @@ struct SettingsTabScreen: View {
                 .clipShape(Circle())
         }
     }
+    
+    @ViewBuilder
+    private func profileImageView() -> some View {
+        if let profilePhoto = settingTabViewMode.profilePhoto {
+            Image(uiImage: profilePhoto.thumbnail)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 50, height: 50)
+                .clipShape(Circle())
+        } else {
+            CircularProfileImageView(currentUser.profileImageUrl, size: .custom(50))
+        }
+    }
 }
 
 #Preview {
-    SettingsTabScreen()
+    SettingsTabScreen(.placeholder)
 }
