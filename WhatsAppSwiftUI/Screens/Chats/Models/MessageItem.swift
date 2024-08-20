@@ -99,6 +99,11 @@ extension MessageItem {
             return false
         }
     }
+    
+    
+    var menuAnchor: UnitPoint {
+        return direction == .received ? .leading : .trailing
+    }
 }
 
 // MARK: ENUMS

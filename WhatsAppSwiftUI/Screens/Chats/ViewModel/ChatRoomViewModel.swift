@@ -25,6 +25,9 @@ final class ChatRoomViewModel : ObservableObject {
     @Published var isPaginating = false
     private var currentCursor: String?
     private var firstMessage: MessageItem?
+    private var isInPreview : Bool {
+        return ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+    }
     
     var showInnerMic : Bool {
         return mediaAttachments.isEmpty && textMessage.isEmptyOrWhitespaces
@@ -45,6 +48,10 @@ final class ChatRoomViewModel : ObservableObject {
         listenToAuthState()
         onPhotoPickerSelection()
         setupVoiceRecorderListener()
+        
+        if isInPreview {
+            messages = MessageItem.stubMessages
+        }
     }
     
     deinit {

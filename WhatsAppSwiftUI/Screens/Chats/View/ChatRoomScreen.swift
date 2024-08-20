@@ -125,8 +125,8 @@ extension ChatRoomScreen {
     
 }
 
-//#Preview {
-//    NavigationStack {
-//        ChatRoomScreen(channel: .placeholder)
-//    }
-//}
+#Preview {
+    NavigationStack {
+        ChatRoomScreen(channel: .placeholder)
+    }
+}

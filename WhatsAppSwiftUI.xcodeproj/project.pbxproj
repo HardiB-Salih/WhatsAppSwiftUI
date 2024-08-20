@@ -84,6 +84,8 @@
 		D5FB52C52BF660720091B68A /* BubblePhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52C42BF660720091B68A /* BubblePhotoView.swift */; };
 		D5FB52C72BF670960091B68A /* BubbleAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52C62BF670960091B68A /* BubbleAudioView.swift */; };
 		D5FB52D42BF69E6F0091B68A /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB52D32BF69E6F0091B68A /* CustomSlider.swift */; };
+		D5FE37252C7539AD00120D5A /* ReactionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FE37242C7539AD00120D5A /* ReactionPickerView.swift */; };
+		D5FE37272C7545A400120D5A /* MessageMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FE37262C7545A400120D5A /* MessageMenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -158,6 +160,8 @@
 		D5FB52C42BF660720091B68A /* BubblePhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblePhotoView.swift; sourceTree = "<group>"; };
 		D5FB52C62BF670960091B68A /* BubbleAudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleAudioView.swift; sourceTree = "<group>"; };
 		D5FB52D32BF69E6F0091B68A /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
+		D5FE37242C7539AD00120D5A /* ReactionPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPickerView.swift; sourceTree = "<group>"; };
+		D5FE37262C7545A400120D5A /* MessageMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageMenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -537,6 +541,8 @@
 				D5FB52B12BF61E680091B68A /* ChatRoomScreen.swift */,
 				D5FB52B32BF6217E0091B68A /* TextInputArea.swift */,
 				D55F208E2C05003A00EB07F9 /* MediaAtachmentPreview.swift */,
+				D5FE37242C7539AD00120D5A /* ReactionPickerView.swift */,
+				D5FE37262C7545A400120D5A /* MessageMenuView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -685,10 +691,12 @@
 				D52E16AA2BF7F82D002466D8 /* GroupPartnerPickerScreen.swift in Sources */,
 				D52A8AC32BF9038E00D63B64 /* ChannelTabViewModel.swift in Sources */,
 				D5FB52A22BF6003E0091B68A /* ChannelTabScreen.swift in Sources */,
+				D5FE37252C7539AD00120D5A /* ReactionPickerView.swift in Sources */,
 				D56356162BF4D00000F0FDE1 /* UIHelperManager.swift in Sources */,
 				D5FB52AB2BF614ED0091B68A /* SettingItemView.swift in Sources */,
 				D586543A2C35525A006AD73E /* MessageCollectionController.swift in Sources */,
 				D5FB52C72BF670960091B68A /* BubbleAudioView.swift in Sources */,
+				D5FE37272C7545A400120D5A /* MessageMenuView.swift in Sources */,
 				D5FB52AE2BF6172F0091B68A /* SettingsItem.swift in Sources */,
 				D5FB52B22BF61E680091B68A /* ChatRoomScreen.swift in Sources */,
 				D52E16A52BF7C4DE002466D8 /* ChatPartnerRowView.swift in Sources */,

@@ -39,6 +39,15 @@ class MessageCollectionController: UIViewController {
     private let cellIdentifier = "MessageCollectionControllerCells"
     private var lastScrollPostion: String?
     
+    
+    //MARK: Custom Reaction Properties
+    private var startingFrame: CGRect?
+    private var blurView: UIVisualEffectView?
+    private var focusdView: UIView?
+    private var highlightedCell : UICollectionViewCell?
+//    private var snapshotCell: CGRect?
+
+    
     private lazy var pullToRefresh: UIRefreshControl = {
         let pullToRefresh = UIRefreshControl()
         pullToRefresh.addTarget(self, action: #selector(refreshData), for: .valueChanged)
@@ -170,17 +179,69 @@ extension MessageCollectionController: UICollectionViewDelegate, UICollectionVie
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        UIApplication.dismissKeyboard()
-        let messageItem = viewModel.messages[indexPath.row]
         
-        switch messageItem.type {
-        case .video:
-            guard let videoURLString = messageItem.videoURL,
-                  let videoURL = URL(string: videoURLString)
-            else { return }
-            viewModel.showMediaPlayer(videoURL)
-        default:
-            break
+        guard let selectedCell = collectionView.cellForItem(at: indexPath) else { return }
+        highlightedCell = selectedCell
+        highlightedCell?.alpha = 0
+        startingFrame = selectedCell.superview?.convert(selectedCell.frame, to: nil)
+
+        guard let snapshotCell = selectedCell.snapshotView(afterScreenUpdates: false) else { return }
+        focusdView = UIView(frame: startingFrame ?? .zero)
+        guard let focusdView else { return }
+        focusdView.isUserInteractionEnabled = false
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissContexMenu))
+        let blurEffect = UIBlurEffect(style: .regular)
+        blurView = UIVisualEffectView(effect: blurEffect)
+        guard let blurView else { return }
+        blurView.contentView.addGestureRecognizer(tapGesture)
+        tapGesture.numberOfTapsRequired = 1
+        blurView.contentView.isUserInteractionEnabled = true
+        blurView.alpha = 0
+        
+        
+        guard let keyWindow = UIWindowScene.current?.keyWindow else { return }
+        keyWindow.addSubview(blurView)
+        keyWindow.addSubview(focusdView)
+        focusdView.addSubview(snapshotCell)
+        blurView.frame = keyWindow.frame
+        
+        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut) {
+            blurView.alpha = 1
+            focusdView.center.y = keyWindow.center.y
+            snapshotCell.frame = focusdView.bounds
+        }
+        
+        
+        
+//        UIApplication.dismissKeyboard()
+//        let messageItem = viewModel.messages[indexPath.row]
+//        
+//        switch messageItem.type {
+//        case .video:
+//            guard let videoURLString = messageItem.videoURL,
+//                  let videoURL = URL(string: videoURLString)
+//            else { return }
+//            viewModel.showMediaPlayer(videoURL)
+//        default:
+//            break
+//        }
+    }
+    
+    @objc private func dismissContexMenu() {
+        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn) { [weak self] in
+            guard let self else { return }
+            focusdView?.frame = startingFrame ?? .zero
+            blurView?.alpha = 0
+        } completion: { [weak self] _ in
+            self?.highlightedCell?.alpha = 1
+            self?.blurView?.removeFromSuperview()
+            self?.focusdView?.removeFromSuperview()
+            
+            //Clearing Refrences
+            self?.highlightedCell = nil
+            self?.blurView = nil
+            self?.focusdView = nil
         }
     }
     
@@ -193,10 +254,6 @@ extension MessageCollectionController: UICollectionViewDelegate, UICollectionVie
     }
     
 }
-
-//#Preview {
-//    MessageListView(viewModel: ChatRoomViewModel(channel: .placeholder))
-//}
 
 private extension UICollectionView {
     ///  Scrolls to the last item of the collection view.
@@ -221,5 +278,16 @@ private extension UICollectionView {
         
         let lastItemIndexPath = IndexPath(item: lastItemIndex, section: lastSectionIndex)
         scrollToItem(at: lastItemIndexPath, at: scrollPosition, animated: animated)
+    }
+}
+
+
+//#Preview {
+//    MessageCollectionController(ChatRoomViewModel(channel: .placeholder))
+//}
+
+#Preview {
+    NavigationStack {
+        ChatRoomScreen(channel: .placeholder)
     }
 }
