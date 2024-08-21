@@ -45,6 +45,9 @@ class MessageCollectionController: UIViewController {
     private var blurView: UIVisualEffectView?
     private var focusdView: UIView?
     private var highlightedCell : UICollectionViewCell?
+    private var reactionHostVC: UIViewController?
+    private var messageMenuVC: UIViewController?
+
 //    private var snapshotCell: CGRect?
 
     
@@ -179,7 +182,7 @@ extension MessageCollectionController: UICollectionViewDelegate, UICollectionVie
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let message = viewModel.messages[indexPath.item]
         guard let selectedCell = collectionView.cellForItem(at: indexPath) else { return }
         highlightedCell = selectedCell
         highlightedCell?.alpha = 0
@@ -189,7 +192,7 @@ extension MessageCollectionController: UICollectionViewDelegate, UICollectionVie
         focusdView = UIView(frame: startingFrame ?? .zero)
         guard let focusdView else { return }
         focusdView.isUserInteractionEnabled = false
-        
+//        focusdView.backgroundColor = .yellow
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissContexMenu))
         let blurEffect = UIBlurEffect(style: .regular)
         blurView = UIVisualEffectView(effect: blurEffect)
@@ -205,11 +208,15 @@ extension MessageCollectionController: UICollectionViewDelegate, UICollectionVie
         keyWindow.addSubview(focusdView)
         focusdView.addSubview(snapshotCell)
         blurView.frame = keyWindow.frame
+        attachMenuActionItems(to: message, in: keyWindow)
         
         UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut) {
             blurView.alpha = 1
-            focusdView.center.y = keyWindow.center.y
+            focusdView.center.y = keyWindow.center.y - 60
             snapshotCell.frame = focusdView.bounds
+            
+            snapshotCell.layer.applyShadow(color: .gray, alpha: 0.2, x: 0, y: 2, blur: 4)
+
         }
         
         
@@ -228,11 +235,39 @@ extension MessageCollectionController: UICollectionViewDelegate, UICollectionVie
 //        }
     }
     
+    private func attachMenuActionItems(to message: MessageItem, in window: UIWindow) {
+        guard let focusdView, let startingFrame else { return }
+        let reactionPickerView = ReactionPickerView(message: message)
+        let reactionHostVC = UIHostingController(rootView: reactionPickerView)
+        reactionHostVC.view.backgroundColor = .clear
+        reactionHostVC.view.translatesAutoresizingMaskIntoConstraints = false
+        window.addSubview(reactionHostVC.view)
+        reactionHostVC.view.bottomAnchor.constraint(equalTo: focusdView.topAnchor, constant: 5).isActive = true
+        reactionHostVC.view.leadingAnchor.constraint(equalTo: focusdView.leadingAnchor, constant: 20).isActive = message.direction == .received
+        reactionHostVC.view.trailingAnchor.constraint(equalTo: focusdView.trailingAnchor, constant: -20).isActive = message.direction == .sent
+        
+        self.reactionHostVC = reactionHostVC
+        
+        let messageMenuView = MessageMenuView(message: message)
+        let messageMenuHostVC = UIHostingController(rootView: messageMenuView)
+        messageMenuHostVC.view.backgroundColor = .clear
+        messageMenuHostVC.view.translatesAutoresizingMaskIntoConstraints = false
+        window.addSubview(messageMenuHostVC.view)
+        messageMenuHostVC.view.topAnchor.constraint(equalTo: focusdView.bottomAnchor, constant: 0).isActive = true
+        messageMenuHostVC.view.leadingAnchor.constraint(equalTo: focusdView.leadingAnchor, constant: 20).isActive = message.direction == .received
+        messageMenuHostVC.view.trailingAnchor.constraint(equalTo: focusdView.trailingAnchor, constant: -20).isActive = message.direction == .sent
+        
+        self.messageMenuVC = messageMenuHostVC
+    }
+    
     @objc private func dismissContexMenu() {
         UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn) { [weak self] in
             guard let self else { return }
             focusdView?.frame = startingFrame ?? .zero
             blurView?.alpha = 0
+            self.reactionHostVC?.view.removeFromSuperview()
+            self.messageMenuVC?.view.removeFromSuperview()
+
         } completion: { [weak self] _ in
             self?.highlightedCell?.alpha = 1
             self?.blurView?.removeFromSuperview()
@@ -242,6 +277,9 @@ extension MessageCollectionController: UICollectionViewDelegate, UICollectionVie
             self?.highlightedCell = nil
             self?.blurView = nil
             self?.focusdView = nil
+            self?.reactionHostVC = nil
+            self?.messageMenuVC = nil
+
         }
     }
     
@@ -281,6 +319,16 @@ private extension UICollectionView {
     }
 }
 
+extension CALayer {
+    func applyShadow(color: UIColor, alpha: Float, x:CGFloat, y:CGFloat, blur: CGFloat) {
+        shadowColor = color.cgColor
+        shadowOpacity = alpha
+        shadowOffset = .init(width: x, height: y)
+        shadowRadius = blur
+        masksToBounds = false
+    }
+}
+
 
 //#Preview {
 //    MessageCollectionController(ChatRoomViewModel(channel: .placeholder))
@@ -288,6 +336,9 @@ private extension UICollectionView {
 
 #Preview {
     NavigationStack {
-        ChatRoomScreen(channel: .placeholder)
+        MessageCollectionView(viewModel: ChatRoomViewModel(channel: .placeholder))
+            .ignoresSafeArea()
+            .environmentObject(VoiceMessagePlayer())
     }
 }
+
