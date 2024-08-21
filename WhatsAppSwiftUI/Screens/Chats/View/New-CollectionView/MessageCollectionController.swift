@@ -17,6 +17,7 @@ class MessageCollectionController: UIViewController {
         super.viewDidLoad()
         setUpViews()
         setUpMessageLisners()
+        setupLongPressGesterRecoganizer()
     }
     
     init(_ viewModel: ChatRoomViewModel){
@@ -182,106 +183,21 @@ extension MessageCollectionController: UICollectionViewDelegate, UICollectionVie
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let message = viewModel.messages[indexPath.item]
-        guard let selectedCell = collectionView.cellForItem(at: indexPath) else { return }
-        highlightedCell = selectedCell
-        highlightedCell?.alpha = 0
-        startingFrame = selectedCell.superview?.convert(selectedCell.frame, to: nil)
-
-        guard let snapshotCell = selectedCell.snapshotView(afterScreenUpdates: false) else { return }
-        focusdView = UIView(frame: startingFrame ?? .zero)
-        guard let focusdView else { return }
-        focusdView.isUserInteractionEnabled = false
-//        focusdView.backgroundColor = .yellow
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissContexMenu))
-        let blurEffect = UIBlurEffect(style: .regular)
-        blurView = UIVisualEffectView(effect: blurEffect)
-        guard let blurView else { return }
-        blurView.contentView.addGestureRecognizer(tapGesture)
-        tapGesture.numberOfTapsRequired = 1
-        blurView.contentView.isUserInteractionEnabled = true
-        blurView.alpha = 0
+        UIApplication.dismissKeyboard()
+        let messageItem = viewModel.messages[indexPath.row]
         
-        
-        guard let keyWindow = UIWindowScene.current?.keyWindow else { return }
-        keyWindow.addSubview(blurView)
-        keyWindow.addSubview(focusdView)
-        focusdView.addSubview(snapshotCell)
-        blurView.frame = keyWindow.frame
-        attachMenuActionItems(to: message, in: keyWindow)
-        
-        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut) {
-            blurView.alpha = 1
-            focusdView.center.y = keyWindow.center.y - 60
-            snapshotCell.frame = focusdView.bounds
-            
-            snapshotCell.layer.applyShadow(color: .gray, alpha: 0.2, x: 0, y: 2, blur: 4)
-
-        }
-        
-        
-        
-//        UIApplication.dismissKeyboard()
-//        let messageItem = viewModel.messages[indexPath.row]
-//        
-//        switch messageItem.type {
-//        case .video:
-//            guard let videoURLString = messageItem.videoURL,
-//                  let videoURL = URL(string: videoURLString)
-//            else { return }
-//            viewModel.showMediaPlayer(videoURL)
-//        default:
-//            break
-//        }
-    }
-    
-    private func attachMenuActionItems(to message: MessageItem, in window: UIWindow) {
-        guard let focusdView, let startingFrame else { return }
-        let reactionPickerView = ReactionPickerView(message: message)
-        let reactionHostVC = UIHostingController(rootView: reactionPickerView)
-        reactionHostVC.view.backgroundColor = .clear
-        reactionHostVC.view.translatesAutoresizingMaskIntoConstraints = false
-        window.addSubview(reactionHostVC.view)
-        reactionHostVC.view.bottomAnchor.constraint(equalTo: focusdView.topAnchor, constant: 5).isActive = true
-        reactionHostVC.view.leadingAnchor.constraint(equalTo: focusdView.leadingAnchor, constant: 20).isActive = message.direction == .received
-        reactionHostVC.view.trailingAnchor.constraint(equalTo: focusdView.trailingAnchor, constant: -20).isActive = message.direction == .sent
-        
-        self.reactionHostVC = reactionHostVC
-        
-        let messageMenuView = MessageMenuView(message: message)
-        let messageMenuHostVC = UIHostingController(rootView: messageMenuView)
-        messageMenuHostVC.view.backgroundColor = .clear
-        messageMenuHostVC.view.translatesAutoresizingMaskIntoConstraints = false
-        window.addSubview(messageMenuHostVC.view)
-        messageMenuHostVC.view.topAnchor.constraint(equalTo: focusdView.bottomAnchor, constant: 0).isActive = true
-        messageMenuHostVC.view.leadingAnchor.constraint(equalTo: focusdView.leadingAnchor, constant: 20).isActive = message.direction == .received
-        messageMenuHostVC.view.trailingAnchor.constraint(equalTo: focusdView.trailingAnchor, constant: -20).isActive = message.direction == .sent
-        
-        self.messageMenuVC = messageMenuHostVC
-    }
-    
-    @objc private func dismissContexMenu() {
-        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn) { [weak self] in
-            guard let self else { return }
-            focusdView?.frame = startingFrame ?? .zero
-            blurView?.alpha = 0
-            self.reactionHostVC?.view.removeFromSuperview()
-            self.messageMenuVC?.view.removeFromSuperview()
-
-        } completion: { [weak self] _ in
-            self?.highlightedCell?.alpha = 1
-            self?.blurView?.removeFromSuperview()
-            self?.focusdView?.removeFromSuperview()
-            
-            //Clearing Refrences
-            self?.highlightedCell = nil
-            self?.blurView = nil
-            self?.focusdView = nil
-            self?.reactionHostVC = nil
-            self?.messageMenuVC = nil
-
+        switch messageItem.type {
+        case .video:
+            guard let videoURLString = messageItem.videoURL,
+                  let videoURL = URL(string: videoURLString)
+            else { return }
+            viewModel.showMediaPlayer(videoURL)
+        default:
+            break
         }
     }
+    
+    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y <= 0 {
@@ -326,6 +242,138 @@ extension CALayer {
         shadowOffset = .init(width: x, height: y)
         shadowRadius = blur
         masksToBounds = false
+    }
+}
+
+//MARK: Context menu interactions
+extension MessageCollectionController {
+    private func setupLongPressGesterRecoganizer(){
+        let longPressGester = UILongPressGestureRecognizer(target: self, action: #selector(showContextMenu))
+        longPressGester.minimumPressDuration = 0.5
+        messagesCollcetionView.addGestureRecognizer(longPressGester)
+    }
+    
+    @objc private func showContextMenu(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else { return }
+        let point = gesture.location(in: messagesCollcetionView)
+        guard let indexPath = messagesCollcetionView.indexPathForItem(at: point) else { return }
+        let message = viewModel.messages[indexPath.item]
+        
+        guard message.type.isAdminMessage == false else { return }
+        
+        guard let selectedCell = messagesCollcetionView.cellForItem(at: indexPath) else { return }
+        highlightedCell = selectedCell
+        highlightedCell?.alpha = 0
+        startingFrame = selectedCell.superview?.convert(selectedCell.frame, to: nil)
+
+        guard let snapshotCell = selectedCell.snapshotView(afterScreenUpdates: false) else { return }
+        focusdView = UIView(frame: startingFrame ?? .zero)
+        guard let focusdView else { return }
+        focusdView.isUserInteractionEnabled = false
+//        focusdView.backgroundColor = .yellow
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissContexMenu))
+        let blurEffect = UIBlurEffect(style: .regular)
+        blurView = UIVisualEffectView(effect: blurEffect)
+        guard let blurView else { return }
+        blurView.contentView.addGestureRecognizer(tapGesture)
+        tapGesture.numberOfTapsRequired = 1
+        blurView.contentView.isUserInteractionEnabled = true
+        blurView.alpha = 0
+        
+        
+        guard let keyWindow = UIWindowScene.current?.keyWindow else { return }
+        keyWindow.addSubview(blurView)
+        keyWindow.addSubview(focusdView)
+        focusdView.addSubview(snapshotCell)
+        blurView.frame = keyWindow.frame
+        attachMenuActionItems(to: message, in: keyWindow, viewModel.isNewDay(for: message, at: indexPath.item))
+        
+        let shrikCell = shrinkCell(startingFrame?.height ?? 0)
+        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut) {
+            blurView.alpha = 1
+            focusdView.center.y = keyWindow.center.y - 60
+            snapshotCell.frame = focusdView.bounds
+            snapshotCell.layer.applyShadow(color: .gray, alpha: 0.2, x: 0, y: 2, blur: 4)
+            
+            if shrikCell {
+                let Xtranslation: CGFloat = message.direction == .received ? -80 : 80
+                let translation = CGAffineTransform(translationX: Xtranslation, y: 1)
+                focusdView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5).concatenating(translation)
+            }
+        }
+    }
+    
+    private func attachMenuActionItems(to message: MessageItem, in window: UIWindow, _ isNewData: Bool) {
+        
+        guard let focusdView, let startingFrame else { return }
+        let shrikCell = shrinkCell(startingFrame.height)
+
+        let reactionPickerView = ReactionPickerView(message: message) {[weak self] reaction in
+            self?.dismissContexMenu()
+            self?.viewModel.addReaction(reaction, to: message)
+            print(reaction.emoji)
+        }
+        let reactionHostVC = UIHostingController(rootView: reactionPickerView)
+        reactionHostVC.view.backgroundColor = .clear
+        reactionHostVC.view.translatesAutoresizingMaskIntoConstraints = false
+        window.addSubview(reactionHostVC.view)
+        
+        
+        var reactionPadding: CGFloat = isNewData ? 45 : 5
+        if shrikCell {
+            reactionPadding += startingFrame.height / 3
+        }
+        reactionHostVC.view.bottomAnchor.constraint(equalTo: focusdView.topAnchor, constant: reactionPadding).isActive = true
+        reactionHostVC.view.leadingAnchor.constraint(equalTo: focusdView.leadingAnchor, constant: 20).isActive = message.direction == .received
+        reactionHostVC.view.trailingAnchor.constraint(equalTo: focusdView.trailingAnchor, constant: -20).isActive = message.direction == .sent
+        
+        self.reactionHostVC = reactionHostVC
+        
+        let messageMenuView = MessageMenuView(message: message)
+        let messageMenuHostVC = UIHostingController(rootView: messageMenuView)
+        messageMenuHostVC.view.backgroundColor = .clear
+        messageMenuHostVC.view.translatesAutoresizingMaskIntoConstraints = false
+        window.addSubview(messageMenuHostVC.view)
+        
+        var menuPadding: CGFloat = 0
+        if shrikCell {
+            menuPadding -= (startingFrame.height / 2.5)
+        }
+        messageMenuHostVC.view.topAnchor.constraint(equalTo: focusdView.bottomAnchor, constant: menuPadding).isActive = true
+        messageMenuHostVC.view.leadingAnchor.constraint(equalTo: focusdView.leadingAnchor, constant: 20).isActive = message.direction == .received
+        messageMenuHostVC.view.trailingAnchor.constraint(equalTo: focusdView.trailingAnchor, constant: -20).isActive = message.direction == .sent
+        
+        self.messageMenuVC = messageMenuHostVC
+    }
+    
+    @objc private func dismissContexMenu() {
+        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn) { [weak self] in
+            guard let self else { return }
+            focusdView?.transform = .identity
+            focusdView?.frame = startingFrame ?? .zero
+            blurView?.alpha = 0
+            self.reactionHostVC?.view.removeFromSuperview()
+            self.messageMenuVC?.view.removeFromSuperview()
+
+        } completion: { [weak self] _ in
+            self?.highlightedCell?.alpha = 1
+            self?.blurView?.removeFromSuperview()
+            self?.focusdView?.removeFromSuperview()
+            
+            //Clearing Refrences
+            self?.highlightedCell = nil
+            self?.blurView = nil
+            self?.focusdView = nil
+            self?.reactionHostVC = nil
+            self?.messageMenuVC = nil
+
+        }
+    }
+    
+    private func shrinkCell(_ cellHeight: CGFloat) -> Bool {
+        let screenHeight = (UIWindowScene.current?.screenHeight ?? 0) / 1.2
+        let spacingForMenuView = screenHeight - cellHeight
+        return spacingForMenuView < 190
     }
 }
 

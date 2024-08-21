@@ -455,4 +455,11 @@ final class ChatRoomViewModel : ObservableObject {
     }
 
     
+    func addReaction(_ reaction: Reaction, to message: MessageItem) {
+        guard let currentUser else {return}
+        MessageService.addReaction(reaction, to: message, in: channel, from: currentUser) { empjiCount in
+            print("What is Reaction \(reaction.emoji) and Count is \(empjiCount)")
+        }
+    }
+    
 }

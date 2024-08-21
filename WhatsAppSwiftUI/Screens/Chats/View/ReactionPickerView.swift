@@ -15,6 +15,7 @@ struct EmojiReaction {
 
 struct ReactionPickerView: View {
     let message : MessageItem
+    let onTapHandler: ((_ selectedEmoji: Reaction) -> Void)
     @State private var animateBackgroundView: Bool = false
     @State private var emojiReactions : [EmojiReaction] = [
         EmojiReaction(reaction: .like),
@@ -52,7 +53,10 @@ struct ReactionPickerView: View {
     }
     
     private func reactionButton(_ item: EmojiReaction, at index: Int) -> some View {
-        Button(action: {}, label: {
+        Button(action: {
+            guard item.reaction != .more else { return }
+            onTapHandler(item.reaction)
+        }, label: {
             buttonBody(item, at: index)
                 .scaleEffect(emojiReactions[index].isAnimating ? 1 : 0.01)
                 .opacity(item.opacity)
@@ -66,6 +70,8 @@ struct ReactionPickerView: View {
                 }
         })
     }
+    
+
     
     private func getAnimationIndex(_ index: Int) -> Int {
         if message.direction == .sent {
@@ -88,7 +94,14 @@ struct ReactionPickerView: View {
         } else {
             Text(item.reaction.emoji)
                 .font(.system(size: 30))
+                .background(selectedEmojiIndicator(item.reaction))
         }
+    }
+    
+    private func selectedEmojiIndicator(_ reaction: Reaction) -> some View {
+        Color(.systemGray5)
+            .frame(width: 45, height: 45)
+            .clipShape(Circle())
     }
     
     private func backgroundView() -> some View {
@@ -106,7 +119,7 @@ struct ReactionPickerView: View {
 #Preview {
     ZStack{
         Rectangle().fill(.whatsAppGray)
-        ReactionPickerView(message: .sentPlaceholder)
+        ReactionPickerView(message: .sentPlaceholder){ _ in }
 
     }
     
