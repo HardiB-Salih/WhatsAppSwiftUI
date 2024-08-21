@@ -22,7 +22,10 @@ struct BubblePhotoView: View {
             if item.direction == .sent { Spacer() }
             
             messageImageView()
-                .overlay(playButton().opacity(item.type == .video ? 1 : 0))
+                .overlay(alignment: item.reactionAnchor) {
+                    MessageReactionView(message: item)
+                        .offset(x: 5, y: 16)
+                }
             
             
             if item.direction == .received { Spacer() }
@@ -65,6 +68,7 @@ struct BubblePhotoView: View {
                 .overlay(alignment: .bottomTrailing, content: {
                     timestampMessage()
                 })
+                .overlay(playButton().opacity(item.type == .video ? 1 : 0))
             
             if item.text.isNotEmptyOrWhitespaces {
                 Text(item.text)

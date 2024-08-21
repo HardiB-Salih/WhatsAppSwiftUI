@@ -62,6 +62,10 @@ struct BubbleAudioView: View {
             .background(item.backgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             .applyTail(item.direction)
+            .overlay(alignment: item.reactionAnchor) {
+                MessageReactionView(message: item)
+                    .offset(x: 5, y: 16)
+            }
             
             if item.direction == .received { timestampTextView() }
         }

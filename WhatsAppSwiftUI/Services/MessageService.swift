@@ -233,7 +233,7 @@ struct MessageService {
             .MessagesRef
             .child(channel.id)
             .child(message.id)
-            .child("reactions")
+            .child(.reactions)
             .child(reaction.emoji)
         
         increaseCountViaTransaction(at: reactionRef) { emojiCount in
@@ -241,7 +241,7 @@ struct MessageService {
             FirebaseConstants.MessagesRef
                 .child(channel.id)
                 .child(message.id)
-                .child("userReactions")
+                .child(.userReaction)
                 .child(currentUser.uid)
                 .setValue(reaction.emoji)
             

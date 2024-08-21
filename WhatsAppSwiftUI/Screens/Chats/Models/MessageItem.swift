@@ -10,6 +10,10 @@ import SwiftUI
 import Firebase
 
 struct MessageItem: Identifiable {
+    typealias userId = String
+    typealias emoji = String
+    typealias emojiCount = Int
+
     
     let id : String
     let isGroupChat: Bool
@@ -30,6 +34,8 @@ struct MessageItem: Identifiable {
     
     var audioURL: String?
     var audioDuration: TimeInterval?
+    var reactions: [emoji: emojiCount] = [:]
+    var userReaction: [userId: emoji] = [:]
     
     private let horizantalPadding:CGFloat = 25
     
@@ -104,6 +110,14 @@ extension MessageItem {
     var menuAnchor: UnitPoint {
         return direction == .received ? .leading : .trailing
     }
+    
+    var reactionAnchor: Alignment {
+        return direction == .sent ? .bottomTrailing : .bottomLeading
+    }
+    
+    var hasReaction : Bool {
+        return !reactions.isEmpty
+    }
 }
 
 // MARK: ENUMS
@@ -152,6 +166,8 @@ extension MessageItem {
         self.videoURL = dictionary[.videoURL] as? String ?? nil
         self.audioURL = dictionary[.audioURL] as? String ?? nil
         self.audioDuration = dictionary[.audioDuration] as? TimeInterval ?? nil
+        self.reactions = dictionary[.reactions] as? [emoji: emojiCount] ?? [:]
+        self.userReaction = dictionary[.userReaction] as? [userId: emoji] ?? [:]
 
 
     }
@@ -168,4 +184,6 @@ extension String {
     static let videoURL = "videoURL"
     static let audioURL = "audioURL"
     static let audioDuration = "audioDuration"
+    static let reactions = "reactions"
+    static let userReaction = "userReaction"
 }
